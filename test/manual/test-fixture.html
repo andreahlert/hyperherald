@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>_hyperstream test fixture</title>
+</head>
+<body>
+<div id="stream-root" _stream="/sse" _stream-subscribe="test:1 test:2" _stream-debug="true">
+    <div id="a">A:initial</div>
+    <div id="b">B:initial</div>
+    <ul id="list"></ul>
+</div>
+<script src="/dist/_hyperstream.js"></script>
+</body>
+</html>

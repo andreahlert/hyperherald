@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="glyph A chevrons">
+  <g transform="translate(8,12)">
+    <polyline points="0,4 26,38 0,72" fill="none" stroke="#00B8B8" stroke-width="9" stroke-linejoin="round" stroke-linecap="round" opacity="0.25"/>
+    <polyline points="26,4 52,38 26,72" fill="none" stroke="#00B8B8" stroke-width="9" stroke-linejoin="round" stroke-linecap="round" opacity="0.55"/>
+    <polyline points="52,4 78,38 52,72" fill="none" stroke="#00B8B8" stroke-width="9" stroke-linejoin="round" stroke-linecap="round"/>
+    <line x1="0" y1="84" x2="84" y2="84" stroke="#00B8B8" stroke-width="9" stroke-linecap="round"/>
+  </g>
+</svg>

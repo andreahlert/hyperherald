@@ -1,0 +1,34 @@
+// @ts-check
+// M0 smoke test: bundle loads, exposes _hyperstream global, logs version.
+import { test, expect } from '@playwright/test';
+import { readFileSync, existsSync } from 'fs';
+import { fileURLToPath } from 'url';
+import { dirname, resolve } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname  = dirname(__filename);
+
+const distPath = resolve(__dirname, '../../dist/_hyperstream.js');
+
+test('bundle exists and loads', async ({ page }) => {
+    expect(existsSync(distPath), 'run `npm run build` first').toBe(true);
+
+    const script = readFileSync(distPath, 'utf8');
+
+    const logs = [];
+    page.on('console', (msg) => logs.push(msg.text()));
+
+    await page.setContent(`<!doctype html><html><body>
+        <script>${script}</script>
+    </body></html>`);
+
+    // wait for hyperstream:ready event after DOM ready setTimeout
+    await page.waitForFunction(() => !!window._hyperstream, { timeout: 5000 });
+
+    const version = await page.evaluate(() => window._hyperstream.version);
+    expect(version).toBe('0.0.1');
+
+    // give the ready handler a tick
+    await page.waitForTimeout(50);
+    expect(logs.some(l => l.includes('_hyperstream 0.0.1'))).toBe(true);
+});

@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 144" shape-rendering="crispEdges" role="img" aria-label="pixel-art Mac classic broadcasting hyperstream chevrons">
+  <!-- antenna -->
+  <g fill="#1a1a1a">
+    <rect x="48" y="0"  width="8" height="32"/>
+    <rect x="40" y="0"  width="24" height="8"/>
+    <rect x="32" y="8"  width="8" height="8"/>
+    <rect x="64" y="8"  width="8" height="8"/>
+  </g>
+  <!-- antenna tip blink -->
+  <rect x="48" y="-8" width="8" height="8" fill="#00B8B8"/>
+  <rect x="48" y="-4" width="8" height="4" fill="#ff7a59"/>
+
+  <!-- mac body shell -->
+  <g fill="#1a1a1a">
+    <rect x="8"  y="32"  width="96" height="8"/>
+    <rect x="8"  y="40"  width="8"  height="72"/>
+    <rect x="96" y="40"  width="8"  height="72"/>
+    <rect x="8"  y="112" width="96" height="8"/>
+    <rect x="0"  y="120" width="112" height="8"/>
+    <rect x="16" y="128" width="80" height="8"/>
+  </g>
+  <!-- mac front fill -->
+  <rect x="16" y="40" width="80" height="72" fill="#dcdad2"/>
+
+  <!-- screen bezel -->
+  <rect x="22" y="46" width="68" height="44" fill="#1a1a1a"/>
+  <rect x="24" y="48" width="64" height="40" fill="#0e2828"/>
+
+  <!-- screen content: stacked chevrons (push) -->
+  <g fill="#00B8B8">
+    <rect x="32" y="56" width="6" height="6"/>
+    <rect x="38" y="62" width="6" height="6"/>
+    <rect x="32" y="68" width="6" height="6"/>
+
+    <rect x="48" y="56" width="6" height="6" opacity="0.7"/>
+    <rect x="54" y="62" width="6" height="6" opacity="0.7"/>
+    <rect x="48" y="68" width="6" height="6" opacity="0.7"/>
+
+    <rect x="64" y="56" width="6" height="6" opacity="0.4"/>
+    <rect x="70" y="62" width="6" height="6" opacity="0.4"/>
+    <rect x="64" y="68" width="6" height="6" opacity="0.4"/>
+  </g>
+
+  <!-- floppy slot -->
+  <rect x="32" y="98" width="40" height="4" fill="#1a1a1a"/>
+  <!-- led -->
+  <rect x="80" y="98" width="6" height="4" fill="#ff7a59"/>
+
+  <!-- chevrons streaming OUT the right -->
+  <g fill="#00B8B8">
+    <rect x="120" y="58" width="8" height="8"/>
+    <rect x="128" y="66" width="8" height="8"/>
+    <rect x="120" y="74" width="8" height="8"/>
+
+    <rect x="148" y="58" width="8" height="8" opacity="0.6"/>
+    <rect x="156" y="66" width="8" height="8" opacity="0.6"/>
+    <rect x="148" y="74" width="8" height="8" opacity="0.6"/>
+
+    <rect x="180" y="58" width="8" height="8" opacity="0.3"/>
+    <rect x="188" y="66" width="8" height="8" opacity="0.3"/>
+    <rect x="180" y="74" width="8" height="8" opacity="0.3"/>
+  </g>
+
+  <!-- confetti -->
+  <g>
+    <rect x="216" y="20" width="4" height="4" fill="#ff7a59"/>
+    <rect x="208" y="36" width="4" height="4" fill="#3d72d7"/>
+    <rect x="220" y="48" width="4" height="4" fill="#ffd166"/>
+    <rect x="200" y="92" width="4" height="4" fill="#ff7a59"/>
+    <rect x="224" y="104" width="4" height="4" fill="#3d72d7"/>
+  </g>
+</svg>

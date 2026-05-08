@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>_hyperstream — retro pixel concept</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --teal: #00B8B8;
+        --coral: #ff7a59;
+        --htmx: #3d72d7;
+        --ink: #1a1a1a;
+        --paper: #fdfdf6;
+        --rule: #d8d6cc;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+        font: 15px/1.55 'IBM Plex Mono', ui-monospace, monospace;
+        background: var(--paper);
+        color: var(--ink);
+    }
+    nav {
+        background: #ececec;
+        border-bottom: 1px solid var(--rule);
+        padding: 0.5rem 1rem;
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+        font-family: 'IBM Plex Mono', monospace;
+        font-weight: 600;
+        font-size: 14px;
+    }
+    nav .logo { width: 28px; height: 28px; }
+    nav a { color: var(--ink); text-decoration: none; }
+    nav a:hover { color: var(--teal); }
+    nav .spacer { flex: 1; }
+    nav .ctrl {
+        background: #fff;
+        border: 1px solid #aaa;
+        padding: 2px 10px;
+        font-size: 12px;
+        border-radius: 3px;
+    }
+
+    .hero {
+        text-align: center;
+        padding: 3rem 1rem 1.5rem;
+    }
+    .hero img.mascot {
+        width: 240px; height: 144px;
+        image-rendering: pixelated;
+        image-rendering: crisp-edges;
+        margin-top: 1.5rem;
+    }
+    h1.wordmark {
+        font-family: 'Press Start 2P', monospace;
+        font-size: 56px;
+        line-height: 1;
+        margin: 1.25rem 0 0.5rem;
+        letter-spacing: -1px;
+        color: var(--ink);
+    }
+    h1.wordmark .accent { color: var(--teal); }
+    h1.wordmark .underscore {
+        color: var(--teal);
+        display: inline-block;
+        transform: translateY(-4px);
+    }
+    .tagline {
+        font-family: 'Press Start 2P', monospace;
+        font-size: 16px;
+        margin: 0.5rem 0 1rem;
+        color: #555;
+    }
+    .blurb {
+        max-width: 640px;
+        margin: 0 auto 0.75rem;
+        font-size: 14px;
+        color: #333;
+    }
+    .blurb a { color: var(--teal); }
+
+    .stack-blocks {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 1rem;
+        max-width: 900px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+    .code-window, .demo-window {
+        border: 1px solid var(--rule);
+        background: #fff;
+        border-radius: 6px;
+        overflow: hidden;
+    }
+    .code-window header, .demo-window header {
+        background: #ececec;
+        border-bottom: 1px solid var(--rule);
+        padding: 0.4rem 0.75rem;
+        font-size: 12px;
+        font-family: 'IBM Plex Mono', monospace;
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+    }
+    .code-window header img { width: 16px; height: 16px; image-rendering: pixelated; }
+    .code-window pre {
+        margin: 0; padding: 1rem;
+        background: #1c1f24;
+        color: #e6e6e6;
+        font-size: 12px;
+        line-height: 1.55;
+        overflow-x: auto;
+    }
+    .code-window pre .tag { color: #ff79c6; }
+    .code-window pre .attr { color: #8be9fd; }
+    .code-window pre .val { color: #f1fa8c; }
+    .code-window pre .com { color: #6c7280; }
+
+    .demo-window .body {
+        padding: 1rem;
+        font-family: system-ui, sans-serif;
+        font-size: 13px;
+    }
+    .demo-window .row {
+        display: flex; justify-content: space-between;
+        padding: 0.3rem 0;
+        border-bottom: 1px dashed #eee;
+    }
+    .demo-window .row:last-child { border: 0; }
+    .demo-window strong { color: #b85; }
+
+    .install {
+        max-width: 900px;
+        margin: 0 auto 3rem;
+        padding: 0 1rem;
+        display: flex;
+        align-items: stretch;
+        gap: 0;
+    }
+    .install .lab {
+        background: #2a2a2a;
+        color: #fff;
+        padding: 0.75rem 1rem;
+        font-family: 'Press Start 2P', monospace;
+        font-size: 11px;
+    }
+    .install code {
+        flex: 1;
+        background: #ececec;
+        padding: 0.75rem 1rem;
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 13px;
+        overflow-x: auto;
+    }
+    .install .copy {
+        background: #ddd; border: 0;
+        padding: 0 1.25rem;
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 12px; cursor: pointer;
+    }
+
+    section.feature-grid {
+        max-width: 900px;
+        margin: 0 auto 3rem;
+        padding: 0 1rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+    }
+    section.feature-grid h2 {
+        font-family: 'Press Start 2P', monospace;
+        font-size: 14px;
+        margin: 0 0 0.5rem;
+    }
+    section.feature-grid p { font-size: 13px; color: #444; margin: 0; }
+
+    footer {
+        text-align: center;
+        padding: 1.5rem;
+        font-size: 12px;
+        color: #888;
+        border-top: 1px solid var(--rule);
+    }
+    footer a { color: var(--teal); text-decoration: none; }
+
+    /* size variants section */
+    .scale-row {
+        max-width: 900px;
+        margin: 0 auto 3rem;
+        padding: 1.5rem;
+        background: #f5f4ec;
+        border: 1px dashed var(--rule);
+        border-radius: 6px;
+        text-align: center;
+    }
+    .scale-row p { color: #777; font-size: 12px; margin: 0 0 1rem; }
+    .scale-row .row {
+        display: flex; gap: 2rem; align-items: center; justify-content: center;
+    }
+    .scale-row img { image-rendering: pixelated; }
+</style>
+</head>
+<body>
+
+<nav>
+    <img src="/img/mascot-retro-small.svg" class="logo" alt="">
+    <a href="#">docs</a>
+    <a href="#">spec</a>
+    <a href="#">patterns</a>
+    <a href="#">demo</a>
+    <a href="#">try it!</a>
+    <span class="spacer"></span>
+    <span class="ctrl">Ctrl</span>
+    <a href="#">GH</a>
+</nav>
+
+<section class="hero">
+    <img class="mascot" src="/img/mascot-retro.svg" alt="_hyperstream pixel mascot">
+    <h1 class="wordmark">
+        <span class="underscore">_</span>hyper<span class="accent">s</span>tream
+    </h1>
+    <p class="tagline">finally... server-push hypermedia.</p>
+    <p class="blurb">
+        Streaming HTML without tears: declarative <a href="#">subscribe</a>, <a href="#">replay</a>,
+        <a href="#">atomic</a> &amp; <a href="#">multi</a> swaps over SSE / WS.
+        5KB brotli, zero deps, install with <a href="#">a script tag</a>.
+    </p>
+</section>
+
+<div class="stack-blocks">
+    <div class="code-window">
+        <header><img src="/img/mascot-retro-small.svg" alt=""> auction.html</header>
+<pre><span class="com">&lt;!-- subscribe a fragment to a channel --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">_stream</span>=<span class="val">"/sse"</span>
+     <span class="attr">_stream-subscribe</span>=<span class="val">"auction:lot-1"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;span</span> <span class="attr">id</span>=<span class="val">"price"</span><span class="tag">&gt;</span>$100<span class="tag">&lt;/span&gt;</span>
+  <span class="tag">&lt;span</span> <span class="attr">id</span>=<span class="val">"leader"</span><span class="tag">&gt;</span>—<span class="tag">&lt;/span&gt;</span>
+  <span class="tag">&lt;span</span> <span class="attr">id</span>=<span class="val">"countdown"</span><span class="tag">&gt;</span>60<span class="tag">&lt;/span&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+
+<span class="com">&lt;!-- server pushes pure HTML envelopes --&gt;</span>
+<span class="tag">&lt;hs-atomic</span> <span class="attr">channel</span>=<span class="val">"auction:lot-1"</span> <span class="attr">seq</span>=<span class="val">"42"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;hs-fragment</span> <span class="attr">target</span>=<span class="val">"#price"</span> <span class="attr">swap</span>=<span class="val">"inner"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;strong&gt;</span>$120<span class="tag">&lt;/strong&gt;</span>
+  <span class="tag">&lt;/hs-fragment&gt;</span>
+<span class="tag">&lt;/hs-atomic&gt;</span></pre>
+    </div>
+    <div class="demo-window">
+        <header>live preview</header>
+        <div class="body">
+            <h3 style="margin:0 0 0.5rem;font-size:14px;">Vintage Big Sky T-Shirt</h3>
+            <div class="row"><span>Current bid</span> <strong>$120</strong></div>
+            <div class="row"><span>Leader</span> <em>alice</em></div>
+            <div class="row"><span>Time left</span> <span>30s</span></div>
+        </div>
+    </div>
+</div>
+
+<div class="install">
+    <div class="lab">Install</div>
+    <code>&lt;script src="https://cdn.jsdelivr.net/npm/hyperstream.org@0.0.1"&gt;&lt;/script&gt;</code>
+    <button class="copy">copy</button>
+</div>
+
+<section class="feature-grid">
+    <div>
+        <h2>HTML Over The Wire</h2>
+        <p>Frames are self-describing custom elements (<code>&lt;hs-fragment&gt;</code>, <code>&lt;hs-atomic&gt;</code>). No JSON envelope. Hypermedia from server to DOM, no translation layer.</p>
+    </div>
+    <div>
+        <h2>Pub/Sub Native</h2>
+        <p>Multiple elements subscribe to one channel; one frame fans out to N targets. Multi-tab atomic updates without OOB hacks.</p>
+    </div>
+    <div>
+        <h2>Replay On Reconnect</h2>
+        <p>Per-channel cursor in sessionStorage, resumed via <code>Last-Event-ID</code> on SSE or <code>&lt;hs-subscribe cursors&gt;</code> on WS. No gaps.</p>
+    </div>
+    <div>
+        <h2>Composes With htmx</h2>
+        <p>Pushed HTML can carry <code>hx-*</code> attrs; htmx upgrades them via MutationObserver. Same cascade as <code>_hyperscript</code>.</p>
+    </div>
+</section>
+
+<div class="scale-row">
+    <p>scale check — 16px / 32px / 64px / hero</p>
+    <div class="row">
+        <img src="/img/mascot-retro-small.svg" width="16" height="16" alt="">
+        <img src="/img/mascot-retro-small.svg" width="32" height="32" alt="">
+        <img src="/img/mascot-retro-small.svg" width="64" height="64" alt="">
+        <img src="/img/mascot-retro.svg"        width="200" alt="">
+    </div>
+</div>
+
+<footer>
+    third leg of the Big Sky triad &mdash;
+    <a href="https://htmx.org">htmx</a> ·
+    <a href="https://hyperscript.org">_hyperscript</a> ·
+    <a href="#">_hyperstream</a>
+</footer>
+
+</body>
+</html>

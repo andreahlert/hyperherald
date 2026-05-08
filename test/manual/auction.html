@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>_hyperstream + htmx4 — auction demo</title>
+<script src="/htmx4/htmx.min.js" defer></script>
+<script src="/dist/_hyperstream.js" defer></script>
+<style>
+    body { font: 16px/1.5 system-ui, sans-serif; max-width: 540px; margin: 4rem auto; padding: 0 1rem; }
+    h1 { margin: 0 0 0.5rem; }
+    .stack { display: flex; gap: 0.5rem; align-items: center; font-size: 0.85em; color: #777; margin: 0.25rem 0 1rem; }
+    .stack code { background: #f0f0f0; padding: 0.1rem 0.4rem; border-radius: 3px; }
+    .panel { border: 1px solid #ccc; border-radius: 8px; padding: 1rem 1.25rem; margin: 1rem 0; }
+    .row { display: flex; justify-content: space-between; padding: 0.4rem 0; border-bottom: 1px dashed #eee; }
+    .row:last-child { border: 0; }
+    #price strong { color: #b85; font-size: 1.4em; }
+    #countdown { font-variant-numeric: tabular-nums; }
+    form { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    input[type=text], input[type=number] { padding: 0.5rem; border: 1px solid #aaa; border-radius: 4px; flex: 1; min-width: 8rem; }
+    button { padding: 0.5rem 1rem; border: 0; background: #235; color: #fff; border-radius: 4px; cursor: pointer; }
+    button:disabled { opacity: 0.5; cursor: wait; }
+    #bid-result { color: #555; font-size: 0.9em; min-height: 1.5em; }
+    .htmx-request button { opacity: 0.5; }
+</style>
+</head>
+<body>
+
+<h1>Live Auction</h1>
+<p class="stack">
+    server push <code>_stream</code> (_hyperstream)
+    +
+    user action <code>hx-post</code> (htmx4 alpha8)
+</p>
+<p>Open in multiple tabs. Bid via htmx. Other tabs update via _hyperstream push.</p>
+
+<!-- _hyperstream: subscribes to channel, applies pushed fragments -->
+<div class="panel" _stream="/sse" _stream-subscribe="auction:lot-1" _stream-debug="true">
+    <h2>Vintage Big Sky Software T-Shirt (size M)</h2>
+    <div class="row"><span>Current bid</span> <span id="price"><strong>$100</strong></span></div>
+    <div class="row"><span>Leader</span> <span id="leader"><em>nobody yet</em></span></div>
+    <div class="row"><span>Time remaining</span> <span id="countdown">60</span> s</div>
+</div>
+
+<!-- htmx: POSTs the bid, swaps server response into #bid-result, resets form on success -->
+<form hx-post="/bid"
+      hx-target="#bid-result"
+      hx-swap="innerHTML"
+      hx-on::after-request="if (event.detail.successful) this.reset()">
+    <input type="text"   name="bidder" placeholder="your name" required>
+    <input type="number" name="amount" min="1" placeholder="amount" required>
+    <button type="submit">Place bid</button>
+</form>
+<p id="bid-result"></p>
+
+</body>
+</html>

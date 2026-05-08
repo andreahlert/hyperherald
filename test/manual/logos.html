@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>_hyperstream — logo concepts</title>
+<style>
+    :root {
+        --teal: #00B8B8;
+        --coral: #ff7a59; /* _hyperscript adjacent */
+        --htmx-blue: #3d72d7;
+    }
+    * { box-sizing: border-box; }
+    body {
+        font: 15px/1.5 system-ui, sans-serif;
+        margin: 0;
+        background: #fafafa;
+        color: #222;
+    }
+    header {
+        padding: 2rem 2rem 0;
+        max-width: 1100px;
+        margin: 0 auto;
+    }
+    h1 { margin: 0 0 0.5rem; font-size: 1.4rem; }
+    p.lead { color: #555; margin: 0 0 1rem; }
+    main {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 2rem;
+        display: grid;
+        gap: 2rem;
+    }
+    .concept {
+        background: #fff;
+        border: 1px solid #e3e3e3;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+    .concept h2 {
+        margin: 0;
+        padding: 1rem 1.5rem;
+        font-size: 1rem;
+        background: #f4f4f4;
+        border-bottom: 1px solid #e3e3e3;
+        display: flex;
+        gap: 0.75rem;
+        align-items: baseline;
+    }
+    .concept h2 small { color: #777; font-weight: 400; }
+    .row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    .row:last-child { border-bottom: 0; }
+    .swatch {
+        padding: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 130px;
+        border-right: 1px solid #f0f0f0;
+    }
+    .swatch:last-child { border-right: 0; }
+    .swatch.light  { background: #ffffff; }
+    .swatch.tint   { background: #f0fbfb; }
+    .swatch.dark   { background: #0e1a1a; }
+    .swatch.peach  { background: #fff1ec; }
+    .swatch label  {
+        position: absolute;
+        font-size: 11px;
+        color: #999;
+        font-family: ui-monospace, monospace;
+        margin-top: -90px;
+        margin-left: -110px;
+    }
+    .swatch.dark label { color: #777; }
+    .swatch img.lockup { max-width: 460px; max-height: 90px; }
+    .swatch img.glyph  { width: 80px; height: 80px; }
+    .swatch img.fav    { width: 16px; height: 16px; image-rendering: pixelated; }
+    .swatch img.fav.x2 { width: 32px; height: 32px; margin-left: 1rem; }
+    .swatch.dark img { filter: brightness(1.05); }
+    .meta {
+        padding: 0.75rem 1.5rem;
+        display: flex;
+        gap: 1.5rem;
+        font-size: 13px;
+        color: #555;
+        background: #fbfbfb;
+    }
+    .meta b { color: #222; }
+    .palette {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        padding: 1rem 1.5rem;
+        font-size: 12px;
+        color: #777;
+        font-family: ui-monospace, monospace;
+        border-top: 1px solid #f0f0f0;
+    }
+    .palette span {
+        display: inline-block;
+        width: 22px; height: 22px;
+        border-radius: 4px;
+        border: 1px solid rgba(0,0,0,0.1);
+    }
+    footer {
+        max-width: 1100px;
+        margin: 0 auto 3rem;
+        padding: 0 2rem;
+        font-size: 13px;
+        color: #777;
+    }
+    code { background: #f0f0f0; padding: 1px 6px; border-radius: 3px; font-size: 12px; }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>_hyperstream — logo concepts</h1>
+    <p class="lead">Three directions, single colour <code>#00B8B8</code> teal. Wordmark + glyph + 16/32 favicon, on light / tinted / dark / peach (next-to-_hyperscript) backgrounds.</p>
+</header>
+
+<main>
+
+<!-- Concept A -->
+<section class="concept">
+    <h2>Concept A — chevron stream <small>direction · push · cascade</small></h2>
+    <div class="row">
+        <div class="swatch light">  <img class="lockup" src="/img/logo-a-chevrons.svg" alt=""></div>
+        <div class="swatch tint">   <img class="lockup" src="/img/logo-a-chevrons.svg" alt=""></div>
+    </div>
+    <div class="row">
+        <div class="swatch dark">   <img class="lockup" src="/img/logo-a-chevrons.svg" alt=""></div>
+        <div class="swatch peach">  <img class="lockup" src="/img/logo-a-chevrons.svg" alt=""></div>
+    </div>
+    <div class="row">
+        <div class="swatch light">
+            <img class="glyph" src="/img/glyph-a.svg" alt="">
+            <img class="fav x2" src="/img/glyph-a.svg" alt="">
+            <img class="fav"   src="/img/glyph-a.svg" alt="">
+        </div>
+        <div class="swatch dark">
+            <img class="glyph" src="/img/glyph-a.svg" alt="">
+            <img class="fav x2" src="/img/glyph-a.svg" alt="">
+            <img class="fav"   src="/img/glyph-a.svg" alt="">
+        </div>
+    </div>
+    <div class="meta">
+        <span><b>strength</b> direction is unambiguous — push semantic</span>
+        <span><b>risk</b> chevrons feel like generic "play"/"forward"</span>
+    </div>
+</section>
+
+<!-- Concept B -->
+<section class="concept">
+    <h2>Concept B — sine wave <small>flow · continuous · river</small></h2>
+    <div class="row">
+        <div class="swatch light">  <img class="lockup" src="/img/logo-b-wave.svg" alt=""></div>
+        <div class="swatch tint">   <img class="lockup" src="/img/logo-b-wave.svg" alt=""></div>
+    </div>
+    <div class="row">
+        <div class="swatch dark">   <img class="lockup" src="/img/logo-b-wave.svg" alt=""></div>
+        <div class="swatch peach">  <img class="lockup" src="/img/logo-b-wave.svg" alt=""></div>
+    </div>
+    <div class="row">
+        <div class="swatch light">
+            <img class="glyph" src="/img/glyph-b.svg" alt="">
+            <img class="fav x2" src="/img/glyph-b.svg" alt="">
+            <img class="fav"   src="/img/glyph-b.svg" alt="">
+        </div>
+        <div class="swatch dark">
+            <img class="glyph" src="/img/glyph-b.svg" alt="">
+            <img class="fav x2" src="/img/glyph-b.svg" alt="">
+            <img class="fav"   src="/img/glyph-b.svg" alt="">
+        </div>
+    </div>
+    <div class="meta">
+        <span><b>strength</b> organic, distinctive, evokes "stream"</span>
+        <span><b>risk</b> curves get mushy at 16px</span>
+    </div>
+</section>
+
+<!-- Concept C -->
+<section class="concept">
+    <h2>Concept C — replay buffer bars <small>frames · seq · gap recovery</small></h2>
+    <div class="row">
+        <div class="swatch light">  <img class="lockup" src="/img/logo-c-bars.svg" alt=""></div>
+        <div class="swatch tint">   <img class="lockup" src="/img/logo-c-bars.svg" alt=""></div>
+    </div>
+    <div class="row">
+        <div class="swatch dark">   <img class="lockup" src="/img/logo-c-bars.svg" alt=""></div>
+        <div class="swatch peach">  <img class="lockup" src="/img/logo-c-bars.svg" alt=""></div>
+    </div>
+    <div class="row">
+        <div class="swatch light">
+            <img class="glyph" src="/img/glyph-c.svg" alt="">
+            <img class="fav x2" src="/img/glyph-c.svg" alt="">
+            <img class="fav"   src="/img/glyph-c.svg" alt="">
+        </div>
+        <div class="swatch dark">
+            <img class="glyph" src="/img/glyph-c.svg" alt="">
+            <img class="fav x2" src="/img/glyph-c.svg" alt="">
+            <img class="fav"   src="/img/glyph-c.svg" alt="">
+        </div>
+    </div>
+    <div class="meta">
+        <span><b>strength</b> sharp at any size; nods to the technical feature (replay)</span>
+        <span><b>risk</b> reads as "WiFi", "menu", or "bar chart"</span>
+    </div>
+</section>
+
+<div class="palette">
+    palette
+    <span style="background:#00B8B8" title="teal #00B8B8"></span> <code>#00B8B8</code>
+    <span style="background:#ff7a59" title="_hyperscript coral"></span> <code>_hyperscript coral (ref)</code>
+    <span style="background:#3d72d7" title="htmx blue"></span> <code>htmx blue (ref)</code>
+</div>
+
+</main>
+
+<footer>
+    Open at <a href="/logos.html">/logos.html</a>. Source SVGs in <code>www/img/</code>.
+</footer>
+
+</body>
+</html>
