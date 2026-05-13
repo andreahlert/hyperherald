@@ -12,9 +12,9 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const ROOT = path.resolve(__dirname);
-const DIST = path.resolve(__dirname, '../../dist');
-const HTMX4_DIST = path.resolve(__dirname, '../../../htmx4/dist');
+const DEFAULT_ROOT = path.resolve(__dirname);
+const DEFAULT_DIST = path.resolve(__dirname, '../../dist');
+const DEFAULT_HTMX4_DIST = path.resolve(__dirname, '../../../htmx4/dist');
 
 const REPLAY_MAX = 200;
 const SPEC_VERSION = 0;
@@ -385,31 +385,37 @@ function handlePublish(req, res) {
 // ───────────────────────────── static + dist ─────────────────────────────
 const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png' };
 
-function serveStatic(req, res, urlPath) {
-    let base, rel;
-    if (urlPath.startsWith('/dist/')) {
-        base = DIST;
-        rel = urlPath.slice('/dist/'.length);
-    } else if (urlPath.startsWith('/htmx4/')) {
-        base = HTMX4_DIST;
-        rel = urlPath.slice('/htmx4/'.length);
-    } else {
-        base = ROOT;
-        rel = urlPath === '/' ? 'index.html' : urlPath.slice(1);
-    }
-    const full = path.normalize(path.join(base, rel));
-    if (!full.startsWith(base)) { res.writeHead(403); res.end(); return; }
-    fs.readFile(full, (err, data) => {
-        if (err) { res.writeHead(404); res.end('not found'); return; }
-        const ext = path.extname(full).toLowerCase();
-        res.writeHead(200, { 'Content-Type': MIME[ext] || 'application/octet-stream' });
-        res.end(data);
-    });
+function makeServeStatic({ staticRoot, distRoot, htmx4Root }) {
+    return function serveStatic(req, res, urlPath) {
+        let base, rel;
+        if (urlPath.startsWith('/dist/')) {
+            base = distRoot;
+            rel = urlPath.slice('/dist/'.length);
+        } else if (urlPath.startsWith('/htmx4/')) {
+            base = htmx4Root;
+            rel = urlPath.slice('/htmx4/'.length);
+        } else {
+            base = staticRoot;
+            rel = urlPath === '/' ? 'index.html' : urlPath.slice(1);
+        }
+        const full = path.normalize(path.join(base, rel));
+        if (!full.startsWith(base)) { res.writeHead(403); res.end(); return; }
+        fs.readFile(full, (err, data) => {
+            if (err) { res.writeHead(404); res.end('not found'); return; }
+            const ext = path.extname(full).toLowerCase();
+            res.writeHead(200, { 'Content-Type': MIME[ext] || 'application/octet-stream' });
+            res.end(data);
+        });
+    };
 }
 
 // ───────────────────────────── server ─────────────────────────────
 export function createServer(opts = {}) {
     const extra = typeof opts.handler === 'function' ? opts.handler : null;
+    const staticRoot = opts.staticRoot ? path.resolve(opts.staticRoot) : DEFAULT_ROOT;
+    const distRoot = opts.distRoot ? path.resolve(opts.distRoot) : DEFAULT_DIST;
+    const htmx4Root = opts.htmx4Root ? path.resolve(opts.htmx4Root) : DEFAULT_HTMX4_DIST;
+    const serveStatic = makeServeStatic({ staticRoot, distRoot, htmx4Root });
     const server = http.createServer((req, res) => {
         const url = new URL(req.url, `http://${req.headers.host}`);
         if (extra && extra(req, res, url) === true) return;
@@ -427,7 +433,7 @@ export function createServer(opts = {}) {
 
 if (import.meta.url === `file://${process.argv[1]}`) {
     const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
-    const server = createServer();
+    const server = createServer({ staticRoot: process.env.STATIC_ROOT });
     server.listen(port, () => {
         console.log(`hyperstream ref server listening on http://localhost:${port}`);
     });

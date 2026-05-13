@@ -22,7 +22,7 @@ export default defineConfig({
     ],
     webServer: {
         command: `node manual/server.js`,
-        url: `http://localhost:${PORT}/auction.html`,
+        url: `http://localhost:${PORT}/test-fixture.html`,
         env: { PORT: String(PORT) },
         reuseExistingServer: !process.env.CI,
         timeout: 10_000,

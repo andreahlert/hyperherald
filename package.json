@@ -31,7 +31,7 @@
     "./ext/*": "./dist/ext/*"
   },
   "scripts": {
-    "start": "node test/manual/auction-server.js",
+    "start": "node www/server.js",
     "build": "node build.config.mjs",
     "build:watch": "node build.config.mjs --watch",
     "test": "playwright test --config test/playwright.config.js --project=chromium",
