@@ -1,7 +1,12 @@
-// _hyperstream auction demo server — extends ref server with /bid endpoint.
+// _hyperstream site + auction server — Railway entry.
+// Wraps the reference impl, sets staticRoot to www/, and adds the /bid endpoint.
 'use strict';
 
-import { createServer, publish } from './server.js';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { createServer, publish } from '../test/manual/server.js';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const state = {
     item: 'lot-1',
@@ -56,7 +61,7 @@ function handleBid(req, res) {
             }
             state.price = amount;
             state.leader = bidder;
-            state.endsAt = Date.now() + 30_000; // reset countdown 30s on each bid
+            state.endsAt = Date.now() + 30_000;
             broadcastState();
             res.writeHead(200, { 'Content-Type': 'text/html' });
             res.end(`<p>bid $${amount} accepted</p>`);
@@ -68,6 +73,7 @@ function handleBid(req, res) {
 }
 
 const server = createServer({
+    staticRoot: __dirname,
     handler(req, res, url) {
         if (url.pathname === '/' && req.method === 'GET') {
             res.writeHead(302, { Location: '/retro.html' });
@@ -86,7 +92,6 @@ setInterval(tickCountdown, 1000);
 
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 server.listen(port, () => {
-    console.log(`hyperstream auction listening on http://localhost:${port}/auction.html`);
-    // seed initial state into replay buffer so late joiners see it
+    console.log(`hyperstream listening on http://localhost:${port}/`);
     broadcastState();
 });
