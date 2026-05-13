@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="glyph B wave">
-  <g transform="translate(10,14)" fill="none" stroke="#00B8B8" stroke-width="9" stroke-linecap="round">
-    <path d="M0,8  Q20,-12 40,8  T80,8"  opacity="0.30"/>
-    <path d="M0,32 Q20,12 40,32 T80,32" opacity="0.60"/>
-    <path d="M0,56 Q20,36 40,56 T80,56"/>
-    <line x1="0" y1="80" x2="80" y2="80"/>
-  </g>
-</svg>
