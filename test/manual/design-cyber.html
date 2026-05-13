@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>_hyperstream — CYBERSIGIL</title>
+<link href="https://fonts.googleapis.com/css2?family=VT323&family=Major+Mono+Display&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+    body{margin:0;background:#000;color:#dfffe1;font:14px/1.5 'Space Mono',mono;overflow-x:hidden;min-height:100vh}
+    body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,rgba(0,255,160,0.04) 0,rgba(0,255,160,0.04) 1px,transparent 1px,transparent 3px);pointer-events:none;z-index:1}
+    body::after{content:'';position:fixed;inset:-10%;background:radial-gradient(circle at 50% 30%,rgba(0,255,160,0.18),transparent 60%);pointer-events:none;z-index:0}
+    .scan{position:fixed;left:0;right:0;height:2px;background:rgba(0,255,160,0.4);box-shadow:0 0 12px rgba(0,255,160,0.6);pointer-events:none;animation:scan 7s linear infinite;z-index:5}
+    @keyframes scan{0%{top:0}100%{top:100vh}}
+    .wrap{position:relative;z-index:2;max-width:1100px;margin:0 auto;padding:2rem}
+    nav{display:flex;align-items:center;gap:1.5rem;padding-bottom:1rem;border-bottom:1px solid rgba(0,255,160,0.3)}
+    nav .lockup{font-family:'Major Mono Display',mono;font-size:18px;color:#0fff8b;text-shadow:0 0 12px #0fff8b;display:flex;align-items:center;gap:0.5rem}
+    nav .lockup img{height:22px;filter:invert(1) hue-rotate(80deg)}
+    nav a{color:#dfffe1;text-decoration:none;font-size:13px;text-transform:uppercase;letter-spacing:1px}
+    nav a:hover{color:#0fff8b;text-shadow:0 0 8px #0fff8b}
+    .spacer{flex:1}
+    nav .gh{border:1px solid #0fff8b;color:#0fff8b;padding:4px 10px;background:rgba(15,255,139,0.1)}
+    h1{font-family:'Major Mono Display','VT323',mono;font-weight:400;font-size:clamp(64px,12vw,156px);line-height:0.95;letter-spacing:-2px;margin:3rem 0 1rem;color:#0fff8b;text-shadow:0 0 24px rgba(15,255,139,0.5),3px 0 0 rgba(255,0,255,0.4),-3px 0 0 rgba(0,255,255,0.4);position:relative}
+    h1::before{content:'_HYPERSTREAM';position:absolute;left:-3px;top:0;color:rgba(255,0,255,0.4);clip-path:polygon(0 30%,100% 30%,100% 50%,0 50%);animation:glitch 4s infinite}
+    @keyframes glitch{0%,90%,100%{clip-path:polygon(0 30%,100% 30%,100% 50%,0 50%)}93%{clip-path:polygon(0 60%,100% 60%,100% 80%,0 80%)}96%{clip-path:polygon(0 10%,100% 10%,100% 25%,0 25%)}}
+    .lede{font-family:'VT323',mono;font-size:24px;color:#dfffe1;max-width:640px;line-height:1.35;margin:0 0 2rem}
+    .pill{display:inline-block;border:1px solid #0fff8b;padding:4px 12px;font-family:'VT323',mono;font-size:14px;color:#0fff8b;background:rgba(15,255,139,0.05);margin-bottom:1rem}
+    .pill::before{content:'> ';color:#0fff8b}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:2rem 0}
+    .panel{border:1px solid #0fff8b;background:rgba(0,20,10,0.6);backdrop-filter:blur(2px);padding:1rem;position:relative}
+    .panel::before{content:'';position:absolute;top:0;left:0;width:20px;height:20px;border-top:2px solid #0fff8b;border-left:2px solid #0fff8b}
+    .panel::after{content:'';position:absolute;bottom:0;right:0;width:20px;height:20px;border-bottom:2px solid #0fff8b;border-right:2px solid #0fff8b}
+    .panel h3{font-family:'Major Mono Display',mono;font-size:14px;color:#0fff8b;margin:0 0 0.75rem;text-transform:uppercase;letter-spacing:2px}
+    pre{font-family:'Space Mono',mono;font-size:12px;color:#dfffe1;margin:0;white-space:pre-wrap;line-height:1.6}
+    pre .t{color:#ff00ff}.pre .a{color:#0fff8b}.pre .v{color:#ffff00}.pre .c{color:#666;font-style:italic}
+    .row{display:flex;justify-content:space-between;padding:0.4rem 0;border-bottom:1px dashed rgba(0,255,160,0.2);font-family:'VT323',mono;font-size:18px}
+    .row:last-child{border:0}
+    .row .v{color:#0fff8b;text-shadow:0 0 6px #0fff8b}
+    .row.hot .v{animation:flicker 1.6s infinite}
+    @keyframes flicker{0%,70%{opacity:1}80%{opacity:0.5;color:#ff00ff;text-shadow:0 0 8px #ff00ff}100%{opacity:1}}
+    .glyphs{font-family:'Major Mono Display',mono;color:rgba(15,255,139,0.3);font-size:10px;line-height:1.2;letter-spacing:2px;margin:2rem 0;white-space:pre}
+    .features{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin:2rem 0}
+    .features > div{border-left:2px solid #0fff8b;padding:0 1rem}
+    .features h4{font-family:'Major Mono Display',mono;font-size:12px;color:#0fff8b;margin:0 0 0.4rem;text-transform:uppercase;letter-spacing:1.5px}
+    .features p{font-size:13px;color:#dfffe1;margin:0;line-height:1.5}
+    footer{margin-top:3rem;padding-top:1rem;border-top:1px solid rgba(0,255,160,0.3);font-family:'VT323',mono;font-size:14px;color:#888;display:flex;justify-content:space-between}
+    footer a{color:#0fff8b;text-decoration:none}
+</style>
+</head>
+<body>
+<div class="scan"></div>
+<div class="wrap">
+<nav>
+    <span class="lockup"><img src="/img/trace-mark-animated.svg" alt=""> _HYPERSTREAM</span>
+    <a href="#">SPEC</a><a href="#">PROTOCOL</a><a href="#">DEMOS</a>
+    <span class="spacer"></span>
+    <a href="#" class="gh">[GITHUB]</a>
+</nav>
+
+<section>
+    <div class="pill">SIGNAL DETECTED · v0.0.1 · channel://big_sky</div>
+    <h1 data-text="_HYPERSTREAM">_HYPERSTREAM</h1>
+    <p class="lede">SERVER-PUSH HYPERMEDIA, PROTOCOL-LEVEL. SUBSCRIBE IN HTML. REPLAY ON RECONNECT. THE WIRE IS THE FRAGMENT.</p>
+</section>
+
+<pre class="glyphs">
+   ▓▓▓ ░░░░░░░░ ▓▓▓     ░░░░ ▓▓▓▓ ░░░░     ▓▓▓ ░░░░░░░░ ▓▓▓
+       fragment              channel              swap
+   ▓▓▓ ░░░░░░░░ ▓▓▓     ░░░░ ▓▓▓▓ ░░░░     ▓▓▓ ░░░░░░░░ ▓▓▓
+</pre>
+
+<div class="grid">
+    <div class="panel">
+        <h3>// WIRE</h3>
+<pre><span class="c">// frame as custom element</span>
+<span class="t">&lt;hs-fragment</span> <span class="a">channel</span>=<span class="v">"auction:lot-1"</span>
+              <span class="a">seq</span>=<span class="v">"42"</span>
+              <span class="a">target</span>=<span class="v">"#price"</span>
+              <span class="a">swap</span>=<span class="v">"inner"</span><span class="t">&gt;</span>
+  <span class="t">&lt;strong&gt;</span>$120<span class="t">&lt;/strong&gt;</span>
+<span class="t">&lt;/hs-fragment&gt;</span></pre>
+    </div>
+    <div class="panel">
+        <h3>// LIVE</h3>
+        <div class="row hot"><span>BID</span><span class="v" id="bid">$120</span></div>
+        <div class="row"><span>LEADER</span><span class="v" id="leader">alice</span></div>
+        <div class="row"><span>T_LEFT</span><span class="v" id="timer">00:30</span></div>
+        <div class="row"><span>SUBS</span><span class="v">1247</span></div>
+    </div>
+</div>
+
+<section class="features">
+    <div><h4>// HTML</h4><p>Frame := element.</p></div>
+    <div><h4>// FAN</h4><p>Push := N targets.</p></div>
+    <div><h4>// REPLAY</h4><p>Cursor := no_loss.</p></div>
+    <div><h4>// htmx</h4><p>hx-* := persists.</p></div>
+</section>
+
+<footer><span>// BIG_SKY · 2026 · BSD-2</span><span><a href="https://htmx.org">[htmx]</a> · <a href="https://hyperscript.org">[_hyperscript]</a> · <a href="#">[_hyperstream]</a></span></footer>
+</div>
+<script>
+const bids=[120,135,150,165,180,200,215,235],ld=['alice','bob','carol','dave'];let i=0,s=30;
+setInterval(()=>{i=(i+1)%bids.length;bid.textContent='$'+bids[i];leader.textContent=ld[i%4];},1600);
+setInterval(()=>{s=s>0?s-1:30;timer.textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');},1000);
+</script>
+</body>
+</html>

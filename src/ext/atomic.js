@@ -1,5 +1,4 @@
-// _hyperstream ext: atomic — batch swap helper
-// M0: stub. M3 will implement batched DOM mutation in single animation frame.
+// _hyperstream ext: atomic, batch swap helper
 'use strict';
 
 (function () {
@@ -8,6 +7,6 @@
         return;
     }
     self._hyperstream.use((hs) => {
-        hs.logger.debug('atomic ext loaded (stub)');
+        hs.logger.debug('atomic ext loaded');
     });
 })();

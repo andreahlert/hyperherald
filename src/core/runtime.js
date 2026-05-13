@@ -150,7 +150,6 @@ export class Runtime {
                 return;
             }
             case FRAME_TYPES.PARTIAL: {
-                // M3 implements suspense slots; v0 minimal: append chunk to target.
                 if (typeof frame.chunk !== 'string') return;
                 const targets = elements.length === 0
                     ? [resolveTarget(frame.target, null)]

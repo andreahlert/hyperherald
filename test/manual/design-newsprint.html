@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>_hyperstream — NEWSPRINT</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=PT+Serif:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+    body{margin:0;background:#f4efe6;color:#1c1612;font:17px/1.5 'PT Serif',Georgia,serif}
+    .paper{max-width:1080px;margin:0 auto;padding:2rem 2.5rem;background:#f8f3ea;background-image:repeating-linear-gradient(0deg,transparent 0,transparent 32px,rgba(0,0,0,0.015) 32px,rgba(0,0,0,0.015) 33px);box-shadow:0 0 0 1px #d4cdb8,0 30px 60px rgba(0,0,0,0.1)}
+    .masthead{text-align:center;border-bottom:3px double #1c1612;border-top:3px double #1c1612;padding:1rem 0;margin-bottom:1rem}
+    .masthead h1{font-family:'Playfair Display',serif;font-weight:900;font-size:74px;margin:0;letter-spacing:-2px;line-height:1}
+    .masthead h1 .u{color:#8b1e1e}
+    .masthead .lat{font-family:'JetBrains Mono',mono;font-size:11px;text-transform:uppercase;letter-spacing:2px;display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #1c1612}
+    .masthead .sub{font-family:'PT Serif',serif;font-style:italic;font-size:14px;margin-top:6px;color:#5a4d3f}
+    .meta-row{display:flex;justify-content:space-between;font-family:'JetBrains Mono',mono;font-size:10px;text-transform:uppercase;letter-spacing:1.5px;padding:0.5rem 0;border-bottom:2px solid #1c1612}
+    .columns{column-count:3;column-gap:1.75rem;column-rule:1px solid #c8bfa6;margin-top:1.5rem;font-family:'PT Serif',serif;font-size:14.5px;line-height:1.55;text-align:justify;hyphens:auto}
+    .columns h2{column-span:all;font-family:'Playfair Display',serif;font-weight:900;font-size:42px;line-height:1.05;letter-spacing:-1px;margin:0.5rem 0 0.75rem;text-align:left}
+    .columns h2 em{color:#8b1e1e;font-style:italic;font-weight:400}
+    .deck{column-span:all;font-family:'PT Serif',serif;font-style:italic;font-size:18px;line-height:1.4;color:#3a2e22;margin-bottom:1rem;border-bottom:1px solid #c8bfa6;padding-bottom:0.75rem}
+    .columns p:first-of-type::first-letter{float:left;font-family:'Playfair Display',serif;font-weight:900;font-size:74px;line-height:0.85;padding:6px 8px 0 0;color:#8b1e1e}
+    .columns p{margin:0 0 0.6rem}
+    .columns code{font-family:'JetBrains Mono',mono;font-size:0.85em;background:#fff8e6;padding:1px 4px;border:1px solid #d4c47a}
+    .pullquote{column-span:all;font-family:'Playfair Display',serif;font-style:italic;font-weight:400;font-size:30px;line-height:1.2;text-align:center;margin:1.5rem 0;padding:1rem 0;border-top:3px double #1c1612;border-bottom:3px double #1c1612;color:#8b1e1e}
+    .ad{column-span:all;border:2px solid #1c1612;padding:0.75rem 1rem;text-align:center;margin:1.5rem 0;font-family:'Playfair Display',serif;font-style:italic}
+    .ad .small{font-family:'JetBrains Mono',mono;font-size:10px;letter-spacing:1px;text-transform:uppercase;display:block;margin-top:4px;color:#5a4d3f}
+    .figure{column-span:all;margin:1rem 0;text-align:center}
+    .figure img{height:80px}
+    .figure .cap{font-family:'JetBrains Mono',mono;font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#5a4d3f;margin-top:6px}
+    pre{column-span:all;font-family:'JetBrains Mono',mono;font-size:12px;background:#1c1612;color:#f4e8c8;padding:1rem;line-height:1.55;margin:1rem 0;border-left:5px solid #8b1e1e;overflow-x:auto;white-space:pre-wrap}
+    pre .t{color:#ff8b8b}.pre .a{color:#fbbf24}.pre .v{color:#fff}.pre .c{color:#888;font-style:italic}
+    .footer{border-top:3px double #1c1612;margin-top:1.5rem;padding-top:0.75rem;display:flex;justify-content:space-between;font-family:'JetBrains Mono',mono;font-size:10px;text-transform:uppercase;letter-spacing:1.5px}
+</style>
+</head>
+<body>
+<div class="paper">
+    <div class="masthead">
+        <div class="lat"><span>Vol. 0 · Issue 1</span><span>Big Sky · Montana</span><span>Friday, May 8, 2026</span></div>
+        <h1><span class="u">_</span>The Hyperstream</h1>
+        <div class="sub">"All the Hypermedia That's Fit to Push" · 5KB · BSD-2 · Free</div>
+    </div>
+
+    <div class="meta-row"><span>Section A · Front</span><span>4 Pages</span><span>Edition: Draft</span></div>
+
+    <div class="columns">
+        <h2>The Server <em>Speaks HTML.</em> Now What?</h2>
+        <p class="deck">A new protocol joins the htmx family. Subscribe in HTML, replay on reconnect, fan out one push to many DOM nodes. No JSON envelope. No client signals. Just hypermedia, all the way down.</p>
+
+        <p>Server-push hypermedia has lived as an afterthought for nearly a decade. <code>htmx</code> ships brilliant primitives for request and response. <code>_hyperscript</code> handles client-side behaviour with the same locality grace. What remained uncovered was the third leg: the moment a server has something new to tell every browser that cares.</p>
+
+        <p>Today that gap is filled with bolted-on JSON envelopes, OOB-swap workarounds, and ad hoc reconnect logic. <em>_hyperstream</em> closes it.</p>
+
+        <div class="figure">
+            <img src="/img/trace-mark-animated.svg" alt="">
+            <div class="cap">FIG. 1 — TRACE MARK, V0.1</div>
+        </div>
+
+        <p class="pullquote">"The wire is HTML.<br>The browser swaps HTML.<br>There is nothing in between."</p>
+
+        <p>Every push is a single, self-describing custom element. The same shape covers fragment swaps, atomic batches, partial streams, subscribe acks. Read it in any inspector. Paste it into any test. Diff it in any review.</p>
+
+<pre><span class="c">// the entire wire format, in one envelope</span>
+<span class="t">&lt;hs-fragment</span> <span class="a">channel</span>=<span class="v">"auction:lot-1"</span>
+              <span class="a">seq</span>=<span class="v">"42"</span>
+              <span class="a">target</span>=<span class="v">"#price"</span>
+              <span class="a">swap</span>=<span class="v">"inner"</span><span class="t">&gt;</span>
+  <span class="t">&lt;strong&gt;</span>$120<span class="t">&lt;/strong&gt;</span>
+<span class="t">&lt;/hs-fragment&gt;</span></pre>
+
+        <p>That single shape, applied recursively, expresses subscriptions, atomic batches, partial streams, replay handshakes. Read it. Paste it. Diff it.</p>
+
+        <p>Subscriptions live on the page itself. The client says nothing about state. It says <em>which channel each node listens to</em>, then yields control. Reconnects, cursor replay, multi-element fan-out, atomic swaps, suspense for partials, all of it lives behind a handful of attributes.</p>
+
+        <div class="ad">
+            <strong>Try it Today</strong><br>
+            <code>npm install hyperstream.org</code>
+            <span class="small">Five kilobytes brotli · zero dependencies · BSD-2</span>
+        </div>
+
+        <p>Continued on Page A2 →</p>
+    </div>
+
+    <div class="footer">
+        <span>htmx · _hyperscript · _hyperstream</span>
+        <span>Set in Playfair Display &amp; PT Serif</span>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>_hyperstream — SKEUOMORPHIC MAC</title>
+<link href="https://fonts.googleapis.com/css2?family=Chivo+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    body{margin:0;background:#777b86;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='4' height='4'><rect width='1' height='1' fill='%23000' opacity='0.08'/><rect x='2' y='2' width='1' height='1' fill='%23fff' opacity='0.08'/></svg>");min-height:100vh;font:13px/1.4 'Chivo Mono',mono;color:#000}
+    .menubar{background:linear-gradient(180deg,#fff 0%,#dcdcdc 100%);border-bottom:1px solid #888;padding:2px 1rem;display:flex;align-items:center;gap:1rem;font-size:12px;font-weight:500;font-family:'Inter',sans-serif}
+    .menubar img{height:14px;margin-right:0.5rem}
+    .menubar .right{margin-left:auto;font-family:'Chivo Mono',mono;font-size:11px;color:#444}
+    .desktop{padding:2rem;display:flex;flex-wrap:wrap;gap:1.5rem;justify-content:center;align-items:flex-start}
+    .window{background:#ececec;border:1px solid #555;border-radius:8px 8px 6px 6px;box-shadow:0 0 0 1px rgba(255,255,255,0.4) inset,0 12px 32px rgba(0,0,0,0.35);width:560px;overflow:hidden}
+    .window.tall{width:680px}
+    .titlebar{background:linear-gradient(180deg,#f8f8f8,#c8c8c8);border-bottom:1px solid #888;padding:6px 10px;display:flex;align-items:center;gap:6px;font-family:'Inter',sans-serif;font-size:12px;font-weight:500}
+    .traffic{display:flex;gap:6px}
+    .traffic span{width:11px;height:11px;border-radius:999px;border:1px solid rgba(0,0,0,0.3);background:#ddd;box-shadow:inset 0 1px 0 rgba(255,255,255,0.6)}
+    .traffic .r{background:radial-gradient(circle at 30% 30%,#ff8a8a,#cc1f1f)}
+    .traffic .y{background:radial-gradient(circle at 30% 30%,#ffe580,#cc9900)}
+    .traffic .g{background:radial-gradient(circle at 30% 30%,#9beb95,#1f9c1f)}
+    .titlebar .title{margin-left:1rem;text-align:center;flex:1}
+    .winbody{padding:1.25rem;background:#fff;background-image:linear-gradient(180deg,#fff,#f4f4f4);min-height:200px}
+    .hero h1{font-family:'Inter',sans-serif;font-weight:700;font-size:54px;letter-spacing:-2px;line-height:1;margin:0 0 0.5rem;background:linear-gradient(180deg,#1a1a1a,#444);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .hero h1 .u{color:#0066cc}
+    .hero .lede{font-family:'Inter',sans-serif;font-size:16px;color:#333;line-height:1.5;max-width:480px;margin:0 0 1.25rem}
+    .hero img.mark{display:block;height:64px;margin:0 0 1rem}
+    .hero .btn{font-family:'Chivo Mono',mono;font-size:13px;background:linear-gradient(180deg,#fdfdfd,#cccccc);border:1px solid #777;border-radius:6px;padding:5px 14px;display:inline-block;color:#000;text-decoration:none;box-shadow:0 1px 0 rgba(255,255,255,0.6) inset,0 1px 2px rgba(0,0,0,0.15)}
+    .hero .btn:active{background:linear-gradient(180deg,#cccccc,#fdfdfd)}
+    .winbody pre{font-family:'Chivo Mono',mono;font-size:12px;background:#1a1a1a;color:#f0f0f0;padding:0.75rem;border-radius:4px;line-height:1.55;margin:0;border:1px solid #555;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.05)}
+    .winbody pre .t{color:#ff7b8a}.winbody pre .a{color:#7bd0ff}.winbody pre .v{color:#fff}.winbody pre .c{color:#888;font-style:italic}
+    .row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #ddd;font-family:'Inter',sans-serif;font-size:14px}
+    .row:last-child{border:0}
+    .row strong{color:#0066cc}
+    .ledtag{display:inline-flex;align-items:center;gap:4px;font-size:11px;color:#666;margin-left:auto}
+    .ledtag .led{width:8px;height:8px;border-radius:999px;background:radial-gradient(circle at 30% 30%,#9beb95,#1f9c1f);box-shadow:0 0 6px #1f9c1f}
+    .icon-row{display:flex;gap:1rem;margin-bottom:1rem;flex-wrap:wrap}
+    .icon-row .icon{display:flex;flex-direction:column;align-items:center;gap:4px;width:64px;font-family:'Inter',sans-serif;font-size:11px;text-align:center;color:#222}
+    .icon-row .icon .ic{width:48px;height:48px;background:linear-gradient(180deg,#bbe4ff,#3a90d8);border-radius:10px;border:1px solid rgba(0,0,0,0.2);box-shadow:0 2px 4px rgba(0,0,0,0.2),inset 0 1px 0 rgba(255,255,255,0.6);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:18px}
+    .dock{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);display:flex;gap:0.5rem;padding:6px 10px;background:rgba(255,255,255,0.4);backdrop-filter:blur(20px);border:1px solid rgba(0,0,0,0.2);border-radius:14px;box-shadow:0 8px 24px rgba(0,0,0,0.3)}
+    .dock .di{width:48px;height:48px;background:linear-gradient(180deg,#fff,#bbb);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#222;border:1px solid rgba(0,0,0,0.2)}
+    .features{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+    .features > div{padding:0.75rem;background:#fff;border:1px solid #ccc;border-radius:6px;box-shadow:inset 0 1px 0 rgba(255,255,255,0.6),0 1px 2px rgba(0,0,0,0.05)}
+    .features h4{font-family:'Chivo Mono',mono;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:#0066cc;margin:0 0 0.25rem}
+    .features p{font-family:'Inter',sans-serif;font-size:12px;margin:0;color:#333}
+</style>
+</head>
+<body>
+<div class="menubar">
+    <img src="/img/trace-mark-animated.svg" alt="">
+    <strong>_hyperstream</strong>
+    <span>File</span><span>Edit</span><span>View</span><span>Stream</span><span>Help</span>
+    <span class="right">3:14 PM · ⚙</span>
+</div>
+
+<div class="desktop">
+    <div class="window tall">
+        <div class="titlebar">
+            <div class="traffic"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+            <span class="title">_hyperstream — readme.app</span>
+            <span class="ledtag"><span class="led"></span> connected</span>
+        </div>
+        <div class="winbody hero">
+            <img class="mark" src="/img/trace-mark-animated.svg" alt="">
+            <h1><span class="u">_</span>hyperstream</h1>
+            <p class="lede">Declarative server-push hypermedia for the web. HTML over the wire, all the way down. Five kilobytes, zero deps.</p>
+            <a class="btn" href="#">📦 Install</a>
+            <a class="btn" href="#">📖 Read the spec</a>
+
+            <div class="icon-row" style="margin-top:1.5rem">
+                <div class="icon"><div class="ic">≡</div>spec.txt</div>
+                <div class="icon"><div class="ic">⌥</div>frames</div>
+                <div class="icon"><div class="ic">⇄</div>transports</div>
+                <div class="icon"><div class="ic">▶</div>auction.html</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="window">
+        <div class="titlebar">
+            <div class="traffic"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+            <span class="title">channel: auction:lot-1 — preview.app</span>
+            <span class="ledtag"><span class="led"></span> live</span>
+        </div>
+        <div class="winbody">
+            <div class="row"><span>Current bid</span><strong id="bid">$120</strong></div>
+            <div class="row"><span>Leader</span><span id="leader">alice</span></div>
+            <div class="row"><span>Time left</span><span id="timer">00:30</span></div>
+            <div class="row"><span>Subscribers</span><span>1,247</span></div>
+        </div>
+    </div>
+
+    <div class="window">
+        <div class="titlebar">
+            <div class="traffic"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+            <span class="title">wire.txt</span>
+        </div>
+        <div class="winbody">
+<pre><span class="c">// the wire format</span>
+<span class="t">&lt;hs-fragment</span> <span class="a">channel</span>=<span class="v">"auction:lot-1"</span>
+              <span class="a">seq</span>=<span class="v">"42"</span>
+              <span class="a">target</span>=<span class="v">"#price"</span>
+              <span class="a">swap</span>=<span class="v">"inner"</span><span class="t">&gt;</span>
+  <span class="t">&lt;strong&gt;</span>$120<span class="t">&lt;/strong&gt;</span>
+<span class="t">&lt;/hs-fragment&gt;</span></pre>
+        </div>
+    </div>
+
+    <div class="window">
+        <div class="titlebar">
+            <div class="traffic"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+            <span class="title">features.app</span>
+        </div>
+        <div class="winbody">
+            <div class="features">
+                <div><h4>HTML wire</h4><p>Custom elements.</p></div>
+                <div><h4>Pub/Sub</h4><p>Fan-out N.</p></div>
+                <div><h4>Replay</h4><p>No gaps.</p></div>
+                <div><h4>htmx</h4><p>Composes.</p></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="dock">
+    <div class="di">📦</div><div class="di">📖</div><div class="di">⚙</div><div class="di">📡</div><div class="di">🐙</div>
+</div>
+<script>
+const bids=[120,135,150,165,180,200,215,235],ld=['alice','bob','carol','dave'];let i=0,s=30;
+setInterval(()=>{i=(i+1)%bids.length;bid.textContent='$'+bids[i];leader.textContent=ld[i%4];},1600);
+setInterval(()=>{s=s>0?s-1:30;timer.textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');},1000);
+</script>
+</body>
+</html>

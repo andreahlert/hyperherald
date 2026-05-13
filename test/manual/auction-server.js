@@ -69,6 +69,11 @@ function handleBid(req, res) {
 
 const server = createServer({
     handler(req, res, url) {
+        if (url.pathname === '/' && req.method === 'GET') {
+            res.writeHead(302, { Location: '/retro.html' });
+            res.end();
+            return true;
+        }
         if (url.pathname === '/bid' && req.method === 'POST') {
             handleBid(req, res);
             return true;

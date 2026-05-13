@@ -16,7 +16,7 @@ It defines a small wire protocol and a tiny JavaScript client (~5KB target) that
 
 `0.0.1` — bootstrap. Spec and client are under active development. Not for production use.
 
-## Quickstart (planned, M1)
+## Quickstart
 
 ```html
 <script src="https://unpkg.com/hyperstream.org@0.1/dist/_hyperstream.min.js"></script>

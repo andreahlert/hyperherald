@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>///_hyperstream / try it!</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="/img/mascot-retro-small.svg">
+    <link rel="preload" href="/fonts/ChicagoFLF.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="/fonts/IBMPlexSans-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="/css/os9.css">
+    <link rel="stylesheet" href="/css/site.css">
+    <link rel="stylesheet" href="/css/prism-htmx.css">
+    <style>
+    .playground {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        margin: 1rem 0;
+    }
+    .playground .window-body { padding: 0; height: 320px; display: flex; flex-direction: column; }
+    .playground textarea {
+        flex: 1;
+        width: 100%;
+        border: 0;
+        padding: 0.75rem 1rem;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        line-height: 1.55;
+        background: #1e2228;
+        color: #e2e8f0;
+        resize: none;
+        outline: none;
+        box-sizing: border-box;
+    }
+    .playground .preview-body {
+        flex: 1;
+        padding: 0.75rem 1rem;
+        overflow: auto;
+        background: var(--bg-subtle);
+    }
+    .controls { display: flex; gap: 0.6rem; margin: 1rem 0; flex-wrap: wrap; }
+    @media (max-width: 700px) {
+        .playground { grid-template-columns: 1fr; }
+        .playground .window-body { height: 220px; }
+    }
+    </style>
+</head>
+<body>
+
+<header class="navbar">
+    <nav>
+        <a href="/" class="nav-logo">
+            <img src="/img/mascot-retro-small.svg" alt="_hyperstream" class="nav-logo-img">
+        </a>
+        <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" onclick="this.closest('.navbar').classList.toggle('nav-open');this.setAttribute('aria-expanded',this.closest('.navbar').classList.contains('nav-open'))">
+            <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links">
+            <li><a href="/docs.html">docs</a>
+            <li><a href="/spec.html">spec</a>
+            <li><a href="/patterns.html">patterns</a>
+            <li><a href="/auction.html">demo</a>
+            <li><a href="/try-it.html">try it!</a>
+            <li class="nav-spacer"></li>
+            <li><a href="https://github.com/andreahlert/hyperstream" class="nav-github" aria-label="GitHub">
+                <svg viewBox="0 0 16 16" width="20" height="20" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+            </a>
+        </ul>
+    </nav>
+</header>
+
+<div class="container content">
+
+    <h1>try it!</h1>
+    <p>Type an HTML fragment on the left, click <b>Push</b>, watch the right pane swap it in. Mock client, no network. Useful for getting the feel of the wire format.</p>
+
+    <div class="playground">
+        <div class="window">
+            <div class="window-title">frame.html, paste a frame</div>
+            <div class="window-body">
+                <textarea id="src" spellcheck="false">&lt;hs-fragment channel="demo" target="#out" swap="inner"&gt;
+  &lt;strong&gt;hello world&lt;/strong&gt;
+&lt;/hs-fragment&gt;</textarea>
+            </div>
+        </div>
+        <div class="window">
+            <div class="window-title">preview, DOM</div>
+            <div class="window-body">
+                <div class="preview-body" id="preview">
+                    <div id="out" style="font-size:0.9rem;color:var(--text-muted)">&lt;empty target&gt;</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button class="btn primary" id="btnPush">push</button>
+        <button class="btn" id="btnDemo1">load: fragment</button>
+        <button class="btn" id="btnDemo2">load: atomic</button>
+        <button class="btn warn" id="btnReset">reset</button>
+    </div>
+
+    <aside class="box">
+        <h3>what works here</h3>
+        <p>This is a <b>local</b> simulator. The src panel renders frames into the preview pane via the same <code>target</code> plus <code>swap</code> rules the real client uses. For end-to-end with a real socket, see <a href="/auction.html">demo</a>.</p>
+        <p>Supported swap values: <code>inner</code>, <code>outer</code>, <code>append</code>, <code>prepend</code>, <code>before</code>, <code>after</code>, <code>delete</code>, <code>replace</code>.</p>
+    </aside>
+
+</div>
+
+<script>
+const src = document.getElementById('src');
+const preview = document.getElementById('preview');
+
+function applyFrame(html) {
+    const tpl = document.createElement('template');
+    tpl.innerHTML = html.trim();
+    const handle = (frag) => {
+        const target = frag.getAttribute('target');
+        const swap = frag.getAttribute('swap') || 'inner';
+        const el = preview.querySelector(target);
+        if (!el) { console.warn('target not found', target); return; }
+        const content = frag.innerHTML.trim();
+        if (swap === 'inner') el.innerHTML = content;
+        else if (swap === 'outer') el.outerHTML = content;
+        else if (swap === 'append') el.insertAdjacentHTML('beforeend', content);
+        else if (swap === 'prepend') el.insertAdjacentHTML('afterbegin', content);
+        else if (swap === 'before') el.insertAdjacentHTML('beforebegin', content);
+        else if (swap === 'after') el.insertAdjacentHTML('afterend', content);
+        else if (swap === 'delete') el.remove();
+        else if (swap === 'replace') el.outerHTML = content;
+    };
+    tpl.content.querySelectorAll('hs-fragment').forEach(handle);
+    tpl.content.querySelectorAll('hs-multi > hs-fragment').forEach(handle);
+    tpl.content.querySelectorAll('hs-atomic > hs-fragment').forEach(handle);
+}
+
+document.getElementById('btnPush').onclick = () => applyFrame(src.value);
+document.getElementById('btnReset').onclick = () => {
+    preview.innerHTML = '<div id="out" style="font-size:0.9rem;color:var(--text-muted)">&lt;empty target&gt;</div>';
+};
+document.getElementById('btnDemo1').onclick = () => {
+    src.value = '<hs-fragment channel="demo" target="#out" swap="inner">\n  <strong style="color:#00B8B8">live: $145</strong>\n</hs-fragment>';
+};
+document.getElementById('btnDemo2').onclick = () => {
+    preview.innerHTML = '<div id="price">$100</div><div id="leader">nobody</div><div id="time">60s</div>';
+    src.value = '<hs-atomic channel="auction" seq="42">\n  <hs-fragment target="#price" swap="inner"><b>$120</b></hs-fragment>\n  <hs-fragment target="#leader" swap="inner">alice</hs-fragment>\n  <hs-fragment target="#time" swap="inner">30s</hs-fragment>\n</hs-atomic>';
+};
+</script>
+
+</body>
+</html>

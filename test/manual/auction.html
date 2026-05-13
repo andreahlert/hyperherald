@@ -1,56 +1,165 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<title>_hyperstream + htmx4 — auction demo</title>
-<script src="/htmx4/htmx.min.js" defer></script>
-<script src="/dist/_hyperstream.js" defer></script>
-<style>
-    body { font: 16px/1.5 system-ui, sans-serif; max-width: 540px; margin: 4rem auto; padding: 0 1rem; }
-    h1 { margin: 0 0 0.5rem; }
-    .stack { display: flex; gap: 0.5rem; align-items: center; font-size: 0.85em; color: #777; margin: 0.25rem 0 1rem; }
-    .stack code { background: #f0f0f0; padding: 0.1rem 0.4rem; border-radius: 3px; }
-    .panel { border: 1px solid #ccc; border-radius: 8px; padding: 1rem 1.25rem; margin: 1rem 0; }
-    .row { display: flex; justify-content: space-between; padding: 0.4rem 0; border-bottom: 1px dashed #eee; }
-    .row:last-child { border: 0; }
-    #price strong { color: #b85; font-size: 1.4em; }
-    #countdown { font-variant-numeric: tabular-nums; }
-    form { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-    input[type=text], input[type=number] { padding: 0.5rem; border: 1px solid #aaa; border-radius: 4px; flex: 1; min-width: 8rem; }
-    button { padding: 0.5rem 1rem; border: 0; background: #235; color: #fff; border-radius: 4px; cursor: pointer; }
-    button:disabled { opacity: 0.5; cursor: wait; }
-    #bid-result { color: #555; font-size: 0.9em; min-height: 1.5em; }
-    .htmx-request button { opacity: 0.5; }
-</style>
+    <title>///_hyperstream / live auction demo</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="/img/mascot-retro-small.svg">
+    <link rel="preload" href="/fonts/ChicagoFLF.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="/fonts/IBMPlexSans-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="/css/os9.css">
+    <link rel="stylesheet" href="/css/site.css">
+    <link rel="stylesheet" href="/css/prism-htmx.css">
+    <script src="/vendor/htmx.min.js" defer></script>
+    <script src="/dist/_hyperstream.js" defer></script>
+    <style>
+    .lot .row {
+        display: flex; justify-content: space-between;
+        padding: 0.55rem 0;
+        border-bottom: 1px dashed var(--border);
+        font-size: 0.95rem;
+    }
+    .lot .row:last-child { border: 0; }
+    .lot #price strong {
+        color: var(--accent);
+        font-size: 1.3em;
+        font-family: var(--font-heading);
+    }
+    .lot #countdown { font-variant-numeric: tabular-nums; }
+    form.bidform { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
+    form.bidform input {
+        padding: 0.45rem 0.6rem;
+        border: 1px solid var(--border-strong);
+        border-radius: var(--radius);
+        font-family: var(--font-mono);
+        font-size: 0.9rem;
+        background: var(--bg);
+        color: var(--text);
+        flex: 1;
+        min-width: 8rem;
+    }
+    form.bidform input:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+    .htmx-request .btn { opacity: 0.5; pointer-events: none; }
+    #bid-result {
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        min-height: 1.5em;
+        margin: 0.5rem 0 0;
+        font-family: var(--font-mono);
+    }
+    .stack-info {
+        display: flex; gap: 0.5rem; align-items: center;
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        margin: 0.6rem 0 1.2rem;
+        flex-wrap: wrap;
+    }
+    .stack-info code {
+        background: var(--bg-subtle);
+        padding: 1px 6px;
+        border-radius: 3px;
+        font-size: 0.8rem;
+        color: var(--text);
+    }
+    </style>
 </head>
 <body>
 
-<h1>Live Auction</h1>
-<p class="stack">
-    server push <code>_stream</code> (_hyperstream)
-    +
-    user action <code>hx-post</code> (htmx4 alpha8)
-</p>
-<p>Open in multiple tabs. Bid via htmx. Other tabs update via _hyperstream push.</p>
+<header class="navbar">
+    <nav>
+        <a href="/" class="nav-logo">
+            <img src="/img/mascot-retro-small.svg" alt="_hyperstream" class="nav-logo-img">
+        </a>
+        <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" onclick="this.closest('.navbar').classList.toggle('nav-open');this.setAttribute('aria-expanded',this.closest('.navbar').classList.contains('nav-open'))">
+            <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links">
+            <li><a href="/docs.html">docs</a>
+            <li><a href="/spec.html">spec</a>
+            <li><a href="/patterns.html">patterns</a>
+            <li><a href="/auction.html">demo</a>
+            <li><a href="/try-it.html">try it!</a>
+            <li class="nav-spacer"></li>
+            <li><a href="https://github.com/andreahlert/hyperstream" class="nav-github" aria-label="GitHub">
+                <svg viewBox="0 0 16 16" width="20" height="20" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+            </a>
+        </ul>
+    </nav>
+</header>
 
-<!-- _hyperstream: subscribes to channel, applies pushed fragments -->
-<div class="panel" _stream="/sse" _stream-subscribe="auction:lot-1" _stream-debug="true">
-    <h2>Vintage Big Sky Software T-Shirt (size M)</h2>
-    <div class="row"><span>Current bid</span> <span id="price"><strong>$100</strong></span></div>
-    <div class="row"><span>Leader</span> <span id="leader"><em>nobody yet</em></span></div>
-    <div class="row"><span>Time remaining</span> <span id="countdown">60</span> s</div>
+<div class="container content">
+
+    <h1>live auction</h1>
+    <p>Open this page in two or three tabs. Place a bid in any tab. The other tabs update price, leader and countdown via _hyperstream push. No JSON, no client state.</p>
+
+    <p class="stack-info">
+        server push <code>_stream</code> (_hyperstream)
+        <span>+</span>
+        user action <code>hx-post</code> (htmx4 alpha8)
+    </p>
+
+    <aside class="box">
+        <h3>how to test</h3>
+        <ol>
+            <li><b>Start the auction server.</b> In a terminal, from <code>hyperstream/</code>:
+<pre class="language-bash"><code class="language-bash">node test/manual/auction-server.js
+# &gt; hyperstream auction listening on http://localhost:3000/auction.html</code></pre>
+            </li>
+            <li><b>Open this page in two or three tabs.</b> <code>http://localhost:3000/auction.html</code> times 3. Each tab subscribes to <code>auction:lot-1</code> via SSE.</li>
+            <li><b>Place a bid in tab 1.</b> Type a name and an amount higher than the current price. Submit. htmx posts to <code>/bid</code>, server validates, then publishes an <code>hs-atomic</code> frame to all subscribers.</li>
+            <li><b>Watch tabs 2 and 3 update at the same time.</b> Price, leader, countdown all swap in one mutation. No flicker, no partial states.</li>
+            <li><b>Test reconnect plus replay.</b> Close one tab, place 2 more bids in another tab, reopen the closed one. It catches up via <code>Last-Event-ID</code> cursor. No gaps.</li>
+        </ol>
+    </aside>
+
+    <h2>the lot</h2>
+
+    <div class="window">
+        <div class="window-title">auction:lot-1, live</div>
+        <div class="window-body lot" _stream="/sse" _stream-subscribe="auction:lot-1" _stream-debug="true">
+            <h3 style="margin:0 0 0.6rem;font-size:1rem;font-family:var(--font-heading)">vintage Big Sky T-Shirt, size M</h3>
+            <div class="row"><span>current bid</span> <span id="price"><strong>$100</strong></span></div>
+            <div class="row"><span>leader</span> <span id="leader"><em>nobody yet</em></span></div>
+            <div class="row"><span>time remaining</span> <span><span id="countdown">60</span> s</span></div>
+        </div>
+    </div>
+
+    <h2>place a bid</h2>
+
+    <div class="window">
+        <div class="window-title">/bid, htmx form</div>
+        <div class="window-body">
+            <form class="bidform"
+                  hx-post="/bid"
+                  hx-target="#bid-result"
+                  hx-swap="innerHTML"
+                  hx-on::after-request="if (event.detail.successful) this.reset()">
+                <input type="text"   name="bidder" placeholder="your name" required>
+                <input type="number" name="amount" min="1" placeholder="amount" required>
+                <button type="submit" class="btn primary">place bid</button>
+            </form>
+            <p id="bid-result"></p>
+        </div>
+    </div>
+
+    <aside class="box warn">
+        <h3>if nothing updates</h3>
+        <ul>
+            <li>Confirm the auction-server is running on <code>:3000</code>. Open <code>/auction.html</code> via that port, not via <code>file://</code>.</li>
+            <li>Check the browser console. _stream-debug is on, you should see <code>[_hyperstream] subscribed</code> and frame logs.</li>
+            <li>If the bid form 404s, the server didn't mount <code>/bid</code>. Restart the server.</li>
+        </ul>
+    </aside>
+
+    <h2>what this proves</h2>
+    <ul>
+        <li><b>Subscribe per item.</b> Tabs share one channel, server publishes once.</li>
+        <li><b>Atomic swap.</b> Price, leader, countdown swap as a single mutation.</li>
+        <li><b>htmx coexists.</b> Bid form uses <code>hx-post</code>; the response triggers an _hyperstream broadcast.</li>
+        <li><b>Replay on reconnect.</b> sessionStorage cursor, server catches you up.</li>
+    </ul>
+
 </div>
-
-<!-- htmx: POSTs the bid, swaps server response into #bid-result, resets form on success -->
-<form hx-post="/bid"
-      hx-target="#bid-result"
-      hx-swap="innerHTML"
-      hx-on::after-request="if (event.detail.successful) this.reset()">
-    <input type="text"   name="bidder" placeholder="your name" required>
-    <input type="number" name="amount" min="1" placeholder="amount" required>
-    <button type="submit">Place bid</button>
-</form>
-<p id="bid-result"></p>
 
 </body>
 </html>

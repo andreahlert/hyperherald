@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>_hyperstream — STRIPE MAXIMALIST</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+    *{box-sizing:border-box}
+    body{margin:0;background:#fff;font:16px/1.55 'Inter',sans-serif;color:#0a2540;overflow-x:hidden}
+    .gradient-hero{position:relative;background:linear-gradient(150deg,#a3a8f5 0%,#5b6ee8 25%,#7e6ad8 55%,#bfa8e8 80%,#e8c0d4 100%);padding-bottom:5rem;overflow:hidden;clip-path:polygon(0 0,100% 0,100% 78%,0 100%)}
+    .gradient-hero::before{content:'';position:absolute;inset:0;background:
+        radial-gradient(ellipse 600px 400px at 20% 30%,rgba(255,255,255,0.4),transparent 60%),
+        radial-gradient(ellipse 500px 400px at 80% 60%,rgba(255,150,200,0.3),transparent 60%);
+        pointer-events:none}
+    nav{max-width:1280px;margin:0 auto;padding:1.5rem 2rem;display:flex;align-items:center;gap:2rem;position:relative;z-index:2}
+    nav .lockup{display:flex;align-items:center;gap:0.5rem;font-weight:700;font-size:18px;color:#fff}
+    nav .lockup img{height:22px;filter:invert(1)}
+    nav a{color:rgba(255,255,255,0.9);text-decoration:none;font-size:14px;font-weight:500}
+    nav a:hover{color:#fff}
+    .spacer{flex:1}
+    nav .gh{background:#fff;color:#0a2540;padding:7px 14px;border-radius:999px;font-size:13px;font-weight:600}
+    .hero-content{max-width:1280px;margin:0 auto;padding:4rem 2rem 0;position:relative;z-index:2}
+    .pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.2);backdrop-filter:blur(20px);color:#fff;padding:6px 14px;border-radius:999px;font-size:13px;font-weight:500;margin-bottom:1.5rem;border:1px solid rgba(255,255,255,0.3)}
+    .pill .arrow{margin-left:6px}
+    h1{font-size:clamp(56px,9vw,108px);font-weight:700;line-height:1;letter-spacing:-3px;margin:0 0 1rem;color:#fff;max-width:900px}
+    h1 .u{color:rgba(255,255,255,0.5)}
+    .lede{font-size:22px;line-height:1.4;color:rgba(255,255,255,0.85);max-width:640px;margin:0 0 2rem}
+    .cta-row{display:flex;gap:0.75rem;align-items:center}
+    .btn{padding:0.85rem 1.5rem;border-radius:999px;font-weight:600;text-decoration:none;font-size:15px;transition:transform 0.15s}
+    .btn:hover{transform:translateY(-2px)}
+    .btn.primary{background:#0a2540;color:#fff}
+    .btn.secondary{background:rgba(255,255,255,0.2);backdrop-filter:blur(20px);color:#fff;border:1px solid rgba(255,255,255,0.3)}
+    .floating{position:absolute;right:-5%;top:-5%;width:55%;perspective:1200px;z-index:1}
+    .card-stack{position:relative;height:520px;transform-style:preserve-3d}
+    .float-card{position:absolute;background:rgba(255,255,255,0.96);border-radius:18px;box-shadow:0 30px 80px rgba(0,0,0,0.18);padding:1.25rem;backdrop-filter:blur(10px);transition:transform 0.4s}
+    .float-card.c1{top:60px;left:20%;width:380px;transform:rotate(-3deg) rotateY(-12deg);animation:floatA 6s ease-in-out infinite}
+    .float-card.c2{top:240px;left:5%;width:340px;transform:rotate(2deg) rotateY(8deg);animation:floatB 8s ease-in-out infinite}
+    .float-card.c3{top:380px;left:35%;width:280px;transform:rotate(-1deg) rotateY(-4deg);animation:floatA 7s ease-in-out infinite reverse}
+    @keyframes floatA{0%,100%{transform:rotate(-3deg) rotateY(-12deg) translateY(0)}50%{transform:rotate(-3deg) rotateY(-12deg) translateY(-15px)}}
+    @keyframes floatB{0%,100%{transform:rotate(2deg) rotateY(8deg) translateY(0)}50%{transform:rotate(2deg) rotateY(8deg) translateY(15px)}}
+    .float-card .head{display:flex;align-items:center;gap:6px;font-size:11px;color:#666;font-family:'JetBrains Mono',mono;margin-bottom:0.5rem}
+    .float-card .head .led{width:7px;height:7px;border-radius:999px;background:#22c55e}
+    .float-card pre{font-family:'JetBrains Mono',mono;font-size:11px;line-height:1.55;color:#0a2540;background:#f6f9fc;padding:0.6rem;border-radius:6px;margin:0}
+    .float-card .row{display:flex;justify-content:space-between;padding:5px 0;font-size:13px;border-bottom:1px solid #e3e8ee}
+    .float-card .row:last-child{border:0}
+    .float-card .row strong{color:#635bff}
+    .features{max-width:1280px;margin:5rem auto;padding:0 2rem;display:grid;grid-template-columns:repeat(2,1fr);gap:2rem}
+    .features > div{padding:1.5rem 0;border-top:1px solid rgba(10,37,64,0.1)}
+    .features h3{font-size:24px;font-weight:600;margin:0 0 0.5rem;letter-spacing:-0.5px}
+    .features p{color:#425466;line-height:1.55;margin:0}
+    .features .num{font-family:'JetBrains Mono',mono;font-size:11px;color:#635bff;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:0.5rem}
+    footer{max-width:1280px;margin:0 auto;padding:2rem;border-top:1px solid #e3e8ee;font-size:13px;color:#425466;display:flex;justify-content:space-between}
+    footer a{color:#0a2540;text-decoration:none}
+</style>
+</head>
+<body>
+
+<section class="gradient-hero">
+    <nav>
+        <span class="lockup"><img src="/img/trace-mark-animated.svg" alt=""> _hyperstream</span>
+        <a href="#">Products</a><a href="#">Docs</a><a href="#">Pricing</a><a href="#">Customers</a>
+        <span class="spacer"></span>
+        <a href="#" class="gh">GitHub →</a>
+    </nav>
+
+    <div class="hero-content">
+        <span class="pill">v0.0.1 just shipped <span class="arrow">→</span></span>
+        <h1><span class="u">_</span>hyperstream — server push, perfected.</h1>
+        <p class="lede">Declarative, fast, and incredibly reliable. The infrastructure for real-time hypermedia, built for the entire web.</p>
+        <div class="cta-row">
+            <a class="btn primary" href="#">Start building →</a>
+            <a class="btn secondary" href="#">Talk to an engineer</a>
+        </div>
+
+        <div class="floating">
+            <div class="card-stack">
+                <div class="float-card c1">
+                    <div class="head"><span class="led"></span> auction.html · live</div>
+<pre>&lt;hs-fragment channel="auction:lot-1"
+   seq="42" target="#price" swap="inner"&gt;
+  &lt;strong&gt;$120&lt;/strong&gt;
+&lt;/hs-fragment&gt;</pre>
+                </div>
+                <div class="float-card c2">
+                    <div class="head"><span class="led"></span> preview · subscribers: 1,247</div>
+                    <div class="row"><span>Current bid</span><strong id="bid">$120</strong></div>
+                    <div class="row"><span>Leader</span><span id="leader">alice</span></div>
+                    <div class="row"><span>Time left</span><span id="timer">00:30</span></div>
+                </div>
+                <div class="float-card c3">
+                    <div class="head"><span class="led"></span> seq cursor</div>
+                    <pre>seq=42 ✓
+seq=43 ✓
+seq=44 ⟳</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="features">
+    <div><div class="num">N° 01 · WIRE</div><h3>HTML, all the way down</h3><p>Frames are self-describing custom elements. No JSON envelope, no client-side parser, no translation layer. Hypermedia from server to DOM.</p></div>
+    <div><div class="num">N° 02 · FAN-OUT</div><h3>One push, every subscriber</h3><p>Multi-element subscriptions on the same channel. One server event, N targets updated atomically across tabs.</p></div>
+    <div><div class="num">N° 03 · REPLAY</div><h3>Reconnect without gaps</h3><p>Per-channel cursor in sessionStorage. SSE Last-Event-ID, WS hs-subscribe handshake. Continuity by default.</p></div>
+    <div><div class="num">N° 04 · htmx</div><h3>Composes, doesn't compete</h3><p>Pushed HTML carries hx-* attributes. htmx upgrades them on swap via MutationObserver. No coordination required.</p></div>
+</section>
+
+<footer><span>© 2026 Big Sky Software</span><span><a href="https://htmx.org">htmx</a> · <a href="https://hyperscript.org">_hyperscript</a> · <a href="#">_hyperstream</a></span></footer>
+
+<script>
+const bids=[120,135,150,165,180,200,215,235],ld=['alice','bob','carol','dave'];let i=0,s=30;
+setInterval(()=>{i=(i+1)%bids.length;bid.textContent='$'+bids[i];leader.textContent=ld[i%4];},1600);
+setInterval(()=>{s=s>0?s-1:30;timer.textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');},1000);
+</script>
+</body>
+</html>

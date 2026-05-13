@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>_hyperstream — BLUEPRINT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --paper: #f5f3ee;
+        --grid:  #d4cdb8;
+        --ink:   #1a1a1a;
+        --mute:  #6b6657;
+        --accent: #c2410c;   /* burnt sienna, technical */
+        --rule:  #2a2a2a;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+        font: 15px/1.55 'IBM Plex Sans', sans-serif;
+        background:
+            linear-gradient(var(--grid) 1px, transparent 1px) 0 0 / 24px 24px,
+            linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0 / 24px 24px,
+            var(--paper);
+        color: var(--ink);
+    }
+    .mono, code, pre { font-family: 'IBM Plex Mono', monospace; }
+
+    /* nav */
+    nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1rem 2rem;
+        display: flex; align-items: center; gap: 2rem;
+        border-bottom: 2px solid var(--ink);
+    }
+    nav .lockup { display: flex; align-items: center; gap: 0.5rem; font-family: 'IBM Plex Mono', monospace; font-weight: 600; }
+    nav .lockup img { height: 22px; }
+    nav .spacer { flex: 1; }
+    nav a { color: var(--ink); text-decoration: none; font-family: 'IBM Plex Mono', monospace; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; }
+    nav a.gh { border: 2px solid var(--ink); padding: 4px 12px; background: var(--ink); color: var(--paper); }
+
+    /* hero schematic */
+    .hero {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 3rem 2rem 2rem;
+        position: relative;
+    }
+    .hero .meta {
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 11px;
+        color: var(--mute);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        display: flex; gap: 1.5rem;
+        border-bottom: 1px solid var(--ink);
+        padding-bottom: 0.5rem;
+        margin-bottom: 2rem;
+    }
+    .hero h1 {
+        font-family: 'IBM Plex Mono', monospace;
+        font-weight: 600;
+        font-size: clamp(40px, 6vw, 72px);
+        margin: 0 0 1.5rem;
+        line-height: 1;
+        letter-spacing: -2px;
+    }
+    .hero h1 .underscore { color: var(--accent); }
+    .hero .tag {
+        font-size: 18px;
+        max-width: 540px;
+        line-height: 1.5;
+        margin: 0 0 2rem;
+    }
+    .schematic {
+        background: var(--paper);
+        border: 2px solid var(--ink);
+        padding: 2rem;
+        margin-top: 2rem;
+        position: relative;
+    }
+    .schematic::before {
+        content: 'FIG. 01 — WIRE PIPELINE';
+        position: absolute;
+        top: -10px; left: 1.5rem;
+        background: var(--paper);
+        padding: 0 0.5rem;
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 11px;
+        letter-spacing: 1px;
+    }
+    .schematic svg { width: 100%; height: auto; display: block; }
+    .schematic .caption {
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 11px;
+        color: var(--mute);
+        text-align: right;
+        margin-top: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    .schematic .node {
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 11px;
+        text-anchor: middle;
+        fill: var(--ink);
+        text-transform: uppercase;
+    }
+    .schematic .lbl { fill: var(--mute); font-size: 9px; }
+    .schematic .wire { stroke: var(--ink); stroke-width: 1.5; fill: none; }
+    .schematic .arrow { fill: var(--ink); }
+    .schematic .pkt {
+        fill: var(--accent);
+        animation: travel 2.4s linear infinite;
+    }
+    @keyframes travel {
+        0%   { transform: translateX(0); opacity: 0; }
+        10%  { opacity: 1; }
+        90%  { opacity: 1; }
+        100% { transform: translateX(900px); opacity: 0; }
+    }
+
+    /* spec callout */
+    .specs {
+        max-width: 1200px;
+        margin: 3rem auto;
+        padding: 0 2rem;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        border-top: 2px solid var(--ink);
+        border-bottom: 2px solid var(--ink);
+    }
+    .specs > div {
+        padding: 1.5rem 1rem;
+        border-right: 1px solid var(--ink);
+    }
+    .specs > div:last-child { border-right: 0; }
+    .specs .k { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--mute); text-transform: uppercase; letter-spacing: 1px; }
+    .specs .v { font-family: 'IBM Plex Mono', monospace; font-size: 22px; font-weight: 500; margin-top: 4px; }
+
+    /* features */
+    .features {
+        max-width: 1200px;
+        margin: 3rem auto;
+        padding: 0 2rem 4rem;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0;
+    }
+    .features > div {
+        padding: 1.5rem;
+        border-left: 1px solid var(--ink);
+        position: relative;
+    }
+    .features > div:first-child { border-left: 0; }
+    .features .num {
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 10px;
+        color: var(--accent);
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-bottom: 0.5rem;
+    }
+    .features h3 {
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 13px;
+        margin: 0 0 0.5rem;
+        text-transform: uppercase;
+    }
+    .features p { font-size: 13px; line-height: 1.5; color: #2a2a2a; margin: 0; }
+
+    footer {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1.5rem 2rem;
+        border-top: 2px solid var(--ink);
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        display: flex; justify-content: space-between;
+    }
+</style>
+</head>
+<body>
+
+<nav>
+    <span class="lockup"><img src="/img/trace-mark-animated.svg" alt=""> _hyperstream</span>
+    <a href="#">Spec</a>
+    <a href="#">Frames</a>
+    <a href="#">Demos</a>
+    <span class="spacer"></span>
+    <a href="#" class="gh">SOURCE →</a>
+</nav>
+
+<section class="hero">
+    <div class="meta">
+        <span>REV. 0.0.1 / 2026-05-08</span>
+        <span>WIRE FORMAT v0</span>
+        <span>STATUS: DRAFT</span>
+    </div>
+    <h1><span class="underscore">_</span>hyperstream</h1>
+    <p class="tag">A protocol for streaming HTML fragments to subscribed DOM nodes. Server is the source of truth. Client is wire and a swap.</p>
+
+    <div class="schematic">
+        <svg viewBox="0 0 1100 240" xmlns="http://www.w3.org/2000/svg">
+            <!-- main bus -->
+            <line class="wire" x1="60" y1="120" x2="1040" y2="120"/>
+
+            <!-- nodes -->
+            <g>
+                <rect x="40"  y="100" width="80" height="40" fill="var(--paper)" stroke="currentColor" stroke-width="1.5"/>
+                <text class="node" x="80"  y="124">SERVER</text>
+                <text class="lbl"  x="80"  y="160">EVENT BUS</text>
+            </g>
+            <g>
+                <rect x="240" y="100" width="100" height="40" fill="var(--paper)" stroke="currentColor" stroke-width="1.5"/>
+                <text class="node" x="290" y="124">SSE / WS</text>
+                <text class="lbl"  x="290" y="160">TRANSPORT</text>
+            </g>
+            <g>
+                <rect x="460" y="100" width="120" height="40" fill="var(--paper)" stroke="currentColor" stroke-width="1.5"/>
+                <text class="node" x="520" y="124">ENVELOPE</text>
+                <text class="lbl"  x="520" y="160">&lt;hs-fragment&gt;</text>
+            </g>
+            <g>
+                <rect x="700" y="100" width="100" height="40" fill="var(--paper)" stroke="currentColor" stroke-width="1.5"/>
+                <text class="node" x="750" y="124">ROUTER</text>
+                <text class="lbl"  x="750" y="160">CHANNEL</text>
+            </g>
+            <g>
+                <rect x="900" y="100" width="100" height="40" fill="var(--paper)" stroke="currentColor" stroke-width="1.5"/>
+                <text class="node" x="950" y="124">DOM</text>
+                <text class="lbl"  x="950" y="160">SWAP TARGET</text>
+            </g>
+
+            <!-- traveling packet -->
+            <g class="pkt">
+                <rect x="120" y="112" width="14" height="16" rx="2"/>
+                <text font-family="IBM Plex Mono" font-size="9" fill="var(--paper)" x="127" y="124" text-anchor="middle">42</text>
+            </g>
+
+            <!-- branches above -->
+            <line class="wire" x1="290" y1="100" x2="290" y2="50" stroke-dasharray="3 3"/>
+            <text class="lbl" x="295" y="42">CURSOR / Last-Event-ID</text>
+            <line class="wire" x1="520" y1="100" x2="520" y2="50" stroke-dasharray="3 3"/>
+            <text class="lbl" x="525" y="42">SEQ, CHANNEL, V</text>
+            <line class="wire" x1="950" y1="140" x2="950" y2="200" stroke-dasharray="3 3"/>
+            <text class="lbl" x="955" y="215">target=#price</text>
+        </svg>
+        <div class="caption">A.A. / 2026 / DRAWING N° 01</div>
+    </div>
+</section>
+
+<section class="specs">
+    <div><div class="k">Bundle</div><div class="v">5 KB</div></div>
+    <div><div class="k">Deps</div><div class="v">0</div></div>
+    <div><div class="k">Wire</div><div class="v">HTML</div></div>
+    <div><div class="k">Transport</div><div class="v">SSE / WS</div></div>
+</section>
+
+<section class="features">
+    <div>
+        <div class="num">N° 01</div>
+        <h3>Self-describing wire</h3>
+        <p>Every frame is a custom element. Read it, paste it, debug it as HTML.</p>
+    </div>
+    <div>
+        <div class="num">N° 02</div>
+        <h3>Channel fan-out</h3>
+        <p>One push reaches every subscribed node. Multi-tab atomic.</p>
+    </div>
+    <div>
+        <div class="num">N° 03</div>
+        <h3>Replay on reconnect</h3>
+        <p>Per-channel cursor. No gaps after WS drop.</p>
+    </div>
+    <div>
+        <div class="num">N° 04</div>
+        <h3>Composes htmx</h3>
+        <p>Pushed HTML carries hx-* attributes. MutationObserver picks up.</p>
+    </div>
+</section>
+
+<footer>
+    <span>BIG SKY SOFTWARE — DRAFT</span>
+    <span>htmx · _hyperscript · _hyperstream</span>
+</footer>
+
+</body>
+</html>

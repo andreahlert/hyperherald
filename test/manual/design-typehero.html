@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>_hyperstream — TYPE-AS-HERO</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+    *{box-sizing:border-box}
+    body{margin:0;background:#fff;color:#0b0b0b;font:16px/1.55 'Inter',sans-serif;overflow-x:hidden}
+    nav{max-width:1280px;margin:0 auto;padding:1rem 2rem;display:flex;align-items:center;gap:1.5rem;font-family:'JetBrains Mono',mono;font-size:13px}
+    nav .lockup{display:flex;align-items:center;gap:0.4rem;font-weight:600}
+    nav .lockup img{height:20px}
+    nav a{color:#0b0b0b;text-decoration:none}
+    .spacer{flex:1}
+    nav .gh{background:#0b0b0b;color:#fff;padding:5px 14px;border-radius:999px}
+    .hero{position:relative;padding:1rem 2rem 0;overflow:hidden}
+    .massive{font-family:'Anton','Bebas Neue',sans-serif;font-weight:400;font-size:clamp(120px,24vw,360px);line-height:0.82;letter-spacing:-0.02em;margin:0;text-transform:lowercase;color:#0b0b0b;display:block;white-space:nowrap;transform:translateX(-2vw)}
+    .massive .u{color:#7C3AED;display:inline-block;animation:pulse 2s ease-in-out infinite}
+    @keyframes pulse{0%,100%{opacity:0.4}50%{opacity:1}}
+    .hero-meta{display:flex;justify-content:space-between;font-family:'JetBrains Mono',mono;font-size:12px;text-transform:uppercase;letter-spacing:1.5px;color:#666;border-top:2px solid #0b0b0b;border-bottom:2px solid #0b0b0b;padding:0.5rem 0;margin:1rem 0}
+    .lede{max-width:680px;font-size:24px;line-height:1.35;margin:2rem auto;text-align:center}
+    .lede em{color:#7C3AED;font-style:normal;font-weight:600}
+    .ticker{background:#0b0b0b;color:#fff;padding:0.6rem 0;font-family:'Anton',sans-serif;font-size:36px;letter-spacing:1px;text-transform:uppercase;overflow:hidden;white-space:nowrap;margin:1rem 0}
+    .ticker span{display:inline-block;animation:scroll 30s linear infinite}
+    .ticker .dot{color:#7C3AED;margin:0 1.5rem}
+    @keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+    .stripe{max-width:1280px;margin:3rem auto;padding:0 2rem;display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+    .panel{border:2px solid #0b0b0b;padding:1.25rem}
+    .panel h3{font-family:'Anton',sans-serif;font-size:32px;letter-spacing:0.5px;margin:0 0 1rem;text-transform:uppercase}
+    .panel pre{font-family:'JetBrains Mono',mono;font-size:13px;line-height:1.7;background:#0b0b0b;color:#f0f0f0;padding:1rem;margin:0}
+    .panel pre .t{color:#c084fc}.panel pre .a{color:#67e8f9}.panel pre .v{color:#fff}.panel pre .c{color:#888;font-style:italic}
+    .row{display:flex;justify-content:space-between;padding:0.75rem 0;border-bottom:2px solid #0b0b0b;font-family:'Anton',sans-serif;font-size:24px;letter-spacing:0.5px;text-transform:uppercase}
+    .row:last-child{border:0}
+    .row strong{color:#7C3AED}
+    .features{max-width:1280px;margin:3rem auto;padding:0 2rem;display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:2px solid #0b0b0b}
+    .features > div{padding:1.5rem;border-bottom:2px solid #0b0b0b;border-right:2px solid #0b0b0b}
+    .features > div:nth-child(2n){border-right:0}
+    .features h4{font-family:'Anton',sans-serif;font-size:48px;letter-spacing:0.5px;margin:0 0 0.5rem;text-transform:uppercase;line-height:0.95}
+    .features p{font-size:15px;color:#333;margin:0;line-height:1.5}
+    footer{max-width:1280px;margin:0 auto;padding:1.5rem 2rem;border-top:2px solid #0b0b0b;display:flex;justify-content:space-between;font-family:'JetBrains Mono',mono;font-size:12px;text-transform:uppercase;letter-spacing:1.5px}
+    footer a{color:#0b0b0b;text-decoration:none}
+</style>
+</head>
+<body>
+<nav>
+    <span class="lockup"><img src="/img/trace-mark-animated.svg" alt=""> _hyperstream</span>
+    <a href="#">Spec</a><a href="#">Frames</a><a href="#">Demos</a>
+    <span class="spacer"></span>
+    <a href="#" class="gh">GitHub →</a>
+</nav>
+
+<section class="hero">
+    <div class="hero-meta">
+        <span>v0.0.1 · 2026-05-08</span>
+        <span>BSD-2 · 5KB · zero deps</span>
+        <span>declarative server-push hypermedia</span>
+    </div>
+    <h1 class="massive"><span class="u">_</span>hyperstream</h1>
+</section>
+
+<p class="lede">A protocol for streaming HTML fragments to subscribed DOM nodes. <em>Hypermedia, all the way down.</em></p>
+
+<div class="ticker">
+    <span>SUBSCRIBE IN HTML <span class="dot">●</span> REPLAY ON RECONNECT <span class="dot">●</span> ATOMIC BATCH SWAP <span class="dot">●</span> FAN OUT TO N <span class="dot">●</span> COMPOSES WITH HTMX <span class="dot">●</span> SUBSCRIBE IN HTML <span class="dot">●</span> REPLAY ON RECONNECT <span class="dot">●</span> ATOMIC BATCH SWAP <span class="dot">●</span> FAN OUT TO N <span class="dot">●</span> COMPOSES WITH HTMX <span class="dot">●</span></span>
+</div>
+
+<section class="stripe">
+    <div class="panel">
+        <h3>The Wire</h3>
+<pre><span class="c">// frames are custom elements</span>
+<span class="t">&lt;hs-fragment</span> <span class="a">channel</span>=<span class="v">"auction:lot-1"</span>
+              <span class="a">seq</span>=<span class="v">"42"</span>
+              <span class="a">target</span>=<span class="v">"#price"</span>
+              <span class="a">swap</span>=<span class="v">"inner"</span><span class="t">&gt;</span>
+  <span class="t">&lt;strong&gt;</span>$120<span class="t">&lt;/strong&gt;</span>
+<span class="t">&lt;/hs-fragment&gt;</span></pre>
+    </div>
+    <div class="panel">
+        <h3>Live</h3>
+        <div class="row"><span>Bid</span><strong id="bid">$120</strong></div>
+        <div class="row"><span>Leader</span><span id="leader">alice</span></div>
+        <div class="row"><span>Time</span><span id="timer">00:30</span></div>
+    </div>
+</section>
+
+<section class="features">
+    <div><h4>HTML<br>Wire.</h4><p>Frames are custom elements. Self-describing. No JSON envelope.</p></div>
+    <div><h4>One Push.<br>Many Targets.</h4><p>Channel fan-out. Multi-tab atomic. No OOB hacks.</p></div>
+    <div><h4>Replay.<br>No Gaps.</h4><p>Per-channel cursor. Reconnect picks up where it left off.</p></div>
+    <div><h4>htmx<br>Native.</h4><p>Pushed HTML carries hx-* attrs. Cascades upgrade.</p></div>
+</section>
+
+<footer><span>Big Sky Software · 2026</span><span><a href="https://htmx.org">htmx</a> · <a href="https://hyperscript.org">_hyperscript</a> · <a href="#">_hyperstream</a></span></footer>
+<script>
+const bids=[120,135,150,165,180,200,215,235],ld=['alice','bob','carol','dave'];let i=0,s=30;
+setInterval(()=>{i=(i+1)%bids.length;bid.textContent='$'+bids[i];leader.textContent=ld[i%4];},1600);
+setInterval(()=>{s=s>0?s-1:30;timer.textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');},1000);
+</script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>_hyperstream — RETRO PIXEL v2</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<style>
+    body{margin:0;background:#1a1a2e;background-image:radial-gradient(ellipse at top,#272a4a,#0e0e1c);color:#f4e8d8;font-family:'VT323',mono;font-size:20px;line-height:1.4;min-height:100vh;image-rendering:pixelated}
+    .wrap{max-width:920px;margin:0 auto;padding:2rem}
+    nav{display:flex;align-items:center;gap:1.5rem;padding:0.5rem 0;border-bottom:4px double #5e3d8c;margin-bottom:2rem}
+    nav .lockup{display:flex;align-items:center;gap:0.5rem;font-family:'Press Start 2P',mono;font-size:11px;color:#7df2c8}
+    nav .lockup img{height:20px;filter:hue-rotate(120deg) brightness(1.3) saturate(2)}
+    nav a{color:#fad643;text-decoration:none;font-size:18px}
+    nav a:hover{color:#ff77c7}
+    .spacer{flex:1}
+    nav .gh{background:#7df2c8;color:#1a1a2e;padding:3px 8px;font-family:'Press Start 2P';font-size:9px}
+    .hero{text-align:center;padding:2rem 1rem 3rem}
+    .badge{display:inline-block;background:#fad643;color:#1a1a2e;padding:6px 12px;font-family:'Press Start 2P';font-size:9px;border:3px solid #1a1a2e;box-shadow:4px 4px 0 #ff77c7;margin-bottom:1.5rem}
+    h1{font-family:'Press Start 2P',mono;font-size:clamp(20px,4vw,42px);color:#7df2c8;text-shadow:4px 4px 0 #ff77c7,8px 8px 0 #5e3d8c;line-height:1.2;margin:0 0 1.5rem;letter-spacing:-1px}
+    h1 .u{color:#fad643}
+    .lede{font-size:24px;max-width:580px;margin:0 auto 2rem;line-height:1.4;color:#f4e8d8}
+    .lede em{color:#7df2c8;font-style:normal}
+    .stars{font-family:'Press Start 2P';font-size:8px;color:#fad643;letter-spacing:4px;margin-bottom:1rem}
+    .panels{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
+    .panel{background:#272a4a;border:4px double #7df2c8;padding:1rem;box-shadow:6px 6px 0 #1a1a2e}
+    .panel header{display:flex;justify-content:space-between;font-family:'Press Start 2P';font-size:9px;color:#fad643;border-bottom:2px solid #5e3d8c;padding-bottom:6px;margin-bottom:8px}
+    pre{font-family:'VT323',mono;font-size:16px;color:#7df2c8;background:#0e0e1c;padding:0.6rem;border:2px solid #5e3d8c;margin:0;white-space:pre-wrap;line-height:1.5}
+    pre .t{color:#ff77c7}.pre .a{color:#fad643}.pre .v{color:#fff}.pre .c{color:#888}
+    .row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px dashed #5e3d8c;font-size:18px}
+    .row:last-child{border:0}
+    .row strong{color:#fad643}
+    .row.hot strong{animation:flash 1.6s infinite}
+    @keyframes flash{0%,70%{color:#fad643}80%{color:#7df2c8;text-shadow:0 0 8px #7df2c8}100%{color:#fad643}}
+    .features{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin:1.5rem 0}
+    .features > div{padding:0.75rem 1rem;background:rgba(125,242,200,0.06);border-left:4px solid #7df2c8}
+    .features h4{font-family:'Press Start 2P';font-size:10px;color:#fad643;margin:0 0 0.4rem}
+    .features p{margin:0}
+    .ascii{font-family:'VT323',mono;font-size:14px;color:rgba(125,242,200,0.5);text-align:center;line-height:1.2;white-space:pre;margin:1.5rem 0}
+    footer{margin-top:3rem;padding-top:1rem;border-top:4px double #5e3d8c;font-family:'Press Start 2P';font-size:9px;color:#888;display:flex;justify-content:space-between}
+    footer a{color:#fad643;text-decoration:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav>
+    <span class="lockup"><img src="/img/trace-mark-animated.svg" alt=""> _HYPERSTREAM</span>
+    <a href="#">SPEC</a><a href="#">FRAMES</a><a href="#">DEMOS</a>
+    <span class="spacer"></span>
+    <a href="#" class="gh">GH</a>
+</nav>
+
+<section class="hero">
+    <div class="stars">★ ・ ★ ・ ★ ・ ★ ・ ★</div>
+    <span class="badge">★ NEW · v0.0.1 ★</span>
+    <h1><span class="u">_</span>HYPERSTREAM</h1>
+    <p class="lede">A real-time hypermedia protocol. <em>Server pushes HTML.</em> Browser swaps HTML. Five kilobytes brotli, zero deps.</p>
+    <div class="stars">★ ・ ★ ・ ★ ・ ★ ・ ★</div>
+</section>
+
+<pre class="ascii">
+    ╔═══════╗     ╔═══════╗     ╔═══════╗     ╔═══════╗
+    ║server ║━━━━▶║ wire  ║━━━━▶║frames ║━━━━▶║  dom  ║
+    ╚═══════╝     ╚═══════╝     ╚═══════╝     ╚═══════╝
+                       ▲           │
+                       └───seq─────┘
+</pre>
+
+<div class="panels">
+    <div class="panel">
+        <header><span>// THE WIRE</span><span>FORMAT v0</span></header>
+<pre><span class="c">// frames as custom elements</span>
+<span class="t">&lt;hs-fragment</span> <span class="a">channel</span>=<span class="v">"auction:lot-1"</span>
+              <span class="a">seq</span>=<span class="v">"42"</span>
+              <span class="a">target</span>=<span class="v">"#price"</span>
+              <span class="a">swap</span>=<span class="v">"inner"</span><span class="t">&gt;</span>
+  <span class="t">&lt;strong&gt;</span>$120<span class="t">&lt;/strong&gt;</span>
+<span class="t">&lt;/hs-fragment&gt;</span></pre>
+    </div>
+    <div class="panel">
+        <header><span>// LIVE</span><span>● STREAMING</span></header>
+        <div class="row hot"><span>BID</span><strong id="bid">$120</strong></div>
+        <div class="row"><span>LEADER</span><strong id="leader">alice</strong></div>
+        <div class="row"><span>TIMER</span><strong id="timer">00:30</strong></div>
+        <div class="row"><span>SUBS</span><strong>1247</strong></div>
+    </div>
+</div>
+
+<section class="features">
+    <div><h4>★ HTML WIRE</h4><p>Frames are custom elements, self-describing.</p></div>
+    <div><h4>★ FAN-OUT</h4><p>One push hits N subscribed targets.</p></div>
+    <div><h4>★ REPLAY</h4><p>Per-channel cursor. Reconnect, no gaps.</p></div>
+    <div><h4>★ HTMX</h4><p>Pushed HTML carries hx-* attrs.</p></div>
+</section>
+
+<footer><span>BIG SKY · 2026 · BSD-2</span><span><a href="https://htmx.org">HTMX</a> · <a href="https://hyperscript.org">_HYPERSCRIPT</a> · <a href="#">_HYPERSTREAM</a></span></footer>
+</div>
+<script>
+const bids=[120,135,150,165,180,200,215,235],ld=['alice','bob','carol','dave'];let i=0,s=30;
+setInterval(()=>{i=(i+1)%bids.length;bid.textContent='$'+bids[i];leader.textContent=ld[i%4];},1600);
+setInterval(()=>{s=s>0?s-1:30;timer.textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');},1000);
+</script>
+</body>
+</html>

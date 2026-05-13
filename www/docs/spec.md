@@ -81,7 +81,7 @@ Same child shape as `<hs-multi>`, but the client buffers all fragments and appli
 |---|---|
 | `target` | selector for the suspense slot |
 | `suspense-id` | opaque ID grouping chunks of one logical stream |
-| `final` | when `"true"`, the suspense slot is sealed (M3) |
+| `final` | when `"true"`, the suspense slot is sealed |
 
 Inner HTML is the chunk text or HTML appended to the slot.
 

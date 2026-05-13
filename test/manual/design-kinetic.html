@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>_hyperstream — KINETIC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;900&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --ink:   #0a0a0a;
+        --paper: #ffffff;
+        --glow:  #7C3AED;
+        --glow2: #06b6d4;
+        --mute:  #888;
+        --hair:  rgba(255,255,255,0.08);
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+        font: 16px/1.55 'Geist', system-ui, sans-serif;
+        background: var(--ink);
+        color: var(--paper);
+        overflow-x: hidden;
+    }
+    .mono, code, pre { font-family: 'Geist Mono', ui-monospace, monospace; }
+
+    /* nav */
+    nav {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 1.25rem 2rem;
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        position: relative;
+        z-index: 5;
+    }
+    nav .lockup { display: flex; align-items: center; gap: 0.55rem; font-family: 'Geist Mono', monospace; font-weight: 600; }
+    nav .lockup img { height: 22px; filter: invert(1); }
+    nav a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 14px; }
+    nav a:hover { color: var(--paper); }
+    nav .spacer { flex: 1; }
+    nav .gh {
+        background: var(--paper); color: var(--ink);
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 500;
+    }
+
+    /* hero */
+    .hero {
+        position: relative;
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 6rem 2rem 8rem;
+        text-align: center;
+        overflow: hidden;
+    }
+    .hero::before {
+        content: '';
+        position: absolute;
+        inset: -200px -100px;
+        background:
+            radial-gradient(ellipse 600px 400px at 50% 30%, rgba(124,58,237,0.35), transparent 60%),
+            radial-gradient(ellipse 500px 300px at 30% 60%, rgba(6,182,212,0.22), transparent 60%),
+            radial-gradient(ellipse 500px 300px at 75% 60%, rgba(236,72,153,0.18), transparent 60%);
+        z-index: 0;
+        animation: drift 14s ease-in-out infinite alternate;
+    }
+    @keyframes drift {
+        0%   { transform: translate(0, 0) scale(1); }
+        100% { transform: translate(-30px, 20px) scale(1.08); }
+    }
+    .hero > * { position: relative; z-index: 1; }
+
+    .pill {
+        display: inline-flex;
+        align-items: center; gap: 0.5rem;
+        padding: 4px 4px 4px 14px;
+        border-radius: 999px;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid var(--hair);
+        font-family: 'Geist Mono', monospace;
+        font-size: 12px;
+        margin-bottom: 2rem;
+        backdrop-filter: blur(10px);
+    }
+    .pill .dot {
+        width: 6px; height: 6px; border-radius: 999px;
+        background: #22c55e;
+        box-shadow: 0 0 8px #22c55e;
+        animation: livePulse 1.6s ease-out infinite;
+    }
+    .pill .tag {
+        background: var(--glow);
+        color: var(--paper);
+        padding: 2px 10px;
+        border-radius: 999px;
+        font-weight: 500;
+        margin-left: 0.5rem;
+    }
+    @keyframes livePulse {
+        0%,70% { box-shadow: 0 0 0 0 rgba(34,197,94,0.5); }
+        85%    { box-shadow: 0 0 0 8px rgba(34,197,94,0); }
+        100%   { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
+    }
+
+    h1.kinetic {
+        font-family: 'Geist', sans-serif;
+        font-weight: 700;
+        font-size: clamp(56px, 11vw, 144px);
+        line-height: 0.95;
+        letter-spacing: -5px;
+        margin: 0;
+        background: linear-gradient(180deg, #fff 30%, rgba(255,255,255,0.55) 100%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    h1.kinetic .u {
+        background: linear-gradient(180deg, var(--glow) 0%, #c084fc 100%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .lede {
+        font-size: 22px;
+        line-height: 1.4;
+        color: rgba(255,255,255,0.75);
+        max-width: 640px;
+        margin: 1.75rem auto 0;
+    }
+    .cta-row {
+        margin-top: 2.5rem;
+        display: flex; gap: 0.75rem; justify-content: center;
+    }
+    .btn {
+        padding: 0.85rem 1.5rem;
+        border-radius: 999px;
+        font-family: 'Geist Mono', monospace;
+        font-size: 14px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .btn.primary {
+        background: var(--paper); color: var(--ink);
+        box-shadow: 0 0 0 1px rgba(255,255,255,0.2), 0 8px 24px rgba(124,58,237,0.4);
+    }
+    .btn.primary:hover { transform: translateY(-2px); box-shadow: 0 0 0 1px rgba(255,255,255,0.3), 0 12px 32px rgba(124,58,237,0.5); }
+    .btn.secondary {
+        background: rgba(255,255,255,0.06);
+        color: var(--paper);
+        border: 1px solid var(--hair);
+    }
+    .btn.secondary:hover { background: rgba(255,255,255,0.12); }
+
+    /* wire across hero — animated SVG */
+    .wirefield {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0.45;
+    }
+    .wirefield path { stroke: url(#grad); stroke-width: 1; fill: none; }
+    .wirefield circle { fill: var(--glow); filter: drop-shadow(0 0 6px var(--glow)); }
+    .wirefield .pkt {
+        animation: pktTravel 3s linear infinite;
+    }
+    .wirefield .pkt2 { animation-delay: 1s; }
+    .wirefield .pkt3 { animation-delay: 2s; }
+    @keyframes pktTravel {
+        0%   { offset-distance: 0%;   opacity: 0; }
+        10%  { opacity: 1; }
+        90%  { opacity: 1; }
+        100% { offset-distance: 100%; opacity: 0; }
+    }
+
+    /* showcase strip */
+    .showcase {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 2rem 6rem;
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 1.5rem;
+    }
+    .glass {
+        background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+        border: 1px solid var(--hair);
+        border-radius: 18px;
+        backdrop-filter: blur(12px);
+        overflow: hidden;
+        position: relative;
+    }
+    .glass::after {
+        content: '';
+        position: absolute; inset: 0;
+        border-radius: 18px;
+        padding: 1px;
+        background: linear-gradient(135deg, rgba(124,58,237,0.4), transparent 30%, transparent 70%, rgba(6,182,212,0.3));
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+                mask-composite: exclude;
+        pointer-events: none;
+    }
+    .glass header {
+        padding: 0.75rem 1.25rem;
+        border-bottom: 1px solid var(--hair);
+        display: flex; align-items: center; gap: 0.6rem;
+        font-family: 'Geist Mono', monospace;
+        font-size: 12px;
+        color: rgba(255,255,255,0.6);
+    }
+    .glass header .live {
+        margin-left: auto;
+        display: inline-flex;
+        align-items: center; gap: 6px;
+        font-size: 11px;
+    }
+    .glass header .live::before {
+        content: ''; width: 6px; height: 6px; border-radius: 999px;
+        background: #22c55e; box-shadow: 0 0 8px #22c55e;
+        animation: livePulse 1.6s ease-out infinite;
+    }
+    .glass pre {
+        margin: 0; padding: 1.5rem;
+        font-family: 'Geist Mono', monospace;
+        font-size: 13px;
+        line-height: 1.7;
+        color: rgba(255,255,255,0.92);
+    }
+    .glass pre .t { color: #c084fc; }
+    .glass pre .a { color: #06b6d4; }
+    .glass pre .v { color: #fbbf24; }
+    .glass pre .c { color: rgba(255,255,255,0.4); font-style: italic; }
+    .glass .demo-body { padding: 1.5rem; }
+    .glass .demo-body h3 { margin: 0 0 1rem; font-size: 16px; color: rgba(255,255,255,0.85); }
+    .glass .demo-row {
+        display: flex; justify-content: space-between;
+        padding: 0.6rem 0;
+        font-size: 14px;
+        color: rgba(255,255,255,0.7);
+        border-bottom: 1px solid var(--hair);
+    }
+    .glass .demo-row:last-child { border: 0; }
+    .glass .demo-row .v {
+        color: var(--paper);
+        font-family: 'Geist Mono', monospace;
+        font-variant-numeric: tabular-nums;
+    }
+    .glass .demo-row.hot .v {
+        animation: bidGlow 1.6s ease-out infinite;
+    }
+    @keyframes bidGlow {
+        0%, 70% { color: var(--paper); text-shadow: none; }
+        80%     { color: #c084fc; text-shadow: 0 0 12px rgba(124,58,237,0.7); }
+        100%    { color: var(--paper); text-shadow: none; }
+    }
+
+    /* feature row */
+    .features {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 2rem 6rem;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: var(--hair);
+        border: 1px solid var(--hair);
+        border-radius: 18px;
+        overflow: hidden;
+    }
+    .features > div {
+        background: var(--ink);
+        padding: 1.75rem;
+        position: relative;
+    }
+    .features h3 {
+        font-family: 'Geist Mono', monospace;
+        font-size: 12px;
+        color: var(--glow);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin: 0 0 0.5rem;
+    }
+    .features p { margin: 0; font-size: 14px; color: rgba(255,255,255,0.7); line-height: 1.55; }
+
+    footer {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 2rem;
+        border-top: 1px solid var(--hair);
+        font-family: 'Geist Mono', monospace;
+        font-size: 12px;
+        color: rgba(255,255,255,0.5);
+        display: flex; justify-content: space-between;
+    }
+    footer a { color: rgba(255,255,255,0.85); text-decoration: none; }
+    footer a:hover { color: var(--glow); }
+</style>
+</head>
+<body>
+
+<svg class="wirefield" viewBox="0 0 1280 700" preserveAspectRatio="none">
+    <defs>
+        <linearGradient id="grad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%"  stop-color="#7C3AED" stop-opacity="0"/>
+            <stop offset="50%" stop-color="#7C3AED" stop-opacity="0.8"/>
+            <stop offset="100%" stop-color="#06b6d4" stop-opacity="0"/>
+        </linearGradient>
+    </defs>
+    <path id="p1" d="M -50 200 C 200 100, 600 300, 900 180 S 1300 250, 1400 200"/>
+    <path id="p2" d="M -50 380 C 250 480, 700 320, 1000 420 S 1300 480, 1400 380"/>
+    <path id="p3" d="M -50 560 C 300 640, 600 500, 950 580 S 1300 620, 1400 560"/>
+    <use href="#p1"/>
+    <use href="#p2"/>
+    <use href="#p3"/>
+    <circle class="pkt"  r="4" style="offset-path: path('M -50 200 C 200 100, 600 300, 900 180 S 1300 250, 1400 200');"/>
+    <circle class="pkt pkt2" r="4" style="offset-path: path('M -50 380 C 250 480, 700 320, 1000 420 S 1300 480, 1400 380');"/>
+    <circle class="pkt pkt3" r="4" style="offset-path: path('M -50 560 C 300 640, 600 500, 950 580 S 1300 620, 1400 560');"/>
+</svg>
+
+<nav>
+    <span class="lockup"><img src="/img/trace-mark-animated.svg" alt=""> _hyperstream</span>
+    <a href="#">Docs</a>
+    <a href="#">Spec</a>
+    <a href="#">Patterns</a>
+    <span class="spacer"></span>
+    <a href="#" class="gh">GitHub →</a>
+</nav>
+
+<section class="hero">
+    <span class="pill"><span class="dot"></span> v0.0.1 just shipped <span class="tag">read post →</span></span>
+    <h1 class="kinetic"><span class="u">_</span>hyperstream</h1>
+    <p class="lede">Server-push hypermedia, stream-grade. Subscribe in HTML. Replay on reconnect. Five kilobytes.</p>
+    <div class="cta-row">
+        <a href="#" class="btn primary">Get started →</a>
+        <a href="#" class="btn secondary">npm i hyperstream.org</a>
+    </div>
+</section>
+
+<section class="showcase">
+    <div class="glass">
+        <header>
+            <span>auction.html</span>
+            <span class="live">streaming · seq 247</span>
+        </header>
+<pre><span class="c">// subscribe in HTML, declarative</span>
+<span class="t">&lt;div</span> <span class="a">_stream</span>=<span class="v">"/sse"</span>
+     <span class="a">_stream-subscribe</span>=<span class="v">"auction:lot-1"</span><span class="t">&gt;</span>
+  <span class="t">&lt;span</span> <span class="a">id</span>=<span class="v">"price"</span><span class="t">&gt;</span>$100<span class="t">&lt;/span&gt;</span>
+<span class="t">&lt;/div&gt;</span>
+
+<span class="c">// server pushes pure HTML envelopes</span>
+<span class="t">&lt;hs-fragment</span> <span class="a">channel</span>=<span class="v">"auction:lot-1"</span>
+              <span class="a">seq</span>=<span class="v">"<span id="seqv">42</span>"</span>
+              <span class="a">target</span>=<span class="v">"#price"</span>
+              <span class="a">swap</span>=<span class="v">"inner"</span><span class="t">&gt;</span>
+  <span class="t">&lt;strong&gt;</span><span id="codeBid">$120</span><span class="t">&lt;/strong&gt;</span>
+<span class="t">&lt;/hs-fragment&gt;</span></pre>
+    </div>
+    <div class="glass">
+        <header>
+            <span>preview · live tab #3</span>
+            <span class="live">connected</span>
+        </header>
+        <div class="demo-body">
+            <h3>Vintage Big Sky T-Shirt</h3>
+            <div class="demo-row hot"><span>Current bid</span><span class="v" id="bid">$120</span></div>
+            <div class="demo-row"><span>Leader</span><span class="v" id="leader">alice</span></div>
+            <div class="demo-row"><span>Time left</span><span class="v" id="timer">00:30</span></div>
+            <div class="demo-row"><span>Subscribers</span><span class="v">1,247</span></div>
+        </div>
+    </div>
+</section>
+
+<section class="features">
+    <div><h3>HTML wire</h3><p>Frames are custom elements. No JSON envelope. Hypermedia, server to DOM.</p></div>
+    <div><h3>Pub / sub</h3><p>One push fans out to N targets. Multi-tab atomic, no OOB hacks.</p></div>
+    <div><h3>Replay</h3><p>Per-channel cursor in sessionStorage. Never miss a frame.</p></div>
+    <div><h3>htmx ready</h3><p>Pushed HTML carries hx-* attrs. Cascades upgrade automatically.</p></div>
+</section>
+
+<footer>
+    <span>third primitive of the Big Sky stack</span>
+    <span><a href="https://htmx.org">htmx</a> · <a href="https://hyperscript.org">_hyperscript</a> · <a href="#">_hyperstream</a></span>
+</footer>
+
+<script>
+    const bids = [120, 135, 150, 165, 180, 200, 215, 235];
+    const leaders = ['alice','bob','carol','dave'];
+    let i = 0, sec = 30, seq = 42;
+    setInterval(() => {
+        i = (i+1) % bids.length;
+        const b = '$' + bids[i];
+        document.getElementById('bid').textContent = b;
+        document.getElementById('codeBid').textContent = b;
+        document.getElementById('leader').textContent = leaders[i % leaders.length];
+        seq++;
+        document.getElementById('seqv').textContent = seq;
+    }, 1600);
+    setInterval(() => {
+        sec = sec > 0 ? sec - 1 : 30;
+        const m = String(Math.floor(sec/60)).padStart(2,'0');
+        const s = String(sec%60).padStart(2,'0');
+        document.getElementById('timer').textContent = m + ':' + s;
+    }, 1000);
+</script>
+
+</body>
+</html>

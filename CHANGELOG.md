@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased] — M1
+## [Unreleased]
 
 Spec v0 wired end-to-end. SSE and WS transports, envelope dispatcher, swap targets, and a zero-deps reference server.
 
@@ -28,4 +28,3 @@ First heartbeat. Repo skeleton, build pipeline, smoke test, and stub runtime.
 - Playwright smoke test verifying bundle loads and exposes `window._hyperstream`
 - Stub `Runtime`, `config`, `logger`, and two extension stubs (`atomic`, `morph`)
 - 0BSD license
-- Plan and milestone breakdown documented internally

@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>_hyperstream — HAND-DRAWN</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;700&family=Patrick+Hand&family=Cascadia+Mono&display=swap" rel="stylesheet">
+<style>
+    :root { --paper:#fbf6e9; --ink:#2b2014; --accent:#e85d75; --blue:#3a86ff; --rule:#cdb88a; }
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 0; font: 18px/1.55 'Patrick Hand', cursive; background: var(--paper); color: var(--ink); }
+    body::before {
+        content: ''; position: fixed; inset: 0;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40'><circle cx='4' cy='4' r='1' fill='%23cdb88a' opacity='0.4'/></svg>");
+        pointer-events: none; opacity: 0.6;
+    }
+    .wrap { max-width: 980px; margin: 0 auto; padding: 2rem; position: relative; z-index: 1; }
+    .doodle-mark { display: inline-block; transform: rotate(-2deg); }
+    nav { display: flex; align-items: center; gap: 1.5rem; padding-bottom: 1rem; border-bottom: 2px solid var(--ink); border-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 4'><path d='M0 2 Q50 0 100 2 T200 2' stroke='%232b2014' stroke-width='2' fill='none'/></svg>") 0 0 100% 0 stretch; }
+    nav .name { font-family: 'Caveat'; font-weight: 700; font-size: 28px; }
+    nav a { color: var(--ink); text-decoration: none; }
+    nav a:hover { background: yellow; padding: 0 4px; transform: rotate(-1deg); display: inline-block; }
+    .spacer { flex: 1; }
+    nav .gh { background: var(--ink); color: var(--paper); padding: 4px 12px; transform: rotate(-1deg); display: inline-block; }
+    h1 { font-family: 'Caveat'; font-weight: 700; font-size: clamp(64px, 11vw, 132px); line-height: 0.95; margin: 3rem 0 1rem; transform: rotate(-1deg); }
+    h1 .u { color: var(--accent); }
+    h1 .scribble { position: relative; }
+    h1 .scribble::after {
+        content: ''; position: absolute; left: -4px; right: -4px; bottom: -8px; height: 16px;
+        background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 16' preserveAspectRatio='none'><path d='M5 8 Q50 2 100 8 T200 8 T300 8 T395 8' stroke='%23e85d75' stroke-width='3' fill='none'/></svg>") no-repeat;
+        background-size: 100% 100%;
+    }
+    .lede { font-size: 22px; max-width: 620px; margin: 0 0 2rem; }
+    .stickynote { background: #fff8b3; border: 1px solid #d4c47a; padding: 1rem 1.25rem; transform: rotate(2deg); display: inline-block; box-shadow: 4px 4px 0 rgba(0,0,0,0.08); margin: 0 0 2rem; }
+    .stickynote code { background: transparent; font-family: 'Cascadia Mono', monospace; font-size: 14px; }
+    .panels { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2rem; }
+    .panel { background: #fff; border: 2px solid var(--ink); padding: 1rem 1.25rem; transform: rotate(-0.5deg); box-shadow: 6px 6px 0 var(--ink); }
+    .panel:nth-child(2) { transform: rotate(0.5deg); }
+    .panel h3 { font-family: 'Caveat'; font-size: 26px; margin: 0 0 0.75rem; color: var(--accent); }
+    pre { font-family: 'Cascadia Mono', monospace; font-size: 13px; background: #f7f0d8; padding: 0.75rem; border: 1px dashed var(--rule); margin: 0; white-space: pre-wrap; }
+    .row { display: flex; justify-content: space-between; padding: 0.4rem 0; border-bottom: 1px dashed var(--rule); }
+    .row:last-child { border: 0; }
+    .row strong { color: var(--accent); }
+    .arrow-hand { display: block; margin: 1rem auto; transform: rotate(8deg); }
+    .features { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; margin: 3rem 0; }
+    .features > div { padding: 1rem; border-left: 4px wavy var(--accent); transform: rotate(-0.3deg); }
+    .features > div:nth-child(2n) { transform: rotate(0.3deg); border-color: var(--blue); }
+    .features h4 { font-family: 'Caveat'; font-size: 24px; margin: 0 0 0.4rem; }
+    footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 2px dashed var(--ink); font-family: 'Caveat'; font-size: 18px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav>
+    <span class="doodle-mark"><img src="/img/trace-mark-animated.svg" height="28"></span>
+    <span class="name">_hyperstream</span>
+    <a href="#">notes</a><a href="#">spec</a><a href="#">demos</a>
+    <span class="spacer"></span>
+    <a href="#" class="gh">github →</a>
+</nav>
+
+<h1><span class="u">_</span><span class="scribble">hyperstream</span></h1>
+<p class="lede">a tiny protocol for streaming <em>HTML fragments</em> straight into the page. no JSON. no signals. just hypermedia, all the way.</p>
+
+<div class="stickynote">
+    P.S. — try it: <code>npm i hyperstream.org</code>
+</div>
+
+<div class="panels">
+    <div class="panel">
+        <h3>the wire</h3>
+<pre>&lt;hs-fragment channel="auction:lot-1"
+              seq="42"
+              target="#price"
+              swap="inner"&gt;
+  &lt;strong&gt;$120&lt;/strong&gt;
+&lt;/hs-fragment&gt;</pre>
+        <svg class="arrow-hand" width="60" height="40" viewBox="0 0 60 40">
+            <path d="M5 30 Q30 5 55 25" stroke="#2b2014" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <path d="M50 18 L55 25 L48 28" stroke="#2b2014" stroke-width="2" fill="none" stroke-linecap="round"/>
+        </svg>
+    </div>
+    <div class="panel">
+        <h3>the page</h3>
+        <div class="row"><span>current bid</span><strong id="bid">$120</strong></div>
+        <div class="row"><span>leader</span><span id="leader">alice</span></div>
+        <div class="row"><span>time left</span><span id="timer">00:30</span></div>
+    </div>
+</div>
+
+<section class="features">
+    <div><h4>HTML wire</h4><p>frames are custom elements. read 'em as HTML. that's it.</p></div>
+    <div><h4>fan-out</h4><p>one push, many targets. like sending a postcard to a list.</p></div>
+    <div><h4>replay</h4><p>connection drops? cursor remembers. nothing is lost.</p></div>
+    <div><h4>htmx friend</h4><p>pushed HTML carries hx-* attrs. just works.</p></div>
+</section>
+
+<footer>made with care · big sky software · htmx · _hyperscript · _hyperstream</footer>
+</div>
+<script>
+const bids=[120,135,150,165,180,200,215,235],ld=['alice','bob','carol','dave'];let i=0,s=30;
+setInterval(()=>{i=(i+1)%bids.length;bid.textContent='$'+bids[i];leader.textContent=ld[i%4];},1600);
+setInterval(()=>{s=s>0?s-1:30;timer.textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');},1000);
+</script>
+</body>
+</html>

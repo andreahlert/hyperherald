@@ -1,5 +1,4 @@
 // @ts-check
-// M0 smoke test: bundle loads, exposes _hyperstream global, logs version.
 import { test, expect } from '@playwright/test';
 import { readFileSync, existsSync } from 'fs';
 import { fileURLToPath } from 'url';

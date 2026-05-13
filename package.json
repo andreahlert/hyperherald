@@ -13,7 +13,7 @@
   "type": "module",
   "homepage": "https://hyperstream.org/",
   "bugs": {
-    "url": "https://github.com/bigskysoftware/_hyperstream/issues"
+    "url": "https://github.com/andreahlert/hyperstream/issues"
   },
   "license": "0BSD",
   "files": [
@@ -31,6 +31,7 @@
     "./ext/*": "./dist/ext/*"
   },
   "scripts": {
+    "start": "node test/manual/auction-server.js",
     "build": "node build.config.mjs",
     "build:watch": "node build.config.mjs --watch",
     "test": "playwright test --config test/playwright.config.js --project=chromium",
@@ -44,7 +45,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bigskysoftware/_hyperstream.git"
+    "url": "git+https://github.com/andreahlert/hyperstream.git"
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.1.2",

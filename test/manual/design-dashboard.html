@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>_hyperstream — BRUTAL DASHBOARD</title>
+<style>
+    body{margin:0;font:13px/1.45 ui-monospace,'SF Mono',Menlo,Consolas,monospace;color:#000;background:#fff}
+    a{color:#0000ee}
+    a:visited{color:#551a8b}
+    .top{padding:0.5rem 1rem;border-bottom:1px solid #000;display:flex;align-items:center;gap:1rem}
+    .top .name{font-weight:700}
+    .top .name img{height:16px;vertical-align:middle;margin-right:6px}
+    .top .nav{display:flex;gap:0.75rem;font-size:12px}
+    .top .right{margin-left:auto;font-size:11px;color:#666}
+    main{max-width:1080px;margin:0 auto;padding:1.5rem 1rem 3rem}
+    h1{font-size:18px;margin:0 0 0.25rem;font-weight:700}
+    h1 .u{color:#888}
+    .subtitle{font-size:13px;color:#444;margin:0 0 1rem}
+    .install{background:#fafafa;border:1px solid #ccc;padding:0.4rem 0.6rem;display:inline-block;font-size:12px}
+    .install::before{content:'$ ';color:#0a0}
+    .meta{font-size:11px;color:#888;margin:0.5rem 0 1.5rem}
+    h2{font-size:14px;font-weight:700;border-bottom:1px solid #000;padding-bottom:2px;margin:1.5rem 0 0.5rem;text-transform:uppercase;letter-spacing:0.5px}
+    p{margin:0 0 0.6rem}
+    table{width:100%;border-collapse:collapse;margin:0.5rem 0;font-size:12px}
+    table th,table td{padding:4px 8px;text-align:left;border-bottom:1px solid #ddd}
+    table th{background:#f4f4f4;font-weight:700;font-size:11px;text-transform:uppercase;border-bottom:1px solid #000}
+    code{background:#fafafa;padding:1px 4px;border:1px solid #eee;font-size:0.9em}
+    pre{background:#fafafa;border:1px solid #ddd;padding:0.5rem 0.75rem;font-size:12px;line-height:1.5;overflow-x:auto;margin:0.5rem 0}
+    pre .t{color:#a30000}.pre .a{color:#000080}.pre .v{color:#006600}.pre .c{color:#888}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0}
+    .grid2 > div{border:1px solid #000;padding:0.5rem 0.75rem;background:#fff}
+    .grid2 h3{margin:0 0 0.4rem;font-size:12px;font-weight:700;text-transform:uppercase;border-bottom:1px solid #000;padding-bottom:2px}
+    .row{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px dotted #ccc;font-size:12px}
+    .row:last-child{border:0}
+    .row strong{color:#a30000}
+    ul{padding-left:1.25rem;margin:0.4rem 0}
+    li{margin-bottom:0.25rem}
+    .feed{font-family:ui-monospace,monospace;font-size:11px;background:#000;color:#0f0;padding:0.5rem 0.75rem;height:140px;overflow:auto;border:1px solid #000}
+    .feed .l{padding:1px 0}
+    .feed .ts{color:#888}
+    .feed .ev{color:#ffe066}
+    footer{border-top:1px solid #000;margin-top:2rem;padding-top:0.5rem;font-size:11px;color:#666;display:flex;justify-content:space-between}
+</style>
+</head>
+<body>
+<div class="top">
+    <span class="name"><img src="/img/trace-mark-animated.svg" alt=""> _hyperstream</span>
+    <span class="nav">
+        <a href="#">spec</a> · <a href="#">frames</a> · <a href="#">transports</a> · <a href="#">demos</a> · <a href="#">github</a>
+    </span>
+    <span class="right">v0.0.1 · 2026-05-08 · BSD-2</span>
+</div>
+
+<main>
+<h1><span class="u">_</span>hyperstream | declarative server-push hypermedia for the web</h1>
+<p class="subtitle">5KB brotli, zero deps. The third primitive of the Big Sky stack alongside <a href="https://htmx.org">htmx</a> and <a href="https://hyperscript.org">_hyperscript</a>.</p>
+
+<div class="install">npm install hyperstream.org</div>
+<p class="meta">last update: 2026-05-08 · 49 files · 7,294 LoC · 6 tests pass</p>
+
+<h2>Why this exists</h2>
+<p>htmx covers request/response. _hyperscript covers behaviour. Server push has been bolt-on. _hyperstream fills the gap: subscribe in HTML, replay on reconnect, fan-out one event to N targets, all without leaving hypermedia.</p>
+
+<h2>The wire format</h2>
+<p>Every push is a single self-describing custom element. No JSON envelope.</p>
+<pre><span class="c">// example: a single fragment swap</span>
+<span class="t">&lt;hs-fragment</span> <span class="a">channel</span>=<span class="v">"auction:lot-1"</span>
+              <span class="a">seq</span>=<span class="v">"42"</span>
+              <span class="a">target</span>=<span class="v">"#price"</span>
+              <span class="a">swap</span>=<span class="v">"inner"</span><span class="t">&gt;</span>
+  <span class="t">&lt;strong&gt;</span>$120<span class="t">&lt;/strong&gt;</span>
+<span class="t">&lt;/hs-fragment&gt;</span></pre>
+
+<h2>Frame types</h2>
+<table>
+    <tr><th>Tag</th><th>Purpose</th><th>Required attrs</th></tr>
+    <tr><td><code>&lt;hs-fragment&gt;</code></td><td>single swap</td><td>channel, seq, target, swap</td></tr>
+    <tr><td><code>&lt;hs-multi&gt;</code></td><td>ordered batch</td><td>channel, seq, fragments[]</td></tr>
+    <tr><td><code>&lt;hs-atomic&gt;</code></td><td>single mutation batch</td><td>channel, seq, fragments[]</td></tr>
+    <tr><td><code>&lt;hs-partial&gt;</code></td><td>progressive append</td><td>channel, seq, suspense_id</td></tr>
+    <tr><td><code>&lt;hs-subscribe-ack&gt;</code></td><td>WS handshake reply</td><td>channels, cursor</td></tr>
+    <tr><td><code>&lt;hs-close&gt;</code></td><td>graceful close</td><td>code</td></tr>
+</table>
+
+<h2>Live channel: auction:lot-1</h2>
+<div class="grid2">
+    <div>
+        <h3>state</h3>
+        <div class="row"><span>current_bid</span><strong id="bid">$120</strong></div>
+        <div class="row"><span>leader</span><span id="leader">alice</span></div>
+        <div class="row"><span>time_left</span><span id="timer">00:30</span></div>
+        <div class="row"><span>subscribers</span><span>1,247</span></div>
+        <div class="row"><span>last_seq</span><span id="seqv">247</span></div>
+    </div>
+    <div>
+        <h3>event feed</h3>
+        <div class="feed" id="feed">
+            <div class="l"><span class="ts">[15:23:01]</span> <span class="ev">hs:fragment</span> seq=247 target=#price</div>
+        </div>
+    </div>
+</div>
+
+<h2>Properties</h2>
+<table>
+    <tr><th>Property</th><th>Value</th></tr>
+    <tr><td>Bundle (brotli)</td><td>5.0 KB</td></tr>
+    <tr><td>Runtime deps</td><td>0</td></tr>
+    <tr><td>Transports</td><td>SSE, WebSocket</td></tr>
+    <tr><td>Wire format</td><td>HTML custom elements</td></tr>
+    <tr><td>License</td><td>BSD-2-Clause</td></tr>
+    <tr><td>Min browser</td><td>Chrome 90, Firefox 90, Safari 15</td></tr>
+</table>
+
+<h2>Quick links</h2>
+<ul>
+    <li><a href="#">Spec v0</a> — wire format, frame types, attribute reference</li>
+    <li><a href="#">SSE transport</a> — Last-Event-ID replay, multi-line data</li>
+    <li><a href="#">WS transport</a> — handshake, reconnect, cursor</li>
+    <li><a href="#">Auction demo</a> — full live example with replay</li>
+    <li><a href="#">Comparison</a> — vs htmx hx-sse, Datastar, LiveView, Turbo</li>
+</ul>
+
+<footer><span>discuss: <a href="#">issues</a> · <a href="#">discord</a></span><span><a href="https://htmx.org">htmx</a> · <a href="https://hyperscript.org">_hyperscript</a> · <a href="#">_hyperstream</a></span></footer>
+</main>
+
+<script>
+const bids=[120,135,150,165,180,200,215,235],ld=['alice','bob','carol','dave'];let i=0,s=30,seq=247;
+const feed=document.getElementById('feed');
+setInterval(()=>{
+    i=(i+1)%bids.length;
+    bid.textContent='$'+bids[i];
+    leader.textContent=ld[i%4];
+    seq++;
+    seqv.textContent=seq;
+    const t=new Date().toTimeString().slice(0,8);
+    const l=document.createElement('div');
+    l.className='l';
+    l.innerHTML=`<span class="ts">[${t}]</span> <span class="ev">hs:fragment</span> seq=${seq} bid=$${bids[i]}`;
+    feed.insertBefore(l,feed.firstChild);
+    while(feed.children.length>10)feed.removeChild(feed.lastChild);
+},1600);
+setInterval(()=>{s=s>0?s-1:30;timer.textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');},1000);
+</script>
+</body>
+</html>

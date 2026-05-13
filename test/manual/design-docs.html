@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>_hyperstream — DOCS</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+    :root { --ink:#1a1a1a; --paper:#fff; --side:#f6f8fa; --rule:#e1e4e8; --link:#0969da; --code-bg:#f6f8fa; --mute:#57606a; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font: 16px/1.6 'Inter', sans-serif; color: var(--ink); display: grid; grid-template-columns: 280px 1fr 240px; min-height: 100vh; }
+    aside.left, aside.right { background: var(--side); padding: 1.5rem 1.25rem; border-right: 1px solid var(--rule); position: sticky; top: 0; height: 100vh; overflow: auto; font-size: 14px; }
+    aside.right { border-right: 0; border-left: 1px solid var(--rule); }
+    aside .lockup { display: flex; align-items: center; gap: 0.5rem; font-family: 'JetBrains Mono', mono; font-weight: 600; padding-bottom: 1rem; border-bottom: 1px solid var(--rule); margin-bottom: 1rem; }
+    aside .lockup img { height: 22px; }
+    aside h4 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--mute); margin: 1rem 0 0.5rem; }
+    aside ul { list-style: none; padding: 0; margin: 0; }
+    aside li { padding: 4px 0; }
+    aside a { color: var(--ink); text-decoration: none; display: block; padding: 4px 8px; border-radius: 4px; }
+    aside a:hover { background: #fff; }
+    aside a.active { background: #fff; color: var(--link); font-weight: 500; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+    aside .ver { font-family: 'JetBrains Mono', mono; font-size: 11px; color: var(--mute); margin-top: auto; }
+    main { padding: 2.5rem 3rem; max-width: 800px; }
+    main h1 { font-size: 36px; font-weight: 700; margin: 0 0 0.5rem; letter-spacing: -0.5px; }
+    main .crumbs { font-size: 13px; color: var(--mute); margin-bottom: 0.5rem; }
+    main .crumbs a { color: var(--mute); text-decoration: none; }
+    main .lede { font-size: 18px; line-height: 1.55; color: #444; margin: 0 0 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--rule); }
+    main h2 { font-size: 24px; margin: 2.5rem 0 1rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--rule); }
+    main p { margin: 0 0 1rem; }
+    main code { font-family: 'JetBrains Mono', mono; font-size: 0.88em; background: var(--code-bg); padding: 2px 6px; border-radius: 3px; }
+    main pre { font-family: 'JetBrains Mono', mono; font-size: 13px; line-height: 1.7; background: var(--code-bg); padding: 1rem 1.25rem; border-radius: 6px; border: 1px solid var(--rule); overflow-x: auto; }
+    main pre .t { color: #cf222e; }
+    main pre .a { color: #0969da; }
+    main pre .v { color: #032f62; }
+    main pre .c { color: #6e7781; font-style: italic; }
+    .callout { background: #ddf4ff; border-left: 4px solid var(--link); padding: 0.75rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; font-size: 14px; }
+    .callout::before { content: 'ℹ Note'; font-weight: 600; display: block; margin-bottom: 4px; color: var(--link); }
+    table.props { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 14px; }
+    table.props th, table.props td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--rule); }
+    table.props th { background: var(--code-bg); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+    aside.right h4:first-child { margin-top: 0; }
+    aside.right .toc a { font-size: 13px; color: var(--mute); }
+    aside.right .toc a.active { color: var(--link); }
+    .install { font-family: 'JetBrains Mono', mono; background: #0d1117; color: #c9d1d9; padding: 0.6rem 0.9rem; border-radius: 6px; font-size: 13px; margin-bottom: 1rem; display: inline-block; }
+    .install .p { color: #7ee787; }
+</style>
+</head>
+<body>
+<aside class="left">
+    <div class="lockup"><img src="/img/trace-mark-animated.svg" alt=""> _hyperstream</div>
+    <h4>Getting started</h4>
+    <ul><li><a href="#" class="active">Introduction</a></li><li><a href="#">Install</a></li><li><a href="#">First push</a></li></ul>
+    <h4>Core</h4>
+    <ul><li><a href="#">Wire format</a></li><li><a href="#">Frames</a></li><li><a href="#">Channels</a></li><li><a href="#">Cursor & replay</a></li></ul>
+    <h4>Transports</h4>
+    <ul><li><a href="#">SSE</a></li><li><a href="#">WebSocket</a></li></ul>
+    <h4>Patterns</h4>
+    <ul><li><a href="#">Auction</a></li><li><a href="#">Dashboard</a></li><li><a href="#">LLM stream</a></li></ul>
+    <div class="ver" style="margin-top:2rem">v0.0.1 · BSD-2</div>
+</aside>
+
+<main>
+    <div class="crumbs"><a href="#">Docs</a> / Getting started / Introduction</div>
+    <h1>_hyperstream</h1>
+    <p class="lede">Declarative server-push hypermedia. HTML over the wire, all the way down. Five kilobytes brotli, zero dependencies.</p>
+
+    <div class="install"><span class="p">$</span> npm install hyperstream.org</div>
+
+    <h2>Why</h2>
+    <p><code>htmx</code> handles request/response. <code>_hyperscript</code> handles client behaviour. <em>_hyperstream</em> is the third primitive: <strong>server-push</strong>. Subscribe in HTML, replay on reconnect, fan out one push to many targets.</p>
+
+    <div class="callout">No JSON envelope. Frames are self-describing custom elements. The wire is hypermedia.</div>
+
+    <h2>The wire format</h2>
+    <p>Every push is a single custom element. The same shape covers fragment swaps, atomic batches, partial streams, subscribe acks.</p>
+
+<pre><span class="c">// example: a single fragment swap</span>
+<span class="t">&lt;hs-fragment</span> <span class="a">channel</span>=<span class="v">"auction:lot-1"</span>
+              <span class="a">seq</span>=<span class="v">"42"</span>
+              <span class="a">target</span>=<span class="v">"#price"</span>
+              <span class="a">swap</span>=<span class="v">"inner"</span><span class="t">&gt;</span>
+  <span class="t">&lt;strong&gt;</span>$120<span class="t">&lt;/strong&gt;</span>
+<span class="t">&lt;/hs-fragment&gt;</span></pre>
+
+    <h2>Attributes</h2>
+    <table class="props">
+        <tr><th>Attribute</th><th>Type</th><th>Description</th></tr>
+        <tr><td><code>_stream</code></td><td>URL</td><td>Endpoint for the connection</td></tr>
+        <tr><td><code>_stream-subscribe</code></td><td>topics</td><td>Space-separated channel list</td></tr>
+        <tr><td><code>_stream-coalesce</code></td><td>config</td><td>Drop-key + window throttling</td></tr>
+        <tr><td><code>_stream-buffer</code></td><td>config</td><td>Bounded queue + drop-policy</td></tr>
+    </table>
+</main>
+
+<aside class="right">
+    <h4>On this page</h4>
+    <div class="toc">
+        <a href="#" class="active">Why</a>
+        <a href="#">The wire format</a>
+        <a href="#">Attributes</a>
+    </div>
+    <h4 style="margin-top:1.5rem">Edit on GitHub</h4>
+    <a href="#" style="font-size:13px;color:var(--link)">→ docs/intro.md</a>
+</aside>
+</body>
+</html>

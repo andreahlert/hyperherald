@@ -27,7 +27,6 @@ const _hyperstream = {
     runtime,
     logger,
 
-    // public API surface (M0 stub — fills in M1)
     process: (root) => runtime.process(root),
     cleanup: (root) => runtime.cleanup(root),
 
