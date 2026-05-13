@@ -1,5 +1,5 @@
-// _hyperstream — declarative server-push hypermedia
-// https://hyperstream.org
+// _hyperherald — declarative server-push hypermedia
+// https://hyperherald.org
 'use strict';
 
 import { config } from './core/config.js';
@@ -21,7 +21,7 @@ const globalScope = typeof self !== 'undefined'
 
 const runtime = new Runtime({ config, logger });
 
-const _hyperstream = {
+const _hyperherald = {
     version: VERSION,
     config,
     runtime,
@@ -32,7 +32,7 @@ const _hyperstream = {
 
     // extension hooks
     use(plugin) {
-        plugin(_hyperstream);
+        plugin(_hyperherald);
     },
 
     /**
@@ -71,15 +71,15 @@ function ready(fn) {
 
 if (typeof document !== 'undefined') {
     ready(() => {
-        logger.info(`_hyperstream ${VERSION}`);
+        logger.info(`_hyperherald ${VERSION}`);
         runtime.process(document.documentElement);
-        document.dispatchEvent(new Event('hyperstream:ready'));
+        document.dispatchEvent(new Event('hyperherald:ready'));
     });
 }
 
 if (typeof self !== 'undefined') {
-    self._hyperstream = _hyperstream;
+    self._hyperherald = _hyperherald;
 }
 
-export default _hyperstream;
-export { _hyperstream };
+export default _hyperherald;
+export { _hyperherald };

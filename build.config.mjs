@@ -3,9 +3,9 @@ import { readdirSync } from 'fs'
 import { execSync } from 'child_process'
 
 const dev = process.argv.includes('--watch')
-const OUT = process.env.HS_OUT_DIR || 'dist'
+const OUT = process.env.HH_OUT_DIR || 'dist'
 
-const coreEntry = ['src/_hyperstream.js']
+const coreEntry = ['src/_hyperherald.js']
 const extEntries = [
   'src/ext/morph.js',
 ]
@@ -51,10 +51,10 @@ function builds(entryPoints, outOptions) {
 }
 
 const coreBuildConfigs = builds(coreEntry, {
-  iife:    { outfile: `${OUT}/_hyperstream.js` },
-  esm:     { outfile: `${OUT}/_hyperstream.esm.js` },
-  iifeMin: { outfile: `${OUT}/_hyperstream.min.js` },
-  esmMin:  { outfile: `${OUT}/_hyperstream.esm.min.js` },
+  iife:    { outfile: `${OUT}/_hyperherald.js` },
+  esm:     { outfile: `${OUT}/_hyperherald.esm.js` },
+  iifeMin: { outfile: `${OUT}/_hyperherald.min.js` },
+  esmMin:  { outfile: `${OUT}/_hyperherald.esm.min.js` },
 })
 
 const extBuildConfigs = builds(extEntries, {
@@ -66,8 +66,8 @@ const extBuildConfigs = builds(extEntries, {
 
 function brotliCompress() {
   const minFiles = [
-    `${OUT}/_hyperstream.min.js`,
-    `${OUT}/_hyperstream.esm.min.js`,
+    `${OUT}/_hyperherald.min.js`,
+    `${OUT}/_hyperherald.esm.min.js`,
   ]
   try {
     for (const f of readdirSync(`${OUT}/ext`)) {
@@ -88,7 +88,7 @@ if (dev) {
     ...shared,
     format: 'iife',
     entryPoints: coreEntry,
-    outfile: `${OUT}/_hyperstream.js`,
+    outfile: `${OUT}/_hyperherald.js`,
   })
   await ctx.watch()
   console.log(`Watching src/ for changes...`)

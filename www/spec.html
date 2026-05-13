@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>///_hyperstream / spec</title>
+    <title>///_hyperherald / spec</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png" href="/img/mascot-retro-small.svg">
@@ -16,7 +16,7 @@
 <header class="navbar">
     <nav>
         <a href="/" class="nav-logo">
-            <img src="/img/mascot-retro-small.svg" alt="_hyperstream" class="nav-logo-img">
+            <img src="/img/mascot-retro-small.svg" alt="_hyperherald" class="nav-logo-img">
         </a>
         <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" onclick="this.closest('.navbar').classList.toggle('nav-open');this.setAttribute('aria-expanded',this.closest('.navbar').classList.contains('nav-open'))">
             <span></span><span></span><span></span>
@@ -28,7 +28,7 @@
             <li><a href="/auction.html">demo</a>
             <li><a href="/try-it.html">try it!</a>
             <li class="nav-spacer"></li>
-            <li><a href="https://github.com/andreahlert/hyperstream" class="nav-github" aria-label="GitHub">
+            <li><a href="https://github.com/hyperherald/_hyperherald" class="nav-github" aria-label="GitHub">
                 <svg viewBox="0 0 16 16" width="20" height="20" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
             </a>
         </ul>
@@ -40,7 +40,7 @@
     <h1>wire format spec</h1>
     <p>v0, 2026. Breaking changes allowed in 0.x.</p>
     <p>
-        _hyperstream frames are HTML custom elements with structured attributes. No JSON envelope.
+        _hyperherald frames are HTML custom elements with structured attributes. No JSON envelope.
         The browser parses them with <code>DOMParser</code> and applies them to the DOM via the runtime.
     </p>
 
@@ -60,42 +60,42 @@
 
     <h2>frame types</h2>
 
-    <h3>1. hs-fragment</h3>
+    <h3>1. hh-fragment</h3>
     <p>Single targeted swap.</p>
-<pre class="language-html"><code class="language-html">&lt;hs-fragment channel="orders:42" seq="17"
+<pre class="language-html"><code class="language-html">&lt;hh-fragment channel="orders:42" seq="17"
              target="#status"
              swap="inner"&gt;
   shipped
-&lt;/hs-fragment&gt;</code></pre>
+&lt;/hh-fragment&gt;</code></pre>
     <p><code>swap</code> values: <code>inner</code>, <code>outer</code>, <code>append</code>, <code>prepend</code>, <code>before</code>, <code>after</code>, <code>delete</code>, <code>replace</code>.</p>
 
-    <h3>2. hs-multi</h3>
+    <h3>2. hh-multi</h3>
     <p>Multiple fragments applied in order. Not atomic.</p>
-<pre class="language-html"><code class="language-html">&lt;hs-multi channel="chat:lobby" seq="42"&gt;
-  &lt;hs-fragment target="#count" swap="inner"&gt;3&lt;/hs-fragment&gt;
-  &lt;hs-fragment target="#log"   swap="append"&gt;&lt;li&gt;hi&lt;/li&gt;&lt;/hs-fragment&gt;
-&lt;/hs-multi&gt;</code></pre>
+<pre class="language-html"><code class="language-html">&lt;hh-multi channel="chat:lobby" seq="42"&gt;
+  &lt;hh-fragment target="#count" swap="inner"&gt;3&lt;/hh-fragment&gt;
+  &lt;hh-fragment target="#log"   swap="append"&gt;&lt;li&gt;hi&lt;/li&gt;&lt;/hh-fragment&gt;
+&lt;/hh-multi&gt;</code></pre>
 
-    <h3>3. hs-atomic</h3>
+    <h3>3. hh-atomic</h3>
     <p>Multiple fragments buffered then flushed in one mutation. Use for state that should never be inconsistent (price plus leader plus countdown).</p>
-<pre class="language-html"><code class="language-html">&lt;hs-atomic channel="auction:lot-1" seq="99"&gt;
-  &lt;hs-fragment target="#price"     swap="inner"&gt;&lt;strong&gt;$120&lt;/strong&gt;&lt;/hs-fragment&gt;
-  &lt;hs-fragment target="#leader"    swap="inner"&gt;alice&lt;/hs-fragment&gt;
-  &lt;hs-fragment target="#countdown" swap="inner"&gt;30&lt;/hs-fragment&gt;
-&lt;/hs-atomic&gt;</code></pre>
+<pre class="language-html"><code class="language-html">&lt;hh-atomic channel="auction:lot-1" seq="99"&gt;
+  &lt;hh-fragment target="#price"     swap="inner"&gt;&lt;strong&gt;$120&lt;/strong&gt;&lt;/hh-fragment&gt;
+  &lt;hh-fragment target="#leader"    swap="inner"&gt;alice&lt;/hh-fragment&gt;
+  &lt;hh-fragment target="#countdown" swap="inner"&gt;30&lt;/hh-fragment&gt;
+&lt;/hh-atomic&gt;</code></pre>
 
-    <h3>4. hs-partial</h3>
+    <h3>4. hh-partial</h3>
     <p>Progressive append, terminates with <code>final</code>. Designed for LLM token streaming.</p>
-<pre class="language-html"><code class="language-html">&lt;hs-partial channel="chat:reply-99" seq="5"
+<pre class="language-html"><code class="language-html">&lt;hh-partial channel="chat:reply-99" seq="5"
             target="#answer"
             suspense_id="reply-99"&gt;
   the wire is HTML
-&lt;/hs-partial&gt;</code></pre>
+&lt;/hh-partial&gt;</code></pre>
 
-    <h3>5. hs-subscribe-ack</h3>
+    <h3>5. hh-subscribe-ack</h3>
     <p>Server confirms subscription, optionally with replay cursor for missed frames.</p>
-<pre class="language-html"><code class="language-html">&lt;hs-subscribe-ack channel="orders:42"
-                  cursor="17"&gt;&lt;/hs-subscribe-ack&gt;</code></pre>
+<pre class="language-html"><code class="language-html">&lt;hh-subscribe-ack channel="orders:42"
+                  cursor="17"&gt;&lt;/hh-subscribe-ack&gt;</code></pre>
 
     <h2>transport</h2>
     <div class="table-wrap">

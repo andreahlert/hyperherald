@@ -1,9 +1,9 @@
-// _hyperstream attribute parser — DOM element → config object
+// _hyperherald attribute parser — DOM element → config object
 'use strict';
 
-const PREFIX = '_stream';
+const PREFIX = '_herald';
 
-/** Get the value of `_stream*` attributes from an element, supporting hyphen variants. */
+/** Get the value of `_herald*` attributes from an element, supporting hyphen variants. */
 export function attr(el, name) {
     if (!el || !el.getAttribute) return null;
     const direct = el.getAttribute(name);
@@ -11,7 +11,7 @@ export function attr(el, name) {
     return null;
 }
 
-/** Parse `_stream-coalesce="window:200ms strategy:last key:foo"` into { window, strategy, key }. */
+/** Parse `_herald-coalesce="window:200ms strategy:last key:foo"` into { window, strategy, key }. */
 export function parseKVString(value) {
     if (!value) return {};
     const out = {};
@@ -34,8 +34,8 @@ export function parseDuration(s) {
 }
 
 /**
- * Read the full _hyperstream attribute set from a connection element.
- * Returns null if the element has no `_stream` attribute.
+ * Read the full _hyperherald attribute set from a connection element.
+ * Returns null if the element has no `_herald` attribute.
  */
 export function readElementConfig(el) {
     const url = attr(el, PREFIX);
@@ -66,7 +66,7 @@ export function readElementConfig(el) {
     };
 }
 
-/** Find all elements with a `_stream` attribute under root (inclusive). */
+/** Find all elements with a `_herald` attribute under root (inclusive). */
 export function findStreamElements(root) {
     if (!root || !root.querySelectorAll) return [];
     const out = [];

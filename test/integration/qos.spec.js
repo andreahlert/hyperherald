@@ -10,7 +10,7 @@ async function publish(request, frame) {
 
 test.beforeEach(async ({ page }) => {
     await page.goto('/test-fixture-qos.html');
-    await page.waitForFunction(() => !!window._hyperstream);
+    await page.waitForFunction(() => !!window._hyperherald);
     await page.waitForTimeout(200);
 });
 

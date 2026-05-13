@@ -1,4 +1,4 @@
-// _hyperstream config — overridable defaults
+// _hyperherald config — overridable defaults
 'use strict';
 
 export const config = {
@@ -28,5 +28,5 @@ export const config = {
     debug: false,
 
     // attribute prefix (mirror htmx/hyperscript flexibility)
-    attributePrefix: '_stream',
+    attributePrefix: '_herald',
 };

@@ -1,4 +1,4 @@
-// _hyperstream subscription registry — (connection → channels → elements)
+// _hyperherald subscription registry — (connection → channels → elements)
 'use strict';
 
 /**

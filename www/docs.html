@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>///_hyperstream / docs</title>
+    <title>///_hyperherald / docs</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png" href="/img/mascot-retro-small.svg">
@@ -16,7 +16,7 @@
 <header class="navbar">
     <nav>
         <a href="/" class="nav-logo">
-            <img src="/img/mascot-retro-small.svg" alt="_hyperstream" class="nav-logo-img">
+            <img src="/img/mascot-retro-small.svg" alt="_hyperherald" class="nav-logo-img">
         </a>
         <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" onclick="this.closest('.navbar').classList.toggle('nav-open');this.setAttribute('aria-expanded',this.closest('.navbar').classList.contains('nav-open'))">
             <span></span><span></span><span></span>
@@ -28,7 +28,7 @@
             <li><a href="/auction.html">demo</a>
             <li><a href="/try-it.html">try it!</a>
             <li class="nav-spacer"></li>
-            <li><a href="https://github.com/andreahlert/hyperstream" class="nav-github" aria-label="GitHub">
+            <li><a href="https://github.com/hyperherald/_hyperherald" class="nav-github" aria-label="GitHub">
                 <svg viewBox="0 0 16 16" width="20" height="20" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
             </a>
         </ul>
@@ -39,47 +39,47 @@
 
     <h1>docs</h1>
     <p>
-        _hyperstream pushes HTML fragments over SSE or WebSocket. Subscribe an element to a channel,
+        _hyperherald pushes HTML fragments over SSE or WebSocket. Subscribe an element to a channel,
         the server publishes fragments, the browser swaps them in. 5KB brotli, zero deps.
     </p>
 
     <h2>install</h2>
     <p>Pick one.</p>
 <pre class="language-html"><code class="language-html">&lt;!-- CDN, dev only --&gt;
-&lt;script src="https://cdn.jsdelivr.net/npm/hyperstream.org@0.0.1"&gt;&lt;/script&gt;
+&lt;script src="https://cdn.jsdelivr.net/npm/hyperherald.org@0.0.1"&gt;&lt;/script&gt;
 
 # npm
-npm install hyperstream.org
+npm install hyperherald.org
 
 // ESM
-import 'hyperstream.org';</code></pre>
+import 'hyperherald.org';</code></pre>
 
     <h2>your first stream</h2>
     <p>Subscribe an element to a channel. The server publishes fragments addressed at children IDs.</p>
-<pre class="language-html"><code class="language-html">&lt;div _stream="/sse"
-     _stream-subscribe="orders:42"&gt;
+<pre class="language-html"><code class="language-html">&lt;div _herald="/sse"
+     _herald-subscribe="orders:42"&gt;
   &lt;span id="status"&gt;pending&lt;/span&gt;
   &lt;span id="total"&gt;$0&lt;/span&gt;
 &lt;/div&gt;</code></pre>
     <p>Server sends:</p>
-<pre class="language-html"><code class="language-html">&lt;hs-fragment channel="orders:42"
+<pre class="language-html"><code class="language-html">&lt;hh-fragment channel="orders:42"
              target="#status"
              swap="inner"&gt;
   shipped
-&lt;/hs-fragment&gt;</code></pre>
+&lt;/hh-fragment&gt;</code></pre>
 
     <h2>attributes reference</h2>
     <div class="table-wrap">
     <table>
         <thead><tr><th>attribute</th><th>example</th><th>purpose</th></tr></thead>
         <tbody>
-            <tr><td><code>_stream</code></td><td><code>/sse</code></td><td>open connection at URL. Multiple elements same URL share one socket.</td></tr>
-            <tr><td><code>_stream-subscribe</code></td><td><code>chat:42 lobby</code></td><td>space-separated channels. Sent via query (SSE) or handshake frame (WS).</td></tr>
-            <tr><td><code>_stream-coalesce</code></td><td><code>key:#price window:200ms strategy:last</code></td><td>drop intermediate frames within window per key.</td></tr>
-            <tr><td><code>_stream-buffer</code></td><td><code>max:50 drop:oldest</code></td><td>backpressure, bounded queue.</td></tr>
-            <tr><td><code>_stream-suspense</code></td><td><code>tokens-1</code></td><td>slot for hs-partial chunks (LLM streaming).</td></tr>
-            <tr><td><code>_stream-transport</code></td><td><code>sse</code> | <code>ws</code> | <code>auto</code></td><td>force a transport. Default auto = SSE.</td></tr>
-            <tr><td><code>_stream-debug</code></td><td><code>true</code></td><td>verbose console logs.</td></tr>
+            <tr><td><code>_herald</code></td><td><code>/sse</code></td><td>open connection at URL. Multiple elements same URL share one socket.</td></tr>
+            <tr><td><code>_herald-subscribe</code></td><td><code>chat:42 lobby</code></td><td>space-separated channels. Sent via query (SSE) or handshake frame (WS).</td></tr>
+            <tr><td><code>_herald-coalesce</code></td><td><code>key:#price window:200ms strategy:last</code></td><td>drop intermediate frames within window per key.</td></tr>
+            <tr><td><code>_herald-buffer</code></td><td><code>max:50 drop:oldest</code></td><td>backpressure, bounded queue.</td></tr>
+            <tr><td><code>_herald-suspense</code></td><td><code>tokens-1</code></td><td>slot for hh-partial chunks (LLM streaming).</td></tr>
+            <tr><td><code>_herald-transport</code></td><td><code>sse</code> | <code>ws</code> | <code>auto</code></td><td>force a transport. Default auto = SSE.</td></tr>
+            <tr><td><code>_herald-debug</code></td><td><code>true</code></td><td>verbose console logs.</td></tr>
         </tbody>
     </table>
     </div>
@@ -87,11 +87,11 @@ import 'hyperstream.org';</code></pre>
     <h2>frame types</h2>
     <p>Five wire types. Details on the <a href="/spec.html">spec page</a>.</p>
     <ul>
-        <li><code>hs-fragment</code>: single swap.</li>
-        <li><code>hs-multi</code>: array of fragments, applied in order.</li>
-        <li><code>hs-atomic</code>: buffered, applied in one mutation.</li>
-        <li><code>hs-partial</code>: append progressive chunks (LLM tokens).</li>
-        <li><code>hs-subscribe-ack</code>: server confirms subscribe plus replay cursor.</li>
+        <li><code>hh-fragment</code>: single swap.</li>
+        <li><code>hh-multi</code>: array of fragments, applied in order.</li>
+        <li><code>hh-atomic</code>: buffered, applied in one mutation.</li>
+        <li><code>hh-partial</code>: append progressive chunks (LLM tokens).</li>
+        <li><code>hh-subscribe-ack</code>: server confirms subscribe plus replay cursor.</li>
     </ul>
 
     <aside class="box">

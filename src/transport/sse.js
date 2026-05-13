@@ -1,4 +1,4 @@
-// _hyperstream SSE transport — fetch + ReadableStream parser, Last-Event-ID replay
+// _hyperherald SSE transport — fetch + ReadableStream parser, Last-Event-ID replay
 'use strict';
 
 import { config } from '../core/config.js';

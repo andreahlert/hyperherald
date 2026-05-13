@@ -1,4 +1,4 @@
-// _hyperstream envelope, HTML-over-the-wire parser
+// _hyperherald envelope, HTML-over-the-wire parser
 // Spec: www/docs/spec.md
 'use strict';
 
@@ -15,12 +15,12 @@ export const FRAME_TYPES = Object.freeze({
 });
 
 const TAG_TO_TYPE = Object.freeze({
-    'hs-fragment':      FRAME_TYPES.FRAGMENT,
-    'hs-multi':         FRAME_TYPES.MULTI,
-    'hs-atomic':        FRAME_TYPES.ATOMIC,
-    'hs-partial':       FRAME_TYPES.PARTIAL,
-    'hs-subscribe-ack': FRAME_TYPES.SUBSCRIBE_ACK,
-    'hs-close':         FRAME_TYPES.CLOSE,
+    'hh-fragment':      FRAME_TYPES.FRAGMENT,
+    'hh-multi':         FRAME_TYPES.MULTI,
+    'hh-atomic':        FRAME_TYPES.ATOMIC,
+    'hh-partial':       FRAME_TYPES.PARTIAL,
+    'hh-subscribe-ack': FRAME_TYPES.SUBSCRIBE_ACK,
+    'hh-close':         FRAME_TYPES.CLOSE,
 });
 
 export const SWAP_STYLES = Object.freeze([
@@ -45,7 +45,7 @@ function readNum(el, attr) {
 function readChildFragments(parent) {
     const out = [];
     for (const child of parent.children) {
-        if (child.tagName.toLowerCase() !== 'hs-fragment') continue;
+        if (child.tagName.toLowerCase() !== 'hh-fragment') continue;
         out.push({
             target: child.getAttribute('target') || '',
             swap:   child.getAttribute('swap')   || 'inner',

@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>///_hyperstream</title>
+    <title>///_hyperherald</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png" href="/img/mascot-retro-small.svg">
@@ -16,7 +16,7 @@
 <header class="navbar">
     <nav>
         <a href="/" class="nav-logo">
-            <img src="/img/mascot-retro-small.svg" alt="_hyperstream" class="nav-logo-img">
+            <img src="/img/mascot-retro-small.svg" alt="_hyperherald" class="nav-logo-img">
         </a>
         <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" onclick="this.closest('.navbar').classList.toggle('nav-open');this.setAttribute('aria-expanded',this.closest('.navbar').classList.contains('nav-open'))">
             <span></span><span></span><span></span>
@@ -28,7 +28,7 @@
             <li><a href="/auction.html">demo</a>
             <li><a href="/try-it.html">try it!</a>
             <li class="nav-spacer"></li>
-            <li><a href="https://github.com/andreahlert/hyperstream" class="nav-github" aria-label="GitHub">
+            <li><a href="https://github.com/hyperherald/_hyperherald" class="nav-github" aria-label="GitHub">
                 <svg viewBox="0 0 16 16" width="20" height="20" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
             </a>
         </ul>
@@ -39,7 +39,7 @@
 
     <div class="hero">
         <div class="hero-logo">
-            <img src="/img/mascot-retro.svg" alt="hyperstream logo" class="hero-logo-static">
+            <img src="/img/mascot-retro.svg" alt="hyperherald logo" class="hero-logo-static">
         </div>
         <div class="hero-title">hyper<span class="hero-accent">s</span>tream</div>
         <h1>Finally... server-push hypermedia for the web</h1>
@@ -51,19 +51,19 @@
                 <div class="window-title">auction.html</div>
                 <div class="window-body">
 <pre class="language-html"><code class="language-html"><span class="token comment">&lt;!-- subscribe a fragment to a channel --></span>
-<span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">_stream</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>/sse<span class="token punctuation">"</span></span>
-     <span class="token attr-name">_stream-subscribe</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>auction:lot-1<span class="token punctuation">"</span></span><span class="token punctuation">></span>
+<span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">_herald</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>/sse<span class="token punctuation">"</span></span>
+     <span class="token attr-name">_herald-subscribe</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>auction:lot-1<span class="token punctuation">"</span></span><span class="token punctuation">></span>
   <span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>price<span class="token punctuation">"</span></span><span class="token punctuation">></span>$100<span class="token tag"><span class="token punctuation">&lt;/</span>span<span class="token punctuation">></span></span>
   <span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>leader<span class="token punctuation">"</span></span><span class="token punctuation">></span>nobody<span class="token tag"><span class="token punctuation">&lt;/</span>span<span class="token punctuation">></span></span>
   <span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>countdown<span class="token punctuation">"</span></span><span class="token punctuation">></span>60<span class="token tag"><span class="token punctuation">&lt;/</span>span<span class="token punctuation">></span></span>
 <span class="token tag"><span class="token punctuation">&lt;/</span>div<span class="token punctuation">></span></span>
 
 <span class="token comment">&lt;!-- server pushes pure HTML envelopes --></span>
-<span class="token tag"><span class="token punctuation">&lt;</span>hs-atomic</span> <span class="token attr-name">channel</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>auction:lot-1<span class="token punctuation">"</span></span> <span class="token attr-name">seq</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>42<span class="token punctuation">"</span></span><span class="token punctuation">></span>
-  <span class="token tag"><span class="token punctuation">&lt;</span>hs-fragment</span> <span class="token attr-name">target</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>#price<span class="token punctuation">"</span></span> <span class="token attr-name">swap</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>inner<span class="token punctuation">"</span></span><span class="token punctuation">></span>
+<span class="token tag"><span class="token punctuation">&lt;</span>hh-atomic</span> <span class="token attr-name">channel</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>auction:lot-1<span class="token punctuation">"</span></span> <span class="token attr-name">seq</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>42<span class="token punctuation">"</span></span><span class="token punctuation">></span>
+  <span class="token tag"><span class="token punctuation">&lt;</span>hh-fragment</span> <span class="token attr-name">target</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>#price<span class="token punctuation">"</span></span> <span class="token attr-name">swap</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>inner<span class="token punctuation">"</span></span><span class="token punctuation">></span>
     <span class="token tag"><span class="token punctuation">&lt;</span>strong<span class="token punctuation">></span></span>$120<span class="token tag"><span class="token punctuation">&lt;/</span>strong<span class="token punctuation">></span></span>
-  <span class="token tag"><span class="token punctuation">&lt;/</span>hs-fragment<span class="token punctuation">></span></span>
-<span class="token tag"><span class="token punctuation">&lt;/</span>hs-atomic<span class="token punctuation">></span></span></code></pre>
+  <span class="token tag"><span class="token punctuation">&lt;/</span>hh-fragment<span class="token punctuation">></span></span>
+<span class="token tag"><span class="token punctuation">&lt;/</span>hh-atomic<span class="token punctuation">></span></span></code></pre>
                 </div>
             </div>
             <div class="window hero-demo">
@@ -82,7 +82,7 @@
     <div style="text-align:center">
         <div class="install-bar">
             <span class="install-label" id="install-label">Install</span>
-            <code class="install-code">&lt;script src="https://cdn.jsdelivr.net/npm/hyperstream.org@0.0.1"&gt;&lt;/script&gt;</code>
+            <code class="install-code">&lt;script src="https://cdn.jsdelivr.net/npm/hyperherald.org@0.0.1"&gt;&lt;/script&gt;</code>
             <span class="install-copy">copy</span>
         </div>
     </div>
@@ -90,7 +90,7 @@
     <div class="features">
         <div class="feature">
             <h2>HTML Over The Wire</h2>
-            <p>Frames are self-describing custom elements: <code>&lt;hs-fragment&gt;</code>, <code>&lt;hs-multi&gt;</code>, <code>&lt;hs-atomic&gt;</code>, <code>&lt;hs-partial&gt;</code>. No JSON envelope. Hypermedia from server to DOM, no translation layer.</p>
+            <p>Frames are self-describing custom elements: <code>&lt;hh-fragment&gt;</code>, <code>&lt;hh-multi&gt;</code>, <code>&lt;hh-atomic&gt;</code>, <code>&lt;hh-partial&gt;</code>. No JSON envelope. Hypermedia from server to DOM, no translation layer.</p>
         </div>
         <div class="feature">
             <h2>Pub/Sub Native</h2>
@@ -110,12 +110,12 @@
         </div>
         <div class="feature">
             <h2>Backpressure Built In</h2>
-            <p>Coalesce by key, throttle by window, bound the queue. <code>_stream-coalesce</code> and <code>_stream-buffer</code> declarative on the element.</p>
+            <p>Coalesce by key, throttle by window, bound the queue. <code>_herald-coalesce</code> and <code>_herald-buffer</code> declarative on the element.</p>
         </div>
     </div>
 
     <aside class="box warn">
-        <p>_hyperstream is v0, working towards 1.0. The wire format may change. Track the <a href="/spec.html">spec</a> and the <a href="https://github.com/andreahlert/hyperstream">repo</a> for breaking changes.</p>
+        <p>_hyperherald is v0, working towards 1.0. The wire format may change. Track the <a href="/spec.html">spec</a> and the <a href="https://github.com/hyperherald/_hyperherald">repo</a> for breaking changes.</p>
     </aside>
 
 </div>

@@ -1,6 +1,6 @@
-# Contributing to _hyperstream
+# Contributing to _hyperherald
 
-`_hyperstream` follows the conventions of `_hyperscript` and `htmx`. Keep code small, predictable, and focused.
+`_hyperherald` follows the conventions of `_hyperscript` and `htmx`. Keep code small, predictable, and focused.
 
 ## Local setup
 
@@ -25,7 +25,7 @@ Open a GitHub issue with:
 - Minimal HTML reproduction
 - Expected vs observed behavior
 - Browser + version
-- `_stream-debug="true"` console output if relevant
+- `_herald-debug="true"` console output if relevant
 
 ## Spec changes
 

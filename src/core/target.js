@@ -1,4 +1,4 @@
-// _hyperstream target resolution — selector → Element
+// _hyperherald target resolution — selector → Element
 'use strict';
 
 /**

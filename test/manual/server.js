@@ -1,4 +1,4 @@
-// _hyperstream reference server — zero deps, http + raw WS + SSE.
+// _hyperherald reference server — zero deps, http + raw WS + SSE.
 // Exposes: GET /sse, WS /ws, POST /publish, GET / static (test/manual).
 //
 // Channels keep an in-memory replay buffer (last N envelopes by seq).
@@ -42,38 +42,38 @@ function attrEscape(s) {
 // Inner HTML payload: only neutralize literal closing tags that would terminate
 // our envelope wrappers prematurely. Server is trusted to produce coherent HTML.
 function neutralizeInnerHTML(html) {
-    return String(html).replace(/<\/(hs-fragment|hs-multi|hs-atomic|hs-partial)\b/gi, '<\\/$1');
+    return String(html).replace(/<\/(hh-fragment|hh-multi|hh-atomic|hh-partial)\b/gi, '<\\/$1');
 }
 
 function fragmentTag(f) {
     if (f.swap === 'delete' && f.html == null) {
-        return `<hs-fragment target="${attrEscape(f.target)}" swap="delete"></hs-fragment>`;
+        return `<hh-fragment target="${attrEscape(f.target)}" swap="delete"></hh-fragment>`;
     }
-    return `<hs-fragment target="${attrEscape(f.target)}" swap="${attrEscape(f.swap || 'inner')}">${neutralizeInnerHTML(f.html ?? '')}</hs-fragment>`;
+    return `<hh-fragment target="${attrEscape(f.target)}" swap="${attrEscape(f.swap || 'inner')}">${neutralizeInnerHTML(f.html ?? '')}</hh-fragment>`;
 }
 
 function buildEnvelope(channelName, seq, type, body) {
     const head = `v="${SPEC_VERSION}" channel="${attrEscape(channelName)}" seq="${seq}" ts="${Date.now()}"`;
     switch (type) {
         case 'fragment':
-            return `<hs-fragment ${head} target="${attrEscape(body.target)}" swap="${attrEscape(body.swap || 'inner')}">${neutralizeInnerHTML(body.html ?? '')}</hs-fragment>`;
+            return `<hh-fragment ${head} target="${attrEscape(body.target)}" swap="${attrEscape(body.swap || 'inner')}">${neutralizeInnerHTML(body.html ?? '')}</hh-fragment>`;
         case 'multi':
         case 'atomic': {
             const inner = (body.fragments || []).map(fragmentTag).join('');
-            return `<hs-${type} ${head}>${inner}</hs-${type}>`;
+            return `<hh-${type} ${head}>${inner}</hh-${type}>`;
         }
         case 'partial': {
             const final = body.final ? ' final="true"' : '';
             const sid = body.suspense_id ? ` suspense-id="${attrEscape(body.suspense_id)}"` : '';
-            return `<hs-partial ${head} target="${attrEscape(body.target)}"${sid}${final}>${neutralizeInnerHTML(body.chunk ?? '')}</hs-partial>`;
+            return `<hh-partial ${head} target="${attrEscape(body.target)}"${sid}${final}>${neutralizeInnerHTML(body.chunk ?? '')}</hh-partial>`;
         }
         case 'subscribe-ack': {
             const ch = (body.channels || []).map(attrEscape).join(' ');
-            return `<hs-subscribe-ack ${head} channels="${ch}"></hs-subscribe-ack>`;
+            return `<hh-subscribe-ack ${head} channels="${ch}"></hh-subscribe-ack>`;
         }
         case 'close': {
             const reason = body.reason ? ` reason="${attrEscape(body.reason)}"` : '';
-            return `<hs-close ${head} code="${body.code ?? 1000}"${reason}></hs-close>`;
+            return `<hh-close ${head} code="${body.code ?? 1000}"${reason}></hh-close>`;
         }
         default:
             throw new Error(`unknown envelope type: ${type}`);
@@ -113,9 +113,9 @@ function parseAttrs(attrString) {
     return out;
 }
 
-/** Parse a <hs-subscribe ...> wire string into { channels, cursors } or null. */
+/** Parse a <hh-subscribe ...> wire string into { channels, cursors } or null. */
 function parseSubscribeWire(text) {
-    const m = text.match(/^<hs-subscribe\b([^>]*)>(?:[\s\S]*<\/hs-subscribe>)?$/i);
+    const m = text.match(/^<hh-subscribe\b([^>]*)>(?:[\s\S]*<\/hh-subscribe>)?$/i);
     if (!m) return null;
     const attrs = parseAttrs(m[1]);
     const channels = (attrs.channels || '').trim().split(/\s+/).filter(Boolean);
@@ -172,7 +172,7 @@ function handleSSE(req, res, url) {
         Connection: 'keep-alive',
         'X-Accel-Buffering': 'no',
     });
-    res.write(': hyperstream sse\n\n');
+    res.write(': hyperherald sse\n\n');
 
     function writeWire(channel, seq, wire) {
         const id = `${channel}:${seq}`;
@@ -430,6 +430,6 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
     const server = createServer({ staticRoot: process.env.STATIC_ROOT });
     server.listen(port, () => {
-        console.log(`hyperstream ref server listening on http://localhost:${port}`);
+        console.log(`hyperherald ref server listening on http://localhost:${port}`);
     });
 }

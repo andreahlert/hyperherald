@@ -1,4 +1,4 @@
-// _hyperstream site + auction server — Railway entry.
+// _hyperherald site + auction server — Railway entry.
 // Wraps the reference impl, sets staticRoot to www/, and adds the /bid endpoint.
 'use strict';
 
@@ -99,6 +99,6 @@ setInterval(tickCountdown, 1000);
 
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 server.listen(port, () => {
-    console.log(`hyperstream listening on http://localhost:${port}/`);
+    console.log(`hyperherald listening on http://localhost:${port}/`);
     broadcastState();
 });

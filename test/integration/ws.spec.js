@@ -10,7 +10,7 @@ async function publish(request, frame) {
 
 test.beforeEach(async ({ page }) => {
     await page.goto('/test-fixture-ws.html');
-    await page.waitForFunction(() => !!window._hyperstream);
+    await page.waitForFunction(() => !!window._hyperherald);
     // Wait for WS open + subscribe handshake.
     await page.waitForTimeout(250);
 });

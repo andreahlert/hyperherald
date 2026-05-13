@@ -1,4 +1,4 @@
-// _hyperstream WebSocket transport — reconnect, backoff, cursor handshake
+// _hyperherald WebSocket transport — reconnect, backoff, cursor handshake
 'use strict';
 
 import { config } from '../core/config.js';
@@ -7,7 +7,7 @@ import { logger } from '../core/logger.js';
 /**
  * Open a WebSocket connection. Each text frame is one envelope (HTML).
  * Reconnect with exponential backoff + jitter; on each (re)connect a
- * <hs-subscribe> envelope is sent including channels and cursors for replay.
+ * <hh-subscribe> envelope is sent including channels and cursors for replay.
  *
  * options:
  *   url        — ws:// or wss:// URL (required)
@@ -69,10 +69,10 @@ export function openWS(options) {
             .map(([ch, seq]) => `${attrEscape(ch)}:${seq}`)
             .join(' ');
         const html =
-            `<hs-subscribe v="${config.specVersion}"` +
+            `<hh-subscribe v="${config.specVersion}"` +
             ` channels="${channelsAttr}"` +
             (cursorsAttr ? ` cursors="${cursorsAttr}"` : '') +
-            ` ts="${Date.now()}"></hs-subscribe>`;
+            ` ts="${Date.now()}"></hh-subscribe>`;
         try {
             socket.send(html);
         } catch (e) {

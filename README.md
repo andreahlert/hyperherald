@@ -1,14 +1,14 @@
-# _hyperstream
+# _hyperherald
 
 > declarative server-push hypermedia for the web
 
-`_hyperstream` is designed to compose with [htmx](https://htmx.org) and [_hyperscript](https://hyperscript.org), covering a domain neither owns: server-push hypermedia. It draws from the [Big Sky](https://bigsky.software) tradition of small, composable hypermedia tools, in the same spirit, with no formal affiliation.
+`_hyperherald` is designed to compose with [htmx](https://htmx.org) and [_hyperscript](https://hyperscript.org), covering a domain neither owns: server-push hypermedia. It draws from the [Big Sky](https://bigsky.software) tradition of small, composable hypermedia tools, in the same spirit, with no formal affiliation.
 
 | Project | Domain |
 |---|---|
 | **htmx** | request/response hypermedia |
 | **_hyperscript** | client-side behavior |
-| **_hyperstream** | server-push hypermedia |
+| **_hyperherald** | server-push hypermedia |
 
 It defines a small wire protocol and a small JavaScript client that lets the server push HTML fragments to the browser, without forcing you to duplicate state on the client. **HTML is state. Server is source of truth. Client is projection.**
 
@@ -21,9 +21,9 @@ See [PRINCIPLES.md](PRINCIPLES.md) for the constitutional design rules of the pr
 ## Quickstart
 
 ```html
-<script src="https://unpkg.com/hyperstream.org/dist/_hyperstream.min.js"></script>
+<script src="https://unpkg.com/hyperherald.org/dist/_hyperherald.min.js"></script>
 
-<div _stream="/events" _stream-subscribe="orders/123">
+<div _herald="/events" _herald-subscribe="orders/123">
     <!-- server pushes fragments scoped to channel "orders/123" -->
 </div>
 ```
@@ -31,10 +31,10 @@ See [PRINCIPLES.md](PRINCIPLES.md) for the constitutional design rules of the pr
 ESM:
 
 ```js
-import _hyperstream from 'hyperstream.org';
+import _hyperherald from 'hyperherald.org';
 ```
 
-> Note: the package is not yet on npm. Until first publish, install from this repo or vendor `dist/_hyperstream.min.js` directly.
+> Note: the package is not yet on npm. Until first publish, install from this repo or vendor `dist/_hyperherald.min.js` directly.
 
 ## Why
 
@@ -49,7 +49,7 @@ Real-time hypermedia in htmx today (SSE/WS extensions) is bolt-on. There is no n
 - Out-of-order rendering / suspense
 - Atomic batch swaps
 
-`_hyperstream` is a separate, server-agnostic project that adds these primitives without changing htmx core.
+`_hyperherald` is a separate, server-agnostic project that adds these primitives without changing htmx core.
 
 ## Non-goals
 
@@ -60,7 +60,7 @@ Real-time hypermedia in htmx today (SSE/WS extensions) is bolt-on. There is no n
 
 ## Contributing
 
-`_hyperstream` aims to be small, correct, and predictable. Bug reports and PRs welcome via GitHub issues. See [CONTRIBUTING.md](CONTRIBUTING.md).
+`_hyperherald` aims to be small, correct, and predictable. Bug reports and PRs welcome via GitHub issues. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ```bash
 npm install

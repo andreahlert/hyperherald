@@ -1,4 +1,4 @@
-// _hyperstream transport picker — heuristic SSE vs WS
+// _hyperherald transport picker — heuristic SSE vs WS
 'use strict';
 
 /**

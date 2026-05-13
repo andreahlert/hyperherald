@@ -1,9 +1,9 @@
-// _hyperstream cursor tracking — sessionStorage-backed seq per (url, channel)
+// _hyperherald cursor tracking — sessionStorage-backed seq per (url, channel)
 'use strict';
 
 import { logger } from './logger.js';
 
-const STORAGE_KEY = '_hyperstream:cursor';
+const STORAGE_KEY = '_hyperherald:cursor';
 
 function loadAll() {
     if (typeof sessionStorage === 'undefined') return {};

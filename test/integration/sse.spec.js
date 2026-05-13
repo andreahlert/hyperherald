@@ -10,7 +10,7 @@ async function publish(request, frame) {
 
 test.beforeEach(async ({ page }) => {
     await page.goto('/test-fixture.html');
-    await page.waitForFunction(() => !!window._hyperstream);
+    await page.waitForFunction(() => !!window._hyperherald);
     // Give SSE one tick to connect + send subscribe-ack.
     await page.waitForTimeout(200);
 });

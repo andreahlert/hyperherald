@@ -1,10 +1,10 @@
-// _hyperstream logger — gated by config.debug
+// _hyperherald logger — gated by config.debug
 'use strict';
 
 import { config } from './config.js';
 
 function fmt(args) {
-    return ['[_hyperstream]', ...args];
+    return ['[_hyperherald]', ...args];
 }
 
 export const logger = {

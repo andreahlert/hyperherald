@@ -1,15 +1,15 @@
-// _hyperstream ext: morph
+// _hyperherald ext: morph
 // Wires `swap="morph"` to Idiomorph if available on the page.
 // Idiomorph: https://github.com/bigskysoftware/idiomorph
 'use strict';
 
 (function () {
-    if (typeof self === 'undefined' || !self._hyperstream) {
-        console.warn('[_hyperstream/morph] _hyperstream not loaded');
+    if (typeof self === 'undefined' || !self._hyperherald) {
+        console.warn('[_hyperherald/morph] _hyperherald not loaded');
         return;
     }
 
-    self._hyperstream.use((hs) => {
+    self._hyperherald.use((hs) => {
         hs.morph = function morph(target, html) {
             const Idiomorph = self.Idiomorph;
             if (!Idiomorph || typeof Idiomorph.morph !== 'function') {

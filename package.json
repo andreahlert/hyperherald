@@ -1,5 +1,5 @@
 {
-  "name": "hyperstream.org",
+  "name": "hyperherald.org",
   "description": "declarative server-push hypermedia for the web",
   "keywords": [
     "hypermedia",
@@ -11,9 +11,9 @@
   ],
   "version": "0.0.1-alpha0",
   "type": "module",
-  "homepage": "https://hyperstream.org/",
+  "homepage": "https://hyperherald.org/",
   "bugs": {
-    "url": "https://github.com/andreahlert/hyperstream/issues"
+    "url": "https://github.com/hyperherald/_hyperherald/issues"
   },
   "license": "0BSD",
   "files": [
@@ -21,14 +21,14 @@
     "README.md",
     "dist/*"
   ],
-  "main": "dist/_hyperstream.js",
-  "module": "dist/_hyperstream.esm.js",
-  "types": "dist/_hyperstream.d.ts",
+  "main": "dist/_hyperherald.js",
+  "module": "dist/_hyperherald.esm.js",
+  "types": "dist/_hyperherald.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/_hyperstream.d.ts",
-      "import": "./dist/_hyperstream.esm.js",
-      "default": "./dist/_hyperstream.js"
+      "types": "./dist/_hyperherald.d.ts",
+      "import": "./dist/_hyperherald.esm.js",
+      "default": "./dist/_hyperherald.js"
     },
     "./ext/*": "./dist/ext/*"
   },
@@ -40,14 +40,14 @@
     "test:all": "playwright test --config test/playwright.config.js",
     "test:manual": "node test/manual/server.js",
     "dist": "npm run build && npm run typings",
-    "typings": "tsc --declaration src/_hyperstream.js --allowJs --emitDeclarationOnly --skipLibCheck --outDir dist",
+    "typings": "tsc --declaration src/_hyperherald.js --allowJs --emitDeclarationOnly --skipLibCheck --outDir dist",
     "www": "npm run build && cp -r dist/* www/js/",
     "www:serve": "cd www && npx @11ty/eleventy --serve",
     "www:search": "cd www && npx @11ty/eleventy && npx pagefind --site _site"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/andreahlert/hyperstream.git"
+    "url": "git+https://github.com/hyperherald/_hyperherald.git"
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.1.2",

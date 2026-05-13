@@ -1,4 +1,4 @@
-// _hyperstream swap dispatcher — applies a fragment to a DOM target
+// _hyperherald swap dispatcher — applies a fragment to a DOM target
 'use strict';
 
 import { logger } from './logger.js';
@@ -60,8 +60,8 @@ export function applySwap(target, fragment) {
 
         case 'morph':
             // Optional ext. Falls back to outer if morph not loaded.
-            if (typeof window !== 'undefined' && window._hyperstream?.morph) {
-                window._hyperstream.morph(target, html);
+            if (typeof window !== 'undefined' && window._hyperherald?.morph) {
+                window._hyperherald.morph(target, html);
                 return true;
             }
             logger.warn('swap=morph requested but morph ext not loaded; falling back to outer');

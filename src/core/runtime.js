@@ -1,4 +1,4 @@
-// _hyperstream runtime — boots, scans DOM, manages connections per [_stream] element
+// _hyperherald runtime — boots, scans DOM, manages connections per [_herald] element
 'use strict';
 
 import { readElementConfig, findStreamElements } from './attributes.js';
@@ -247,7 +247,7 @@ export class Runtime {
             };
             for (const t of targets) {
                 if (!t) continue;
-                t.dispatchEvent(new CustomEvent('hyperstream:suspense:done', { detail, bubbles: true }));
+                t.dispatchEvent(new CustomEvent('hyperherald:suspense:done', { detail, bubbles: true }));
             }
         }
     }
@@ -262,12 +262,12 @@ export class Runtime {
         const elements = conn.elementsForChannel(frame.channel);
         if (elements.length === 0) {
             if (typeof document !== 'undefined') {
-                document.dispatchEvent(new CustomEvent('hyperstream:gone', { detail, bubbles: true }));
+                document.dispatchEvent(new CustomEvent('hyperherald:gone', { detail, bubbles: true }));
             }
             return;
         }
         for (const el of elements) {
-            el.dispatchEvent(new CustomEvent('hyperstream:gone', { detail, bubbles: true }));
+            el.dispatchEvent(new CustomEvent('hyperherald:gone', { detail, bubbles: true }));
         }
     }
 

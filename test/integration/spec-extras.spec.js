@@ -1,5 +1,5 @@
 // @ts-check
-// Integration: hs-partial (suspense) + hs-close (gone) semantics.
+// Integration: hh-partial (suspense) + hh-close (gone) semantics.
 import { test, expect } from '@playwright/test';
 
 async function publish(request, frame) {
@@ -10,14 +10,14 @@ async function publish(request, frame) {
 
 test.beforeEach(async ({ page }) => {
     await page.goto('/test-fixture-extras.html');
-    await page.waitForFunction(() => !!window._hyperstream);
+    await page.waitForFunction(() => !!window._hyperherald);
     await page.waitForTimeout(200);
 });
 
 test('suspense: chunks accumulate and final fires done event', async ({ page, request }) => {
     await page.evaluate(() => {
         window.__suspenseDone = null;
-        document.addEventListener('hyperstream:suspense:done', (e) => {
+        document.addEventListener('hyperherald:suspense:done', (e) => {
             window.__suspenseDone = e.detail;
         });
     });
@@ -73,10 +73,10 @@ test('suspense: sealed slot ignores further chunks', async ({ page, request }) =
     await expect(page.locator('#b')).not.toContainText('IGNORED');
 });
 
-test('gone: hs-close code 4001 dispatches hyperstream:gone', async ({ page, request }) => {
+test('gone: hh-close code 4001 dispatches hyperherald:gone', async ({ page, request }) => {
     await page.evaluate(() => {
         window.__gone = null;
-        document.addEventListener('hyperstream:gone', (e) => {
+        document.addEventListener('hyperherald:gone', (e) => {
             window.__gone = e.detail;
         });
     });

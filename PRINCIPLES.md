@@ -1,4 +1,4 @@
-# _hyperstream Design Principles
+# _hyperherald Design Principles
 
 These principles are constitutional. If any future design decision contradicts a principle, the principle wins. The spec, the client, and any reference server implementation are downstream of this document.
 
@@ -12,7 +12,7 @@ State lives on the server. The DOM is the current rendering of that state. The c
 
 ## 2. No client-side reactive layer
 
-`_hyperstream` does not ship signals, stores, observables, or a reactive graph. The reactivity primitive is "the server pushes a fragment, the client swaps it in". Anything beyond that belongs to the application, not to the library.
+`_hyperherald` does not ship signals, stores, observables, or a reactive graph. The reactivity primitive is "the server pushes a fragment, the client swaps it in". Anything beyond that belongs to the application, not to the library.
 
 ## 3. Declarative subscription, imperative escape hatch
 
@@ -20,11 +20,11 @@ Subscribing to a channel is an attribute on an element. Opening a connection is 
 
 ## 4. The DOM is dynamic, connections follow it
 
-The page rarely loads in one shot and stays still. htmx swaps regions, scripts inject panels, routers replace views. `_hyperstream` treats this as the default case. Any element with a `_stream` attribute mounted at any time after page load connects on its own, with no imperative call from the application. Elements removed from the DOM release their share of the connection. The application never calls "scan" or "rescan". Living next to htmx is the natural condition, not a special mode.
+The page rarely loads in one shot and stays still. htmx swaps regions, scripts inject panels, routers replace views. `_hyperherald` treats this as the default case. Any element with a `_herald` attribute mounted at any time after page load connects on its own, with no imperative call from the application. Elements removed from the DOM release their share of the connection. The application never calls "scan" or "rescan". Living next to htmx is the natural condition, not a special mode.
 
 ## 5. The spec is the contract, not the implementation
 
-`_hyperstream` is a wire protocol with a reference client. Any server in any language that speaks the envelope is a valid `_hyperstream` server. The Node reference server is an example, not the product. Coupling to one runtime, one framework, or one language is forbidden.
+`_hyperherald` is a wire protocol with a reference client. Any server in any language that speaks the envelope is a valid `_hyperherald` server. The Node reference server is an example, not the product. Coupling to one runtime, one framework, or one language is forbidden.
 
 ## 6. Replay is the responsibility of the protocol
 
@@ -36,7 +36,7 @@ One connection carries many channels. Subscriptions are declarative. Fan-out fro
 
 ## 8. One connection per origin, always multiplexed
 
-Many elements on a page can listen to many channels, but they share transport. If two or more elements declare the same `_stream` URL, they ride a single connection and the library routes envelopes by channel to the right element. The browser's connection budget is small and finite. The library spends it once per URL, never per element. A future change that opens a connection per element, per channel, or per subscription violates this principle even if the call site looks simpler.
+Many elements on a page can listen to many channels, but they share transport. If two or more elements declare the same `_herald` URL, they ride a single connection and the library routes envelopes by channel to the right element. The browser's connection budget is small and finite. The library spends it once per URL, never per element. A future change that opens a connection per element, per channel, or per subscription violates this principle even if the call site looks simpler.
 
 ## 9. Atomicity is opt-in and frame-aligned
 
@@ -64,7 +64,7 @@ When the server outpaces the client, the system has primitives for it: coalesce 
 
 ## 15. Compose with htmx and _hyperscript, replace neither
 
-[htmx](https://htmx.org) covers request and response. [_hyperscript](https://hyperscript.org) covers client behavior. `_hyperstream` covers server push. It is designed to compose with both, depends on neither, and does not absorb their concerns. A project that pulls htmx into the runtime, or that grows a scripting language on top of envelopes, has stopped being `_hyperstream`. Whether the three end up branded as one stack is for the maintainers of each to decide; the design rule stands either way.
+[htmx](https://htmx.org) covers request and response. [_hyperscript](https://hyperscript.org) covers client behavior. `_hyperherald` covers server push. It is designed to compose with both, depends on neither, and does not absorb their concerns. A project that pulls htmx into the runtime, or that grows a scripting language on top of envelopes, has stopped being `_hyperherald`. Whether the three end up branded as one stack is for the maintainers of each to decide; the design rule stands either way.
 
 ## 16. Security is the server's job, and the protocol makes that honest
 

@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>///_hyperstream / patterns</title>
+    <title>///_hyperherald / patterns</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png" href="/img/mascot-retro-small.svg">
@@ -16,7 +16,7 @@
 <header class="navbar">
     <nav>
         <a href="/" class="nav-logo">
-            <img src="/img/mascot-retro-small.svg" alt="_hyperstream" class="nav-logo-img">
+            <img src="/img/mascot-retro-small.svg" alt="_hyperherald" class="nav-logo-img">
         </a>
         <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" onclick="this.closest('.navbar').classList.toggle('nav-open');this.setAttribute('aria-expanded',this.closest('.navbar').classList.contains('nav-open'))">
             <span></span><span></span><span></span>
@@ -28,7 +28,7 @@
             <li><a href="/auction.html">demo</a>
             <li><a href="/try-it.html">try it!</a>
             <li class="nav-spacer"></li>
-            <li><a href="https://github.com/andreahlert/hyperstream" class="nav-github" aria-label="GitHub">
+            <li><a href="https://github.com/hyperherald/_hyperherald" class="nav-github" aria-label="GitHub">
                 <svg viewBox="0 0 16 16" width="20" height="20" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
             </a>
         </ul>
@@ -42,20 +42,20 @@
 
     <h2>1. live auction</h2>
     <p>Multi-tab consistent state. Atomic frames keep price, leader and countdown in sync.</p>
-<pre class="language-html"><code class="language-html">&lt;div _stream="/sse" _stream-subscribe="auction:lot-1"&gt;
+<pre class="language-html"><code class="language-html">&lt;div _herald="/sse" _herald-subscribe="auction:lot-1"&gt;
   &lt;span id="price"&gt;$100&lt;/span&gt;
   &lt;span id="leader"&gt;nobody&lt;/span&gt;
   &lt;span id="countdown"&gt;60&lt;/span&gt;
 &lt;/div&gt;
-&lt;!-- server publishes hs-atomic with all three fragments --&gt;</code></pre>
+&lt;!-- server publishes hh-atomic with all three fragments --&gt;</code></pre>
     <p>Live: <a href="/auction.html">auction.html</a></p>
 
     <h2>2. dashboard with backpressure</h2>
     <p>High-frequency metrics. Coalesce intermediate frames, only render last per key per window.</p>
-<pre class="language-html"><code class="language-html">&lt;div _stream="/ws"
-     _stream-subscribe="metrics:cpu metrics:mem metrics:io"
-     _stream-coalesce="key:target window:200ms strategy:last"
-     _stream-buffer="max:50 drop:oldest"&gt;
+<pre class="language-html"><code class="language-html">&lt;div _herald="/ws"
+     _herald-subscribe="metrics:cpu metrics:mem metrics:io"
+     _herald-coalesce="key:target window:200ms strategy:last"
+     _herald-buffer="max:50 drop:oldest"&gt;
   &lt;span id="cpu"&gt;0%&lt;/span&gt;
   &lt;span id="mem"&gt;0 GB&lt;/span&gt;
   &lt;span id="io"&gt;0 MB/s&lt;/span&gt;
@@ -63,33 +63,33 @@
 
     <h2>3. chat with append plus replay</h2>
     <p>Disconnect-resilient feed. Cursor in sessionStorage, server replays missed messages on reconnect.</p>
-<pre class="language-html"><code class="language-html">&lt;ul _stream="/sse" _stream-subscribe="chat:lobby" id="feed"&gt;&lt;/ul&gt;
+<pre class="language-html"><code class="language-html">&lt;ul _herald="/sse" _herald-subscribe="chat:lobby" id="feed"&gt;&lt;/ul&gt;
 
 &lt;!-- server publishes append fragments --&gt;
-&lt;hs-fragment channel="chat:lobby" target="#feed" swap="append"&gt;
+&lt;hh-fragment channel="chat:lobby" target="#feed" swap="append"&gt;
   &lt;li&gt;&lt;b&gt;alice&lt;/b&gt;: hi&lt;/li&gt;
-&lt;/hs-fragment&gt;</code></pre>
+&lt;/hh-fragment&gt;</code></pre>
 
     <h2>4. LLM token streaming</h2>
-    <p>Progressive text. Suspense slot accepts hs-partial chunks until <code>final</code>.</p>
-<pre class="language-html"><code class="language-html">&lt;article _stream="/sse"
-         _stream-subscribe="reply:99"
-         _stream-suspense="reply-99"&gt;
+    <p>Progressive text. Suspense slot accepts hh-partial chunks until <code>final</code>.</p>
+<pre class="language-html"><code class="language-html">&lt;article _herald="/sse"
+         _herald-subscribe="reply:99"
+         _herald-suspense="reply-99"&gt;
   &lt;p id="answer"&gt;thinking...&lt;/p&gt;
 &lt;/article&gt;
 
 &lt;!-- each token --&gt;
-&lt;hs-partial channel="reply:99" target="#answer" suspense_id="reply-99"&gt;
+&lt;hh-partial channel="reply:99" target="#answer" suspense_id="reply-99"&gt;
   the wire
-&lt;/hs-partial&gt;</code></pre>
+&lt;/hh-partial&gt;</code></pre>
 
-    <h2>5. status feed (htmx plus hyperstream)</h2>
+    <h2>5. status feed (htmx plus hyperherald)</h2>
     <p>Pushed HTML carries <code>hx-*</code> attrs. htmx upgrades them via MutationObserver. Cascades just work.</p>
-<pre class="language-html"><code class="language-html">&lt;hs-fragment channel="orders:42" target="#row-42" swap="outer"&gt;
+<pre class="language-html"><code class="language-html">&lt;hh-fragment channel="orders:42" target="#row-42" swap="outer"&gt;
   &lt;tr id="row-42" hx-get="/orders/42" hx-trigger="click" hx-target="#detail"&gt;
     &lt;td&gt;shipped&lt;/td&gt;&lt;td&gt;$240&lt;/td&gt;
   &lt;/tr&gt;
-&lt;/hs-fragment&gt;</code></pre>
+&lt;/hh-fragment&gt;</code></pre>
 
     <aside class="box">
         <h3>try one</h3>
