@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>///_hyperherald, the lore</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="/img/mascot-herald-small.svg">
+    <link rel="preload" href="/fonts/ChicagoFLF.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="/fonts/IBMPlexSans-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="/css/os9.css">
+    <link rel="stylesheet" href="/css/site.css">
+</head>
+<body>
+
+<header class="navbar">
+    <nav>
+        <a href="/" class="nav-logo">
+            <img src="/img/mascot-herald-small.svg" alt="_hyperherald" class="nav-logo-img">
+        </a>
+        <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" onclick="this.closest('.navbar').classList.toggle('nav-open');this.setAttribute('aria-expanded',this.closest('.navbar').classList.contains('nav-open'))">
+            <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links">
+            <li><a href="/docs.html">docs</a>
+            <li><a href="/spec.html">spec</a>
+            <li><a href="/patterns.html">patterns</a>
+            <li><a href="/herald.html" aria-current="page">lore</a>
+            <li><a href="/auction.html">demo</a>
+            <li><a href="/try-it.html">try it!</a>
+            <li class="nav-spacer"></li>
+            <li><a href="https://github.com/hyperherald/_hyperherald" class="nav-github" aria-label="GitHub">
+                <svg viewBox="0 0 16 16" width="20" height="20" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+            </a>
+        </ul>
+    </nav>
+</header>
+
+<div class="container content">
+
+    <div class="hero">
+        <div class="hero-logo">
+            <img src="/img/mascot-herald.svg" alt="medieval herald mascot" class="hero-logo-static">
+        </div>
+        <div class="hero-title">the <span class="hero-accent">herald</span></div>
+        <h1>Hear ye, hear ye</h1>
+        <p class="subtitle">_hyperherald takes its name from a medieval office: the messenger who carried sealed decrees from the king to the town square and read them aloud, exactly as written, in order.</p>
+    </div>
+
+    <section style="margin-top:3rem">
+        <h2>The role</h2>
+        <p>A medieval herald received sealed envelopes from a trusted source, carried them across distance, and announced their contents to anyone within earshot. If the seal was unbroken and the parchment intact, the announcement stood.</p>
+        <p>That is the protocol in one sentence. The server is the king. The envelopes are signed HTML fragments. The library is the herald.</p>
+    </section>
+
+    <section style="margin-top:2rem">
+        <h2>Medieval and technical, side by side</h2>
+        <table class="lore-table">
+            <thead>
+                <tr><th>Medieval office</th><th>_hyperherald</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>The king</td><td>The server. Holds state. Source of truth.</td></tr>
+                <tr><td>The decree</td><td>An HTML envelope: <code>&lt;hh-fragment&gt;</code>, <code>&lt;hh-multi&gt;</code>, <code>&lt;hh-atomic&gt;</code>, <code>&lt;hh-partial&gt;</code>.</td></tr>
+                <tr><td>The royal seal</td><td>The wire is HTML, parsed by the browser. One serialization, end to end.</td></tr>
+                <tr><td>The numbered scroll</td><td><code>seq</code> on every envelope. Replay knows where to resume.</td></tr>
+                <tr><td>The town square</td><td>A channel. <code>_herald-subscribe="auction:lot-1"</code>.</td></tr>
+                <tr><td>The crier's route</td><td>One connection per origin, multiplexed across channels.</td></tr>
+                <tr><td>"Hear ye, hear ye"</td><td>Fan-out: one envelope, many subscribed elements.</td></tr>
+                <tr><td>The page who delivers letters</td><td>SSE or WS transport. The herald carries either road.</td></tr>
+                <tr><td>The herald returning after the road washed out</td><td>Reconnect with cursor. The client tracks <code>(url, channel) -> seq</code>. The application never sees it.</td></tr>
+                <tr><td>The drum roll before three decrees</td><td>Atomic frame: many fragments flushed in one animation frame.</td></tr>
+                <tr><td>Forward compatibility</td><td>Unknown envelopes are ignored. Newer servers reach older clients.</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section style="margin-top:2rem">
+        <h2>The herald's contract</h2>
+        <p>The role is narrow on purpose. A herald carries the message. The DOM is the current rendering, the server is the record.</p>
+        <ul class="lore-list">
+            <li><strong>State lives with the king.</strong> The DOM is a projection of server state, not a parallel ledger.</li>
+            <li><strong>Order is preserved.</strong> <code>seq</code> on every envelope, cursor on reconnect.</li>
+            <li><strong>HTML in, HTML applied.</strong> The wire is the markup the browser already knows how to parse.</li>
+            <li><strong>One connection per origin.</strong> Many channels ride together. The browser's connection budget is spent once.</li>
+        </ul>
+    </section>
+
+    <section style="margin-top:2rem">
+        <h2>The unbroken seal</h2>
+        <p>The seal lives on the king's side. Authentication, authorization, payload validation belong with the publisher. The wire is HTML, and HTML from a hostile publisher is an XSS vector. The library is honest about where trust sits.</p>
+        <p>Multi-tenant kingdoms sanitize before sealing.</p>
+    </section>
+
+    <aside class="box info" style="margin-top:3rem">
+        <p>The constitutional rules behind this metaphor live in <a href="https://github.com/hyperherald/_hyperherald/blob/main/PRINCIPLES.md">PRINCIPLES.md</a>. If a future design decision contradicts a principle, the principle wins.</p>
+    </aside>
+
+</div>
+
+<style>
+.lore-table { width:100%; border-collapse:collapse; margin-top:1rem; font-size:0.95rem }
+.lore-table th, .lore-table td { padding:0.5rem 0.75rem; border-bottom:1px solid var(--rule, #1a1a1a33); text-align:left; vertical-align:top }
+.lore-table th { font-family:var(--font-heading); background:var(--surface-alt, #f3f1ea) }
+.lore-table td:first-child { width:34%; font-style:italic }
+.lore-list { margin-top:0.75rem; padding-left:1.25rem }
+.lore-list li { margin:0.4rem 0 }
+</style>
+
+</body>
+</html>

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 160" role="img" aria-label="_hyperstream — chevrons concept">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 160" role="img" aria-label="_hyperherald — chevrons concept">
   <g transform="translate(24,28)">
     <!-- chevron trail -->
     <polyline points="0,12 24,40 0,68" fill="none" stroke="#00B8B8" stroke-width="8" stroke-linejoin="round" stroke-linecap="round" opacity="0.25"/>
@@ -8,5 +8,5 @@
     <line x1="0" y1="92" x2="76" y2="92" stroke="#00B8B8" stroke-width="8" stroke-linecap="round"/>
   </g>
   <!-- wordmark -->
-  <text x="124" y="108" font-family="ui-monospace, 'JetBrains Mono', Menlo, monospace" font-size="56" fill="#00B8B8" font-weight="600" letter-spacing="-1">_hyperstream</text>
+  <text x="124" y="108" font-family="ui-monospace, 'JetBrains Mono', Menlo, monospace" font-size="56" fill="#00B8B8" font-weight="600" letter-spacing="-1">_hyperherald</text>
 </svg>
