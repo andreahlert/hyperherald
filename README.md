@@ -2,7 +2,7 @@
 
 > declarative server-push hypermedia for the web
 
-`_hyperstream` is the third leg of the [Big Sky](https://bigsky.software) hypermedia stack, alongside [htmx](https://htmx.org) and [_hyperscript](https://hyperscript.org).
+`_hyperstream` is designed to compose with [htmx](https://htmx.org) and [_hyperscript](https://hyperscript.org), covering a domain neither owns: server-push hypermedia. It draws from the [Big Sky](https://bigsky.software) tradition of small, composable hypermedia tools, in the same spirit, with no formal affiliation.
 
 | Project | Domain |
 |---|---|
@@ -16,7 +16,7 @@ See [PRINCIPLES.md](PRINCIPLES.md) for the constitutional design rules of the pr
 
 ## Status
 
-`0.0.1` — bootstrap. Spec and client are under active development. Not for production use.
+`0.0.1-alpha0` — bootstrap. Spec and client are under active development. Not for production use.
 
 ## Quickstart
 

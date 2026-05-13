@@ -62,9 +62,9 @@ Unknown attributes, unknown nested elements, unknown frame types within a known 
 
 When the server outpaces the client, the system has primitives for it: coalesce by key, buffer with a bound, throttle by channel. The application declares intent. The library enforces it. Dropping frames silently or piling them up unbounded are not acceptable defaults.
 
-## 15. The third leg of Big Sky, never a replacement
+## 15. Compose with htmx and _hyperscript, replace neither
 
-[htmx](https://htmx.org) covers request and response. [_hyperscript](https://hyperscript.org) covers client behavior. `_hyperstream` covers server push. It composes with both, depends on neither, and does not absorb their concerns. A project that pulls htmx into the runtime, or that grows a scripting language on top of envelopes, has stopped being `_hyperstream`.
+[htmx](https://htmx.org) covers request and response. [_hyperscript](https://hyperscript.org) covers client behavior. `_hyperstream` covers server push. It is designed to compose with both, depends on neither, and does not absorb their concerns. A project that pulls htmx into the runtime, or that grows a scripting language on top of envelopes, has stopped being `_hyperstream`. Whether the three end up branded as one stack is for the maintainers of each to decide; the design rule stands either way.
 
 ## 16. Security is the server's job, and the protocol makes that honest
 
