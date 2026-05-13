@@ -1,6 +1,30 @@
 # Changelog
 
-## [Unreleased]
+## [0.0.1-alpha0] - 2026-05-13
+
+### Added
+
+- Client-side QoS: `_stream-coalesce="window:Nms strategy:last|first key:..."` collapses fragment bursts keyed by target; `_stream-buffer="max:N drop:oldest|newest"` caps queue length and flushes per animation frame. Multi/atomic frames pass through unchanged.
+- QoS integration tests (`test/integration/qos.spec.js`): coalesce window collapse, per-target key isolation, buffer cap + drop-oldest
+- `PRINCIPLES.md`, constitutional design rules of the project (18 principles)
+- `hyperstream:gone` event dispatched on `<hs-close code="4001">` so apps can recover from cursor-expired
+- Suspense slot registry: `<hs-partial>` chunks dedupe by seq per `suspense-id`, sealed on `final="true"`, dispatch `hyperstream:suspense:done`
+- `ext/morph.js` now wires `swap="morph"` to `window.Idiomorph` when present, with `outer` fallback and warning
+- WS integration test suite (`test/integration/ws.spec.js`): connect, fragment, multi, append, replay on reconnect
+- Suspense + gone integration suite (`test/integration/spec-extras.spec.js`)
+- CI workflow (`.github/workflows/test.yml`) running `npm test` on PR and push to `main`
+
+### Changed
+
+- Reference server no longer resolves a sibling `htmx4/dist` path. Filesystem coupling removed.
+- Auction demo bids now serialize through a promise queue, eliminating compare-and-set race.
+
+### Removed
+
+- `ext/atomic.js` stub. Atomic semantics live in the core via `<hs-atomic>` envelope; the empty extension was redundant.
+- README claim of `~5KB target`. Replaced with the honest `small`.
+
+## [Pre-unreleased snapshot]
 
 Spec v0 wired end-to-end. SSE and WS transports, envelope dispatcher, swap targets, and a zero-deps reference server.
 

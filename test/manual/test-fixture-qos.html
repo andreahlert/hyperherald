@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>_hyperstream qos test fixture</title>
+</head>
+<body>
+<div id="coalesce-root"
+     _stream="/sse?ns=coalesce"
+     _stream-subscribe="qos:coalesce"
+     _stream-coalesce="window:120ms strategy:last">
+    <div id="c">C:initial</div>
+    <ul id="cl"></ul>
+</div>
+<div id="buffer-root"
+     _stream="/sse?ns=buffer"
+     _stream-subscribe="qos:buffer"
+     _stream-buffer="max:3 drop:oldest">
+    <ul id="bl"></ul>
+</div>
+<script src="/dist/_hyperstream.js"></script>
+</body>
+</html>

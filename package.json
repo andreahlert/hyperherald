@@ -9,7 +9,7 @@
     "HTML",
     "htmx"
   ],
-  "version": "0.0.1",
+  "version": "0.0.1-alpha0",
   "type": "module",
   "homepage": "https://hyperstream.org/",
   "bugs": {
@@ -23,8 +23,10 @@
   ],
   "main": "dist/_hyperstream.js",
   "module": "dist/_hyperstream.esm.js",
+  "types": "dist/_hyperstream.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/_hyperstream.d.ts",
       "import": "./dist/_hyperstream.esm.js",
       "default": "./dist/_hyperstream.js"
     },
@@ -38,7 +40,7 @@
     "test:all": "playwright test --config test/playwright.config.js",
     "test:manual": "node test/manual/server.js",
     "dist": "npm run build && npm run typings",
-    "typings": "npx tsc --declaration dist/_hyperstream.esm.js --allowJs --emitDeclarationOnly --skipLibCheck",
+    "typings": "tsc --declaration src/_hyperstream.js --allowJs --emitDeclarationOnly --skipLibCheck --outDir dist",
     "www": "npm run build && cp -r dist/* www/js/",
     "www:serve": "cd www && npx @11ty/eleventy --serve",
     "www:search": "cd www && npx @11ty/eleventy && npx pagefind --site _site"
@@ -57,6 +59,7 @@
     "markdown-it-attrs": "^4.1.3",
     "markdown-it-table-of-contents": "^0.6.0",
     "pagefind": "^1.4.0",
-    "serve": "^14.2.6"
+    "serve": "^14.2.6",
+    "typescript": "^5.9.3"
   }
 }

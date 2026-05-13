@@ -7,7 +7,6 @@ const OUT = process.env.HS_OUT_DIR || 'dist'
 
 const coreEntry = ['src/_hyperstream.js']
 const extEntries = [
-  'src/ext/atomic.js',
   'src/ext/morph.js',
 ]
 

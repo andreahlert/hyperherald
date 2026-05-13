@@ -10,7 +10,9 @@
 | **_hyperscript** | client-side behavior |
 | **_hyperstream** | server-push hypermedia |
 
-It defines a small wire protocol and a tiny JavaScript client (~5KB target) that lets the server push HTML fragments to the browser, without forcing you to duplicate state on the client. **HTML is state. Server is source of truth. Client is projection.**
+It defines a small wire protocol and a small JavaScript client that lets the server push HTML fragments to the browser, without forcing you to duplicate state on the client. **HTML is state. Server is source of truth. Client is projection.**
+
+See [PRINCIPLES.md](PRINCIPLES.md) for the constitutional design rules of the project.
 
 ## Status
 
@@ -19,7 +21,7 @@ It defines a small wire protocol and a tiny JavaScript client (~5KB target) that
 ## Quickstart
 
 ```html
-<script src="https://unpkg.com/hyperstream.org@0.1/dist/_hyperstream.min.js"></script>
+<script src="https://unpkg.com/hyperstream.org/dist/_hyperstream.min.js"></script>
 
 <div _stream="/events" _stream-subscribe="orders/123">
     <!-- server pushes fragments scoped to channel "orders/123" -->
@@ -31,6 +33,8 @@ ESM:
 ```js
 import _hyperstream from 'hyperstream.org';
 ```
+
+> Note: the package is not yet on npm. Until first publish, install from this repo or vendor `dist/_hyperstream.min.js` directly.
 
 ## Why
 

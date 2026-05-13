@@ -14,7 +14,6 @@ import { fileURLToPath } from 'node:url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DEFAULT_ROOT = path.resolve(__dirname);
 const DEFAULT_DIST = path.resolve(__dirname, '../../dist');
-const DEFAULT_HTMX4_DIST = path.resolve(__dirname, '../../../htmx4/dist');
 
 const REPLAY_MAX = 200;
 const SPEC_VERSION = 0;
@@ -385,15 +384,12 @@ function handlePublish(req, res) {
 // ───────────────────────────── static + dist ─────────────────────────────
 const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png' };
 
-function makeServeStatic({ staticRoot, distRoot, htmx4Root }) {
+function makeServeStatic({ staticRoot, distRoot }) {
     return function serveStatic(req, res, urlPath) {
         let base, rel;
         if (urlPath.startsWith('/dist/')) {
             base = distRoot;
             rel = urlPath.slice('/dist/'.length);
-        } else if (urlPath.startsWith('/htmx4/')) {
-            base = htmx4Root;
-            rel = urlPath.slice('/htmx4/'.length);
         } else {
             base = staticRoot;
             rel = urlPath === '/' ? 'index.html' : urlPath.slice(1);
@@ -414,8 +410,7 @@ export function createServer(opts = {}) {
     const extra = typeof opts.handler === 'function' ? opts.handler : null;
     const staticRoot = opts.staticRoot ? path.resolve(opts.staticRoot) : DEFAULT_ROOT;
     const distRoot = opts.distRoot ? path.resolve(opts.distRoot) : DEFAULT_DIST;
-    const htmx4Root = opts.htmx4Root ? path.resolve(opts.htmx4Root) : DEFAULT_HTMX4_DIST;
-    const serveStatic = makeServeStatic({ staticRoot, distRoot, htmx4Root });
+    const serveStatic = makeServeStatic({ staticRoot, distRoot });
     const server = http.createServer((req, res) => {
         const url = new URL(req.url, `http://${req.headers.host}`);
         if (extra && extra(req, res, url) === true) return;

@@ -13,7 +13,7 @@ import { openSSE } from './transport/sse.js';
 import { openWS } from './transport/ws.js';
 import { pickTransport } from './transport/pick.js';
 
-const VERSION = '0.0.1';
+const VERSION = '0.0.1-alpha0';
 
 const globalScope = typeof self !== 'undefined'
     ? self
@@ -35,7 +35,14 @@ const _hyperstream = {
         plugin(_hyperstream);
     },
 
-    // internals (advanced / debugging)
+    /**
+     * Internal modules exposed for advanced users, debugging, and extensions.
+     *
+     * UNSTABLE: anything under `internals` is not covered by semver. Names,
+     * shapes, and presence may change in any minor release while the library
+     * is < 1.0. Build against the documented top-level API (process, cleanup,
+     * use, config, version, logger) and the spec, not against internals.
+     */
     internals: {
         runtime,
         parseEnvelope,

@@ -46,29 +46,36 @@ function tickCountdown() {
     });
 }
 
+let bidQueue = Promise.resolve();
+
+function processBid({ amount, bidder }) {
+    if (isNaN(amount) || amount <= state.price) {
+        return { ok: false, html: `<p style="color:red">bid must beat current $${state.price}</p>` };
+    }
+    state.price = amount;
+    state.leader = bidder;
+    state.endsAt = Date.now() + 30_000;
+    broadcastState();
+    return { ok: true, html: `<p>bid $${amount} accepted</p>` };
+}
+
 function handleBid(req, res) {
     let body = '';
     req.on('data', (c) => (body += c));
     req.on('end', () => {
-        try {
-            const params = new URLSearchParams(body);
-            const amount = parseInt(params.get('amount'), 10);
-            const bidder = (params.get('bidder') || 'anon').slice(0, 32);
-            if (isNaN(amount) || amount <= state.price) {
-                res.writeHead(400, { 'Content-Type': 'text/html' });
-                res.end(`<p style="color:red">bid must beat current $${state.price}</p>`);
-                return;
+        bidQueue = bidQueue.then(() => {
+            try {
+                const params = new URLSearchParams(body);
+                const amount = parseInt(params.get('amount'), 10);
+                const bidder = (params.get('bidder') || 'anon').slice(0, 32);
+                const result = processBid({ amount, bidder });
+                res.writeHead(result.ok ? 200 : 400, { 'Content-Type': 'text/html' });
+                res.end(result.html);
+            } catch (e) {
+                res.writeHead(400);
+                res.end('bad bid');
             }
-            state.price = amount;
-            state.leader = bidder;
-            state.endsAt = Date.now() + 30_000;
-            broadcastState();
-            res.writeHead(200, { 'Content-Type': 'text/html' });
-            res.end(`<p>bid $${amount} accepted</p>`);
-        } catch (e) {
-            res.writeHead(400);
-            res.end('bad bid');
-        }
+        });
     });
 }
 
