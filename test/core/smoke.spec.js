@@ -8,6 +8,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname  = dirname(__filename);
 
 const distPath = resolve(__dirname, '../../dist/_hyperherald.js');
+const pkgPath  = resolve(__dirname, '../../package.json');
+const pkgVersion = JSON.parse(readFileSync(pkgPath, 'utf8')).version;
 
 test('bundle exists and loads', async ({ page }) => {
     expect(existsSync(distPath), 'run `npm run build` first').toBe(true);
@@ -25,9 +27,9 @@ test('bundle exists and loads', async ({ page }) => {
     await page.waitForFunction(() => !!window._hyperherald, { timeout: 5000 });
 
     const version = await page.evaluate(() => window._hyperherald.version);
-    expect(version).toBe('0.0.1');
+    expect(version).toBe(pkgVersion);
 
     // give the ready handler a tick
     await page.waitForTimeout(50);
-    expect(logs.some(l => l.includes('_hyperherald 0.0.1'))).toBe(true);
+    expect(logs.some(l => l.includes(`_hyperherald ${pkgVersion}`))).toBe(true);
 });
